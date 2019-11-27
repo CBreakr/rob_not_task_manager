@@ -2,8 +2,26 @@
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 const api = require("./api/api");
+
+const DB = process.env.DB_CONNECT
+          || "mongodb://localhost/taskmanager";
+
+mongoose.connect(
+  DB,
+  {useNewUrlParser:true, useUnifiedTopology:true},
+  (err, data) => {
+    if(err){
+      console.log("error connecting to DB", err);
+      return;
+    }
+
+    console.log("DB connection successful");
+  }
+);
+
 
 const PORT = 5000;
 const app = express();
