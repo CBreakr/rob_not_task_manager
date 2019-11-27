@@ -1,0 +1,23 @@
+{
+  "name": "taskmanager",
+  "version": "1.0.0",
+  "description": "a taskmanager API and React app",
+  "scripts": {
+    "client": "cd taskmanager-app && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "start": "node server.js",
+    "heroku-postbuild": "cd comment_system && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+  },
+  "author": "Robert Notwicz",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.7.12"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.0"
+  }
+}
