@@ -2,7 +2,9 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 
- function App() {
+import ReduxTest from "./Containers/ReduxTestContainer";
+
+function App() {
 
   const newUser = {
     email:"aaa@aa.aa",
@@ -37,6 +39,7 @@ import './App.css';
 
   return (
     <div className="App">
+      <ReduxTest />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
