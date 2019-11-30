@@ -6,14 +6,9 @@ const register = require("./register");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  res.json({message:"GET"});
-});
-
-router.post("/", (req, res, next) => {
-  const body = req.body;
-
-  res.json({message:"POST", body});
+router.get("/checkUser", (req, res, next) => {
+  console.log("do we have a user?", req.user);
+  return res.json({user:req.user});
 });
 
 router.use("/login", login);

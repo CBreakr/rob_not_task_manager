@@ -2,18 +2,20 @@
 import { ActionTypes } from "./Actions";
 
 const initialState = {
-  testVal: "Q"
+  currentUser: null
 };
 
 const rootReducer = (state = initialState, action) => {
 
   let newState = {...state};
 
-  console.log({state});
-
-  if(action.type === ActionTypes.TEST){
-    console.log("action type TEST");
-    newState.testVal = "TEST";
+  if(action.type === ActionTypes.RECEIVE_USER){
+    console.log("receive user", {user:action.user});
+    newState.currentUser = action.user;
+  }
+  else if(action.type === ActionTypes.REMOVE_USER){
+    console.log("logout");
+    newState.currentUser = null;
   }
 
   console.log("reducer", {newState});

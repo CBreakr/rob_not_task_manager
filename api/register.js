@@ -16,28 +16,4 @@ router.post("/",
   }
 );
 
-router.post("/aaa", (req, res, next) => {
-
-  console.log("POST register", req.body);
-
-  passport.authenticate("localRegister", (err, user) => {
-
-    console.log("register authenticate", {err, user});
-
-    if(err){
-      return res.json({err});
-    }
-    else if(!user){
-      return res.json({err: new Error("no user returned")});
-    }
-
-    req.login(user, (err) => {
-      if(err){
-        return res.json({err: "could not log in"});
-      }
-      return res.json({user});
-    });
-  });
-})
-
 module.exports = router;
