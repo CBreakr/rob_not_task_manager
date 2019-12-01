@@ -6,6 +6,9 @@ import { DispatchActions } from "../Reducers/Actions";
 import Logout from "../Components/Logout";
 
 const mapStateToProps = (state) => {
+  if(state.currentUser){
+    return {email:state.currentUser.email};
+  }
   // I don't need anything here
   return {};
 }
