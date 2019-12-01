@@ -12,7 +12,6 @@ router.get("/logout", (req, res, next) => {
 router.post("/",
   passport.authenticate("localLogin"),
   (req, res) => {
-    console.log("login successful", req.user);
     return res.json({user: req.user});
   }
 );
