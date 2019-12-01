@@ -3,9 +3,11 @@ const express = require("express");
 
 const login = require("./login");
 const register = require("./register");
+const project = require("./project");
 
 const router = express.Router();
 
+// basic layer: whether we have a user or not
 router.get("/checkUser", (req, res, next) => {
   console.log("do we have a user?", req.user);
   return res.json({user:req.user});
@@ -13,5 +15,6 @@ router.get("/checkUser", (req, res, next) => {
 
 router.use("/login", login);
 router.use("/register", register);
+router.use("/project", project);
 
 module.exports = router;
