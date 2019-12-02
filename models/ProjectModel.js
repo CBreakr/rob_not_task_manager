@@ -8,6 +8,7 @@ const ProjectSchema = new mongoose.Schema(
   projectname: {type:String, required:true, trim:true},
   description: {type:String, default:"", trim:true},
   createdBy: {type:ObjectId, ref:"User", required:true},
+  lists: [{type:ObjectId, ref:"List"}],
   timestamp: {type:Date, default:Date.now}
 },
 {

@@ -16,6 +16,7 @@ const Task = new mongoose.Schema(
   assignedToUsers: [{type:ObjectId, ref:"User"}],
   assignedToTeams: [{type:ObjectId, ref:"Team"}],
   parentList: {type:ObjectId, ref:"List", required:true},
+  subtasks: [{type:ObjectId, ref:"Subtask"}],
   timestamp: {type:Date, default:Date.now},
   tags: [{type:ObjectId, ref:"Tags"}]
 },
