@@ -13,20 +13,13 @@ router.get("/", (req, res, next) => {
   // get the user from the DB as a source
   UserModel.findById(user._id)
   .populate({
-    path:"projectAccess",
-    populate: {
-      path: "createdBy"
-    }
+    path:"projectAccess"
   })
   .exec()
   .then(user => {
     return res.json({projects: user.projectAccess});
   })
   .catch(err => console.log("error: project GET, find user", {err}));
-});
-
-router.get("/:id", (req, res, next) => {
-
 });
 
 router.post("/", (req, res, next) => {
@@ -42,6 +35,21 @@ router.post("/", (req, res, next) => {
         }
         user.projectAccess.push(entry._id);
         user.save();
+
+        // and I also need to create a default list for the project
+        const defaultList = {
+          listname: `${entry.projectname} base list`,
+          description: `default list for the ${entry.projectname} project`,
+          parentProject: entry._id,
+          createdBy: user._id,
+        }
+
+        ListModel.create(defaultList, (err, list) => {
+          if(err) {
+            // don't worry about this, since it doesn't really harm anything
+          }
+        });
+
         return res.json({newProject: entry});
       });
     })
