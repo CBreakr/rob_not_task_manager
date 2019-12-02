@@ -7,6 +7,8 @@ const UserModel = require("../models/UserModel");
 const ProjectModel = require("../models/ProjectModel");
 const ListModel = require("../models/ListModel");
 
+const removeLists = require("./utilities/removeLists");
+
 router.get("/", (req, res, next) => {
   if(req.user) {
     const { user } = req;
@@ -54,7 +56,7 @@ router.post("/", (req, res, next) => {
             // don't worry about this, since it doesn't really harm anything
           }
           else{
-            consoe.log("list created", {list});
+            console.log("list created", {list});
             // give the user access to this default list
             user.listAccess.push(list._id);
             user.save();
@@ -67,6 +69,7 @@ router.post("/", (req, res, next) => {
     .catch(err => next(err));
   }
   else{
+    console.log({user:req.user, body:req.body});
     next(new Error("invalid request: no project and/or no user"));
   }
 });
@@ -109,11 +112,13 @@ router.delete("/:id", (req, res, next) => {
       // make sure the user has access
       if(user.projectAccess.find(access => access._id == projectId)){
         console.log("we have a project to delete");
-        ProjectModel.deleteOne({_id:req.params.id}, (err, result) => {
+        ProjectModel.findById(req.params.id, (err, project) => {
           if(err){
-            console.log("error deleteing", {err});
+            console.log("error finding project for deletion", {err});
             return next(err);
           }
+          project.deleteOne();
+          removeLists(projectId, next);
           return res.json({message:"deletion successful"});
         });
       }
