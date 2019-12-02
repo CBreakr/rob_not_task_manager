@@ -108,5 +108,16 @@ export const DispatchActions = {
       DispatchActions.getProjects(dispatch, data._id);
     })
     .catch(err => console.log("error updating project", {err}));
+  },
+  deleteProject: (dispatch, projectId) => {
+    fetch(`/api/project/${projectId}`, {
+      method:"DELETE",
+      headers
+    })
+    .then(res => res.json())
+    .then(result => {
+      DispatchActions.getProjects(dispatch);
+    })
+    .catch(err => console.log("error deleting project", {err}));
   }
 };

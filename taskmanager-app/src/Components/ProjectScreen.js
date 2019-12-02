@@ -48,6 +48,13 @@ class ProjectScreen extends React.Component {
     });
   }
 
+  deleteProject = () => {
+    const proceed = window.confirm(`Are you sure you want to PERMANENTLY DELETE project ${this.props.project.projectname}`);
+    if(proceed){
+      this.props.deleteProject(this.props.project._id);
+    }
+  }
+
   render() {
     let project = null;
     if(this.props && this.props.project){
@@ -75,6 +82,7 @@ class ProjectScreen extends React.Component {
                 {project.description}
               </div>
               <input type="button" value="edit" onClick={this.setEdit} />
+              <input type="button" value="delete" onClick={this.deleteProject} />
             </>
           }
           </>

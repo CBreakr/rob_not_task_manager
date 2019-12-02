@@ -15,7 +15,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setProjectEdit: (project) => DispatchActions.setProjectEdit(dispatch, project)
+    setProjectEdit: (project) => DispatchActions.setProjectEdit(dispatch, project),
+    deleteProject: (projectId) => DispatchActions.deleteProject(dispatch, projectId)
   };
 };
 

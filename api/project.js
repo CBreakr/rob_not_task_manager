@@ -8,18 +8,23 @@ const ProjectModel = require("../models/ProjectModel");
 const ListModel = require("../models/ListModel");
 
 router.get("/", (req, res, next) => {
-  const { user } = req;
+  if(req.user) {
+    const { user } = req;
 
-  // get the user from the DB as a source
-  UserModel.findById(user._id)
-  .populate({
-    path:"projectAccess"
-  })
-  .exec()
-  .then(user => {
-    return res.json({projects: user.projectAccess});
-  })
-  .catch(err => console.log("error: project GET, find user", {err}));
+    // get the user from the DB as a source
+    UserModel.findById(user._id)
+    .populate({
+      path:"projectAccess"
+    })
+    .exec()
+    .then(user => {
+      return res.json({projects: user.projectAccess});
+    })
+    .catch(err => console.log("error: project GET, find user", {err}));
+  }
+  else {
+    next(new Error("invalid request: no user"));
+  }
 });
 
 router.post("/", (req, res, next) => {
@@ -47,6 +52,12 @@ router.post("/", (req, res, next) => {
         ListModel.create(defaultList, (err, list) => {
           if(err) {
             // don't worry about this, since it doesn't really harm anything
+          }
+          else{
+            consoe.log("list created", {list});
+            // give the user access to this default list
+            user.listAccess.push(list._id);
+            user.save();
           }
         });
 
@@ -88,8 +99,33 @@ router.put("/", (req, res, next) => {
   }
 });
 
-router.delete("/", (req, res, next) => {
-
+router.delete("/:id", (req, res, next) => {
+  if(req.user){
+    const projectId = req.params.id;
+    console.log("delete call", {projectId});
+    UserModel.findById(req.user._id)
+    .then(user => {
+      console.log("we have the user for delete");
+      // make sure the user has access
+      if(user.projectAccess.find(access => access._id == projectId)){
+        console.log("we have a project to delete");
+        ProjectModel.deleteOne({_id:req.params.id}, (err, result) => {
+          if(err){
+            console.log("error deleteing", {err});
+            return next(err);
+          }
+          return res.json({message:"deletion successful"});
+        });
+      }
+      else{
+        console.log("could not find the project to delete");
+      }
+    })
+    .catch(err => next(err));
+  }
+  else {
+    next(new Error("invalid request: no user"));
+  }
 });
 
 module.exports = router;
