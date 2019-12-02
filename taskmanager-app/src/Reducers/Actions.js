@@ -3,8 +3,8 @@ export const ActionTypes = {
   RECEIVE_USER:"RECIEVE_USER",
   LOGOUT_USER:"LOGOUT_USER",
   RECEIVE_PROJECT_LIST:"RECEIVE_PROJECT_LIST",
-  ADD_NEW_PROJECT:"ADD_NEW_PROJECT",
-  SET_CURRENT_PROJECT:"SET_CURRENT_PROJECT"
+  SET_CURRENT_PROJECT:"SET_CURRENT_PROJECT",
+  SET_PROJECT_EDIT_MODE:"SET_PROJECT_EDIT_MODE"
 };
 
 const headers = {
@@ -16,7 +16,6 @@ export const DispatchActions = {
     fetch("/api/checkUser")
     .then(res => res.json())
     .then(data => {
-      console.log("get user", {data});
       if(data.user){
         dispatch({type:ActionTypes.RECEIVE_USER, user:data.user});
       }
@@ -31,9 +30,9 @@ export const DispatchActions = {
     })
     .then(res => res.json())
     .then(data => {
-      console.log("login", {data});
       if(data.user){
-        dispatch({type:ActionTypes.RECEIVE_USER, user:data.user});
+        dispatch({type:ActionTypes.RECEIVE_USER, user:data.user})
+        DispatchActions.getProjects(dispatch);
       }
     })
     .catch(err => console.log("error on login", {err}));
@@ -46,7 +45,6 @@ export const DispatchActions = {
     })
     .then(res => res.json())
     .then(data => {
-      console.log("register", {data})
       if(data.user){
         dispatch({type:ActionTypes.RECEIVE_USER, user:data.user});
       }
@@ -63,23 +61,19 @@ export const DispatchActions = {
     .catch(err => console.log("error on logout", {err}));
   },
   getProjects: (dispatch, selectId) => {
-
-    console.log("get Projects");
-
     fetch("/api/project")
     .then(res => res.json())
     .then(data => {
       // the project list
-      dispatch({type:ActionTypes.RECEIVE_PROJECT_LIST, projects:data.projects, projectid:selectId});
+      console.log("new project id", {selectId});
+      dispatch({type:ActionTypes.RECEIVE_PROJECT_LIST, projects:data.projects, projectId:selectId});
     })
     .catch(err => console.log("error getting project list", {err}));
   },
-  setProject: (dispatch, project) => {
-    console.log("set project", {project});
-    dispatch({type:ActionTypes.SET_CURRENT_PROJECT, project});
+  setProject: (dispatch, projectId) => {
+    dispatch({type:ActionTypes.SET_CURRENT_PROJECT, projectId});
   },
   upsertProject: (dispatch, project) => {
-    console.log("upsert", {project});
     if(!project._id){
       DispatchActions.createProject(dispatch, project);
     }
@@ -88,8 +82,6 @@ export const DispatchActions = {
     }
   },
   createProject: (dispatch, project) => {
-    console.log("new project", {project});
-
     fetch("/api/project", {
       method:"POST",
       headers,
@@ -98,13 +90,11 @@ export const DispatchActions = {
     .then(res => res.json())
     .then(data => {
       // I should get all projects and also return the current id
-      DispatchActions.getProjects(dispatch, data._id);
+      DispatchActions.getProjects(dispatch, data.newProject._id);
     })
     .catch(err => console.log("error creating new project", {err}));
   },
   updateProject: (dispatch, project) => {
-    console.log("update project", {project});
-
     fetch("/api/project", {
       method:"PUT",
       headers,

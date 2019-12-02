@@ -24,14 +24,15 @@ const rootReducer = (state = initialState, action) => {
       console.log("projects", {projects:action.projects});
       newState.projects = action.projects;
       // if it's null, then this will be undefined
-      newState.currentProject = newState.projects.find(project => project._id === action.projectId);
-      break;
-    case ActionTypes.ADD_NEW_PROJECT:
-      newState.projects = [...newState.projects, action.project];
+      newState.currentProject = newState.projects.find(project => project._id == action.projectId);
+      newState.editProject = null;
       break;
     case ActionTypes.SET_CURRENT_PROJECT:
-      newState.currentProject = action.project;
+      newState.currentProject = newState.projects.find(project => project._id == action.projectId);
+      newState.editProject = null;
       break;
+    default:
+      ;
   }
 
   console.log("reducer", {newState});

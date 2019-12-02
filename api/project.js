@@ -30,12 +30,9 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.post("/", (req, res, next) => {
-  console.log("project POST req", {body: req.body}, {user:req.user});
   if(req.body && req.user && req.body.project){
     const {project} = req.body;
     project.createdBy = req.user._id;
-
-    console.log("project POST", {project});
 
     UserModel.findById(req.user._id)
     .then(user => {
@@ -55,31 +52,35 @@ router.post("/", (req, res, next) => {
   }
 });
 
-router.put("/:id", (req, res, next) => {
+router.put("/", (req, res, next) => {
   if(req.body && req.user && req.body.project){
     const { project } = req.body;
-    project.createdBy = req.user._id;
 
-    console.log("project POST", {project});
-
-    UserModel.findById(user._id)
+    UserModel.findById(req.user._id)
     .then(user => {
       // make sure the user has access
-      if(user.projectAccess.find(access => access._id === project._id)){
-        ProjectModel.findOneAndUpdate({_id:project._id}, {$set: {project}}, (err, entry) => {
-          if(err) {
+      if(user.projectAccess.find(access => access._id == project._id)){
+        ProjectModel.findById(project._id, (err, entry) => {
+          if(err){
             return next(err);
           }
-          return res.json({newProject: entry});
+
+          entry.projectname = project.projectname;
+          entry.description = project.description;
+          entry.save();
+
+          return res.json({message:"project updated"});
         });
       }
     })
     .catch(err => next(err));
   }
-  next(new Error("invalid request: no project and/or no user"));
+  else{
+    next(new Error("invalid request: no project and/or no user"));
+  }
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/", (req, res, next) => {
 
 });
 

@@ -3,10 +3,9 @@ import React from "react";
 
 class ProjectList extends React.Component {
 
-  componentDidMount(){
-    if(this.props.user && !this.props.projects){
-      this.props.getProjects();
-    }
+  selectProject = (evt) => {
+    const projectId = evt.target.getAttribute("projectid");
+    this.props.setCurrentProject(projectId);
   }
 
   render(){
@@ -23,7 +22,7 @@ class ProjectList extends React.Component {
         {
           projects.map(project => {
             return (
-              <li key={project._id}>{project.projectname}</li>
+              <li key={project._id} projectid={project._id} onClick={this.selectProject}>{project.projectname}</li>
             );
           })
         }
