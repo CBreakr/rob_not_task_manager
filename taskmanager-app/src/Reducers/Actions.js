@@ -120,7 +120,13 @@ export const DispatchActions = {
     })
     .catch(err => console.log("error deleting project", {err}));
   },
+  getLists: (dispatch, project) => {
+    console.log("get lists for project", {project});
+  },
+  setList: (dispatch, listId) => {
+    console.log("set active list", {listId});
+  },
   deleteList: (dispatch, listId) => {
-    console.log("delete list");
+    console.log("delete list", {listId});
   }
 };
