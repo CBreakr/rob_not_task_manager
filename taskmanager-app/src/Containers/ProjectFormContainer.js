@@ -6,11 +6,7 @@ import { DispatchActions } from "../Reducers/Actions";
 import ProjectForm from "../Components/ProjectForm";
 
 const mapStateToProps = (state) => {
-  const props = {};
-  if(state.editProject){
-    props.project = {...state.editProject};
-  }
-  return props;
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {
