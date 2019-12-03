@@ -119,5 +119,8 @@ export const DispatchActions = {
       DispatchActions.getProjects(dispatch);
     })
     .catch(err => console.log("error deleting project", {err}));
+  },
+  deleteList: (dispatch, listId) => {
+    console.log("delete list");
   }
 };

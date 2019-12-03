@@ -1,24 +1,24 @@
 
 import { connect } from "react-redux";
 
-import ActiveProject from "../Components/ActiveProject";
-
 import { DispatchActions } from "../Reducers/Actions";
+
+import ActiveList from "../Components/ActiveList";
 
 const mapStateToProps = (state) => {
   const props = {};
-  if(state.currentProject){
-    props.project = {...state.currentProject};
+  if(state.currentList){
+    props.list = {...state.currentList};
   }
   return props;
-};
+}
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteProject: (projectId) => DispatchActions.deleteProject(dispatch, projectId)
+    deleteList: (listId) => DispatchActions.deleteList(dispatch, listId)
   };
-};
+}
 
 const enhancer = connect(mapStateToProps, mapDispatchToProps);
 
-export default enhancer(ActiveProject);
+export default enhancer(ActiveList);

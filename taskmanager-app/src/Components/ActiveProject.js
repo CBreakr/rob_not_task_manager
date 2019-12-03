@@ -3,7 +3,9 @@ import React from "react";
 
 import ProjectForm from "../Containers/ProjectFormContainer";
 
-class ProjectScreen extends React.Component {
+import ListScreen from "../Containers/ListScreenContainer";
+
+class ActiveProject extends React.Component {
 
   constructor(){
     super();
@@ -85,6 +87,7 @@ class ProjectScreen extends React.Component {
               </div>
               <input type="button" value="edit" onClick={this.setEdit} />
               <input type="button" value="delete" onClick={this.deleteProject} />
+              <ListScreen />
             </>
           }
           </>
@@ -98,4 +101,4 @@ class ProjectScreen extends React.Component {
   }
 }
 
-export default ProjectScreen;
+export default ActiveProject;
