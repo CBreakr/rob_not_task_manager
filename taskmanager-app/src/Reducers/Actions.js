@@ -65,7 +65,7 @@ export const DispatchActions = {
     .then(res => res.json())
     .then(data => {
       // the project list
-      console.log("new project id", {selectId});
+      console.log("selected project id", {selectId});
       dispatch({type:ActionTypes.RECEIVE_PROJECT_LIST, projects:data.projects, projectId:selectId});
     })
     .catch(err => console.log("error getting project list", {err}));
@@ -105,7 +105,7 @@ export const DispatchActions = {
       // get all projects
       // this can only be done to the active project
       // so we'll pass along the id to maintain that
-      DispatchActions.getProjects(dispatch, data._id);
+      DispatchActions.getProjects(dispatch, project._id);
     })
     .catch(err => console.log("error updating project", {err}));
   },

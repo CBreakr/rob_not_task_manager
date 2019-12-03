@@ -4,8 +4,6 @@ import React from "react";
 import Logout from "../Containers/LogoutContainer";
 import LoginForm from "../Containers/LoginFormContainer";
 import RegisterForm from "../Containers/RegisterFormContainer";
-import ProjectList from "../Containers/ProjectListContainer";
-import ProjectForm from "../Containers/ProjectFormContainer";
 import ProjectScreen from "../Containers/ProjectScreenContainer";
 
 class MainScreen extends React.Component {
@@ -23,8 +21,6 @@ class MainScreen extends React.Component {
           user
           ? <>
               <Logout />
-              <ProjectForm />
-              <ProjectList />
               <ProjectScreen />
             </>
           : <>

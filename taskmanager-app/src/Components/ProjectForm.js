@@ -84,7 +84,7 @@ class ProjectForm extends React.Component {
           <br />
           <input type="text" name="description" placeholder="description" value={description} onChange={this.updateInput} />
           <br />
-          <input type="submit" value="Add" />
+          <input type="submit" value={this.props.submitText} />
           <input type="button" value="Cancel" onClick={this.onCancel} />
         </form>
       </div>
