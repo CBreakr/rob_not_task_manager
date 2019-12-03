@@ -1,7 +1,7 @@
 
 import React from "react";
 
-class ProjectList extends React.Component {
+class Projects extends React.Component {
 
   selectProject = (evt) => {
     const projectId = evt.target.getAttribute("projectid");
@@ -17,7 +17,7 @@ class ProjectList extends React.Component {
 
     return (
       <div>
-        ProjectList:
+        Projects:
         <ul>
         {
           projects.map(project => {
@@ -32,4 +32,4 @@ class ProjectList extends React.Component {
   }
 }
 
-export default ProjectList;
+export default Projects;

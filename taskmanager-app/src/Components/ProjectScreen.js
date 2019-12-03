@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import ProjectList from "../Containers/ProjectListContainer";
+import Projects from "../Containers/ProjectsContainer";
 import ProjectForm from "../Containers/ProjectFormContainer";
 import ActiveProject from "../Containers/ActiveProjectContainer";
 
@@ -10,7 +10,7 @@ class ProjectScreen extends React.Component {
     return (
       <>
         <ProjectForm submitText="Add" />
-        <ProjectList />
+        <Projects />
         <ActiveProject />
       </>
     );

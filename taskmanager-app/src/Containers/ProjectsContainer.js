@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 
 import { DispatchActions } from "../Reducers/Actions";
 
-import ProjectList from "../Components/ProjectList";
+import Projects from "../Components/Projects";
 
 const mapStateToProps = (state) => {
   const props = {
@@ -30,4 +30,4 @@ const mapDispatchToProps = (dispatch) => {
 
 const enhancer = connect(mapStateToProps, mapDispatchToProps);
 
-export default enhancer(ProjectList);
+export default enhancer(Projects);
