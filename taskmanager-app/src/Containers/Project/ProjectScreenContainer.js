@@ -1,7 +1,7 @@
 
 import { connect } from "react-redux";
 
-import ProjectScreen from "../Components/ProjectScreen";
+import ProjectScreen from "../../Components/Project/ProjectScreen";
 
 // do we need anything right now?
 

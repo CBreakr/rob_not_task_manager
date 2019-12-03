@@ -1,0 +1,33 @@
+
+import { connect } from "react-redux";
+
+import { DispatchActions } from "../../Reducers/Actions";
+
+import Lists from "../../Components/List/Lists";
+
+const mapStateToProps = (state) => {
+  const props = {
+    project: null,
+    lists: null
+  }
+
+  if(state.currentProject) {
+    props.project = state.currentProject;
+    if(state.lists){
+      props.lists = [...state.lists];
+    }
+  }
+
+  return props;
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getLists: (project) => DispatchActions.getLists(dispatch, project),
+    setCurrentList: (listId) => DispatchActions.setList(dispatch, listId)
+  }
+};
+
+const enhancer = connect(mapStateToProps, mapDispatchToProps);
+
+export default enhancer(Lists);

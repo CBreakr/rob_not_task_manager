@@ -1,9 +1,9 @@
 
 import { connect } from "react-redux";
 
-import { DispatchActions } from "../Reducers/Actions";
+import { DispatchActions } from "../../Reducers/Actions";
 
-import ProjectForm from "../Components/ProjectForm";
+import ProjectForm from "../../Components/Project/ProjectForm";
 
 const mapStateToProps = (state) => {
   return {};

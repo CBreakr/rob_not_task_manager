@@ -1,9 +1,9 @@
 
 import React from "react";
 
-import ListForm from "../Containers/ListFormContainer";
-import Lists from "../Containers/ListsContainer";
-import ActiveList from "../Containers/ActiveListContainer";
+import ListForm from "../../Containers/List/ListFormContainer";
+import Lists from "../../Containers/List/ListsContainer";
+import ActiveList from "../../Containers/List/ActiveListContainer";
 
 class ListScreen extends React.Component {
   render() {

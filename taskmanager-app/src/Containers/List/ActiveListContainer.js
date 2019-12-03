@@ -1,9 +1,9 @@
 
 import { connect } from "react-redux";
 
-import { DispatchActions } from "../Reducers/Actions";
+import { DispatchActions } from "../../Reducers/Actions";
 
-import ActiveList from "../Components/ActiveList";
+import ActiveList from "../../Components/List/ActiveList";
 
 const mapStateToProps = (state) => {
   const props = {};

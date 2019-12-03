@@ -1,9 +1,9 @@
 
 import React from "react";
 
-import Projects from "../Containers/ProjectsContainer";
-import ProjectForm from "../Containers/ProjectFormContainer";
-import ActiveProject from "../Containers/ActiveProjectContainer";
+import ProjectForm from "../../Containers/Project/ProjectFormContainer";
+import Projects from "../../Containers/Project/ProjectsContainer";
+import ActiveProject from "../../Containers/Project/ActiveProjectContainer";
 
 class ProjectScreen extends React.Component {
   render() {
