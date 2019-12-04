@@ -15,7 +15,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    deleteList: (listId) => DispatchActions.deleteList(dispatch, listId)
+    deleteList: (list) => DispatchActions.deleteList(dispatch, list)
   };
 }
 

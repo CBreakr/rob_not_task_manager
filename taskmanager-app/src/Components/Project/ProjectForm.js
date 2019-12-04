@@ -72,7 +72,6 @@ class ProjectForm extends React.Component {
     let description = "";
 
     if(this.state){
-      console.log("we have state");
       projectname = this.state.projectname || "";
       description = this.state.description || "";
     }

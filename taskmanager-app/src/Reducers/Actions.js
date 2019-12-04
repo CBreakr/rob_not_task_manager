@@ -2,9 +2,10 @@
 export const ActionTypes = {
   RECEIVE_USER:"RECIEVE_USER",
   LOGOUT_USER:"LOGOUT_USER",
-  RECEIVE_PROJECT_LIST:"RECEIVE_PROJECT_LIST",
+  RECEIVE_PROJECTS:"RECEIVE_PROJECTS",
   SET_CURRENT_PROJECT:"SET_CURRENT_PROJECT",
-  SET_PROJECT_EDIT_MODE:"SET_PROJECT_EDIT_MODE"
+  RECEIVE_LISTS:"RECEIVE_LISTS",
+  SET_CURRENT_LIST:"SET_CURRENT_LIST"
 };
 
 const headers = {
@@ -66,19 +67,21 @@ export const DispatchActions = {
     .then(data => {
       // the project list
       console.log("selected project id", {selectId});
-      dispatch({type:ActionTypes.RECEIVE_PROJECT_LIST, projects:data.projects, projectId:selectId});
+      dispatch({type:ActionTypes.RECEIVE_PROJECTS, projects:data.projects, projectId:selectId});
     })
     .catch(err => console.log("error getting project list", {err}));
   },
   setProject: (dispatch, projectId) => {
     dispatch({type:ActionTypes.SET_CURRENT_PROJECT, projectId});
+    // also get the lists
+    DispatchActions.getLists(dispatch, projectId);
   },
   upsertProject: (dispatch, project) => {
-    if(!project._id){
-      DispatchActions.createProject(dispatch, project);
+    if(project._id){
+      DispatchActions.updateProject(dispatch, project);
     }
     else{
-      DispatchActions.updateProject(dispatch, project);
+      DispatchActions.createProject(dispatch, project);
     }
   },
   createProject: (dispatch, project) => {
@@ -120,13 +123,63 @@ export const DispatchActions = {
     })
     .catch(err => console.log("error deleting project", {err}));
   },
-  getLists: (dispatch, project) => {
-    console.log("get lists for project", {project});
+  getLists: (dispatch, projectId, selectId) => {
+    console.log("get lists for project", {projectId, selectId});
+    fetch(`/api/list/byproject/${projectId}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log("get lists by project", {data});
+      dispatch({type:ActionTypes.RECEIVE_LISTS, lists:data.lists, listId:selectId});
+    })
+    .catch(err => console.log("error getting lists by project", {err}));
+  },
+  upsertList: (dispatch, list, projectId) => {
+    if(list._id){
+      DispatchActions.updateList(dispatch, list, projectId);
+    }
+    else{
+      DispatchActions.createList(dispatch, list, projectId);
+    }
+  },
+  createList: (dispatch, list, projectId) => {
+    console.log("create list", {list, projectId});
+    fetch("/api/list", {
+      method:"POST",
+      headers,
+      body: JSON.stringify({list, projectId})
+    })
+    .then(res => res.json())
+    .then(data => {
+      DispatchActions.getLists(dispatch, projectId, data.newList._id);
+    })
+    .catch(err => console.log("error creating list", {err}));
+  },
+  updateList: (dispatch, list) => {
+    fetch("/api/list", {
+      method:"PUT",
+      headers,
+      body: JSON.stringify({list})
+    })
+    .then(res => res.json())
+    .then(data => {
+      DispatchActions.getLists(dispatch, list.parentProject, list._id);
+    })
+    .catch(err => console.log("error updating list", {err}));
   },
   setList: (dispatch, listId) => {
     console.log("set active list", {listId});
+    dispatch({type:ActionTypes.SET_CURRENT_LIST, listId});
   },
-  deleteList: (dispatch, listId) => {
-    console.log("delete list", {listId});
+  deleteList: (dispatch, list) => {
+    console.log("delete list", {list});
+    fetch(`/api/list/${list._id}`, {
+      method:"DELETE",
+      headers
+    })
+    .then(res => res.json())
+    .then(data => {
+      DispatchActions.getLists(dispatch, list.parentProject);
+    })
+    .catch(err => console.log("error deleting list", {err}));
   }
 };
