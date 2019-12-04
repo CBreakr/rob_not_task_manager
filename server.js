@@ -11,8 +11,6 @@ const fs = require("fs");
 const api = require("./api/api");
 const auth = require("./config/auth")(passport);
 
-console.log("is this visible in the logs?");
-
 // DB
 const DB = process.env.DB_CONNECT
           || "mongodb://localhost/taskmanager";
@@ -75,16 +73,16 @@ if(process.env.NODE_ENV === "production") {
 
   // route to React app
   app.get("*", (req, res, next) => {
-    console.log("responding to a request");
+    // console.log("responding to a request");
     const file = path.join(__dirname, "taskmanager-app/build", "index.html");
-    console.log(file);
-    try {
-      if (fs.existsSync(path)) {
-        console.log("file exists");
-      }
-    } catch(err) {
-      console.error("file does not exist", err)
-    }
+    // console.log(file);
+    // try {
+    //   if (fs.existsSync(path)) {
+    //     console.log("file exists");
+    //   }
+    // } catch(err) {
+    //   console.error("file does not exist", err)
+    // }
     res.sendFind(file);
   });
 }
