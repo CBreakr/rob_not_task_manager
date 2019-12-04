@@ -1,7 +1,7 @@
 
 import { connect } from "react-redux";
 
-import { DispatchActions } from "../Reducers/Actions";
+import DispatchActions from "../Reducers/Actions/UserActions";
 
 import Logout from "../Components/Logout";
 

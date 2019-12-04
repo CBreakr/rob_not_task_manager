@@ -1,23 +1,12 @@
 
 import { connect } from "react-redux";
 
-import { DispatchActions } from "../../Reducers/Actions";
-
 import ListScreen from "../../Components/List/ListScreen";
 
-const mapStateToProps = (state) => {
-  // do we need anything from the main state?
-  return {
+// do we need anything right now?
 
-  };
-};
+// I'm going to keep this for now in case
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-
-  };
-};
-
-const enhancer = connect(mapStateToProps, mapDispatchToProps);
+const enhancer = connect(null, null);
 
 export default enhancer(ListScreen);
