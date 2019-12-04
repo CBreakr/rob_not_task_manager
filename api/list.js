@@ -6,8 +6,7 @@ const router = express.Router();
 const UserModel = require("../models/UserModel");
 const ListModel = require("../models/ListModel");
 
-// const removeTasks = require("./utilities/removeTasks");
-// const removeListFromProject = require("./utilities/removeListFromProject");
+const removeTasks = require("./utilities/removeTasks");
 
 router.get("/:id", (req, res, next) => {
 
@@ -123,11 +122,13 @@ router.delete("/:id", (req, res, next) => {
             return next(err);
           }
           list.deleteOne();
+          removeTasks(listId, next);
+
           user.listAccess = user.listAccess.filter(la => {
             return la+"" === list._id+"";
           });
-          // removeTasks(listId, next);
-          // removeListFromProject(listId, projectId);
+          user.save();
+
           return res.json({message:"deletion successful"});
         });
       }

@@ -5,7 +5,9 @@ export const ReducerActionTypes = {
   RECEIVE_PROJECTS:"RECEIVE_PROJECTS",
   SET_CURRENT_PROJECT:"SET_CURRENT_PROJECT",
   RECEIVE_LISTS:"RECEIVE_LISTS",
-  SET_CURRENT_LIST:"SET_CURRENT_LIST"
+  SET_CURRENT_LIST:"SET_CURRENT_LIST",
+  RECEIVE_TASKS:"RECEIVE_TASKS",
+  SET_CURRENT_TASK:"SET_CURRENT_TASK"
 };
 
 const initialState = {
@@ -44,6 +46,13 @@ const rootReducer = (state = initialState, action) => {
     case ReducerActionTypes.SET_CURRENT_LIST:
       newState.currentList = newState.lists.find(list => list._id == action.listId);
       break;
+      case ReducerActionTypes.RECEIVE_TASKS:
+        newState.tasks = action.tasks;
+        newState.currentTask = newState.tasks.find(list => list._id == action.taskId);
+        break;
+      case ReducerActionTypes.SET_CURRENT_TASK:
+        newState.currentTask = newState.tasks.find(list => list._id == action.taskId);
+        break;
     default:
       ;
   }

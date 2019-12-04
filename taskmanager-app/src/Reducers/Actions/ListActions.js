@@ -1,5 +1,6 @@
 
 import { ReducerActionTypes as ActionTypes } from "../RootReducer";
+import TaskDispatchActions from "./TaskActions";
 
 const headers = {
   "Content-Type":"application/json"
@@ -15,6 +16,11 @@ const DispatchActions = {
       dispatch({type:ActionTypes.RECEIVE_LISTS, lists:data.lists, listId:selectId});
     })
     .catch(err => console.log("error getting lists by project", {err}));
+  },
+  setList: (dispatch, listId) => {
+    console.log("set active list", {listId});
+    dispatch({type:ActionTypes.SET_CURRENT_LIST, listId});
+    TaskDispatchActions.getTasks(dispatch, listId);
   },
   upsertList: (dispatch, list, projectId) => {
     if(list._id){
@@ -48,10 +54,6 @@ const DispatchActions = {
       DispatchActions.getLists(dispatch, list.parentProject, list._id);
     })
     .catch(err => console.log("error updating list", {err}));
-  },
-  setList: (dispatch, listId) => {
-    console.log("set active list", {listId});
-    dispatch({type:ActionTypes.SET_CURRENT_LIST, listId});
   },
   deleteList: (dispatch, list) => {
     console.log("delete list", {list});

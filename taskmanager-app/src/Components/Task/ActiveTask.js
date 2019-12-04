@@ -1,23 +1,22 @@
 
 import React from "react";
 
-import ListForm from "../../Containers/List/ListFormContainer";
-import TaskScreen from "../../Containers/Task/TaskScreenContainer";
+import TaskForm from "../../Containers/Task/TaskFormContainer";
 
-class ActiveList extends React.Component {
+class ActiveTask extends React.Component {
 
   constructor(){
     super();
     this.state = {
-      listId: null,
+      taskId: null,
       editMode: false
     };
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if(nextProps && nextProps.list && nextProps.list._id != prevState.listId){
+    if(nextProps && nextProps.list && nextProps.task._id != prevState.taskId){
       return {
-        listId: nextProps.list._id,
+        taskId: nextProps.task._id,
         editMode: false
       };
     }
@@ -49,50 +48,49 @@ class ActiveList extends React.Component {
     });
   }
 
-  deleteList = () => {
-    const proceed = window.confirm(`Are you sure you want to PERMANENTLY DELETE list ${this.props.list.listname}`);
+  deleteTask = () => {
+    const proceed = window.confirm(`Are you sure you want to PERMANENTLY DELETE list ${this.props.task.taskname}`);
     if(proceed){
-      this.props.deleteList(this.props.list);
+      this.props.deleteTask(this.props.task);
     }
   }
 
   render() {
-    let list = null;
-    if(this.props && this.props.list){
-      list = this.props.list;
+    let task = null;
+    if(this.props && this.props.task){
+      task = this.props.task;
     }
 
     return (
       <div>
         {
-          list
+          task
           ?
           <>
           {
             this.state.editMode
             ?
-              <ListForm
-                list={list}
+              <TaskForm
+                task={task}
                 onCancel={this.onCancel}
                 onComplete={this.onComplete}
                 submitText="Save" />
             :
             <>
               <div>
-                {list.listname}
+                {task.taskname}
               </div>
               <div>
-                {list.description}
+                {task.description}
               </div>
               <input type="button" value="edit" onClick={this.setEdit} />
-              <input type="button" value="delete" onClick={this.deleteList} />
-              <TaskScreen />
+              <input type="button" value="delete" onClick={this.deleteTask} />
             </>
           }
           </>
           :
           <div>
-            No List Selected Yet
+            No Task Selected Yet
           </div>
         }
       </div>
@@ -100,4 +98,4 @@ class ActiveList extends React.Component {
   }
 }
 
-export default ActiveList;
+export default ActiveTask;
