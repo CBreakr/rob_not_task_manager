@@ -2,7 +2,6 @@
 import React from "react";
 
 import ProjectForm from "../../Containers/Project/ProjectFormContainer";
-
 import ListScreen from "../../Containers/List/ListScreenContainer";
 
 class ActiveProject extends React.Component {
