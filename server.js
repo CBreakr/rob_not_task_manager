@@ -30,7 +30,7 @@ mongoose.connect(
 
 // BASIC APP SERVER
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 const SESSION_SECRET = process.env.SESSION_SECRET
                       || "lyg7o6twergvweflyi";
 
@@ -73,16 +73,7 @@ if(process.env.NODE_ENV === "production") {
 
   // route to React app
   app.get("*", (req, res, next) => {
-    // console.log("responding to a request");
     const file = path.join(__dirname, "taskmanager-app/build", "index.html");
-    // console.log(file);
-    // try {
-    //   if (fs.existsSync(path)) {
-    //     console.log("file exists");
-    //   }
-    // } catch(err) {
-    //   console.error("file does not exist", err)
-    // }
     res.sendFind(file);
   });
 }
