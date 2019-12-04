@@ -10,7 +10,6 @@ const api = require("./api/api");
 const auth = require("./config/auth")(passport);
 
 // DB
-
 const DB = process.env.DB_CONNECT
           || "mongodb://localhost/taskmanager";
 
@@ -66,6 +65,7 @@ app.get("/getuser", (req, res, next) => {
 // on production make sure we're hooked up
 //
 if(process.env.NODE_ENV === "production") {
+  console.log("we're in production mode");
   // serve any static files
   app.use(express.static(path.join(__dirname, "taskmanager-app/build")));
 
@@ -73,6 +73,9 @@ if(process.env.NODE_ENV === "production") {
   app.get("*", (req, res, next) => {
     res.sendFind(path.join(__dirname, "taskmanager-app/build", "index.html"));
   });
+}
+else{
+  console.log("we're not in production mode");
 }
 
 // handle error (with next)
