@@ -6,6 +6,8 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
 
+const fs = require("fs");
+
 const api = require("./api/api");
 const auth = require("./config/auth")(passport);
 
@@ -73,7 +75,17 @@ if(process.env.NODE_ENV === "production") {
 
   // route to React app
   app.get("*", (req, res, next) => {
-    res.sendFind(path.join(__dirname, "taskmanager-app/build", "index.html"));
+    console.log("responding to a request");
+    const file = path.join(__dirname, "taskmanager-app/build", "index.html");
+    console.log(file);
+    try {
+      if (fs.existsSync(path)) {
+        console.log("file exists");
+      }
+    } catch(err) {
+      console.error("file does not exist", err)
+    }
+    res.sendFind(file);
   });
 }
 else{
