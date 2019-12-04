@@ -7,7 +7,7 @@
     "server": "nodemon server.js",
     "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "start": "node server.js",
-    "heroku-postbuild": "cd comment_system && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
+    "heroku-postbuild": "cd taskmanager-app && npm install && npm install --only=dev --no-shrinkwrap && npm run build"
   },
   "author": "Robert Notwicz",
   "license": "ISC",
