@@ -9,6 +9,8 @@ const session = require("express-session");
 const api = require("./api/api");
 const auth = require("./config/auth")(passport);
 
+console.log("is this visible in the logs?");
+
 // DB
 const DB = process.env.DB_CONNECT
           || "mongodb://localhost/taskmanager";
