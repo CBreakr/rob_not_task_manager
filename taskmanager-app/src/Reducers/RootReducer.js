@@ -34,25 +34,30 @@ const rootReducer = (state = initialState, action) => {
       newState.projects = action.projects;
       // if it's null, then this will be undefined
       newState.currentProject = newState.projects.find(project => project._id == action.projectId);
-      console.log("current project", {current:newState.currentProject});
+      newState.currentList = null;
+      newState.currentTask = null;
       break;
     case ReducerActionTypes.SET_CURRENT_PROJECT:
       newState.currentProject = newState.projects.find(project => project._id == action.projectId);
+      newState.currentList = null;
+      newState.currentTask = null;
       break;
     case ReducerActionTypes.RECEIVE_LISTS:
       newState.lists = action.lists;
       newState.currentList = newState.lists.find(list => list._id == action.listId);
+      newState.currentTask = null;
       break;
     case ReducerActionTypes.SET_CURRENT_LIST:
       newState.currentList = newState.lists.find(list => list._id == action.listId);
+      newState.currentTask = null;
       break;
-      case ReducerActionTypes.RECEIVE_TASKS:
-        newState.tasks = action.tasks;
-        newState.currentTask = newState.tasks.find(list => list._id == action.taskId);
-        break;
-      case ReducerActionTypes.SET_CURRENT_TASK:
-        newState.currentTask = newState.tasks.find(list => list._id == action.taskId);
-        break;
+    case ReducerActionTypes.RECEIVE_TASKS:
+      newState.tasks = action.tasks;
+      newState.currentTask = newState.tasks.find(list => list._id == action.taskId);
+      break;
+    case ReducerActionTypes.SET_CURRENT_TASK:
+      newState.currentTask = newState.tasks.find(list => list._id == action.taskId);
+      break;
     default:
       ;
   }
