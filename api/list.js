@@ -6,7 +6,7 @@ const router = express.Router();
 const UserModel = require("../models/UserModel");
 const ListModel = require("../models/ListModel");
 
-const removeTasks = require("./utilities/removeTasks");
+const removeTasks = require("./removalUtilities/removeTasks");
 
 router.get("/:id", (req, res, next) => {
 

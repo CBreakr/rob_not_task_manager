@@ -7,7 +7,7 @@ const UserModel = require("../models/UserModel");
 const ProjectModel = require("../models/ProjectModel");
 const ListModel = require("../models/ListModel");
 
-const removeLists = require("./utilities/removeLists");
+const removeLists = require("./removalUtilities/removeLists");
 
 router.get("/", (req, res, next) => {
   if(req.user) {

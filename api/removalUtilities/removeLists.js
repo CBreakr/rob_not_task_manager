@@ -2,6 +2,8 @@
 const ListModel = require("../../models/ListModel");
 const removeTasks = require("./removeTasks");
 
+const objIdMatch = require("../../utilities/objectIdMatch");
+
 module.exports = removeLists = (projectId, user, next) => {
   console.log("remove lists", {projectId, user});
   ListModel.find({parentProject:projectId}, (err, lists) => {
@@ -15,7 +17,8 @@ module.exports = removeLists = (projectId, user, next) => {
       list.deleteOne();
       // remove the listaccess here, too
       user.listAccess = user.listAccess.filter(la => {
-        return la+"" !== list._id+"";
+        // return la+"" !== list._id+"";
+        return !objIdMatch(la, list._id);
       });
       user.save();
       removeTasks(list._id, next);
