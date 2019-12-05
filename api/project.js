@@ -119,10 +119,13 @@ router.delete("/:id", (req, res, next) => {
           }
           project.deleteOne();
           user.projectAccess = user.projectAccess.filter(pa => {
-            return pa+"" === project._id+"";
+            return pa+"" !== project._id+"";
           });
-          user.save();
-          removeLists(projectId, next);
+          user.save()
+          .then(res => {
+            console.log("user saved, inside THEN block");
+            removeLists(projectId, user, next);
+          });
           return res.json({message:"deletion successful"});
         });
       }
