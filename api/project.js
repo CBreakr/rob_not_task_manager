@@ -42,7 +42,7 @@ router.post("/", (req, res, next) => {
         }
         user.projectAccess.push(entry._id);
         user.save()
-        .then(res => {
+        .then(result => {
           // and I also need to create a default list for the project
           const defaultList = {
             listname: `${entry.projectname} base list`,

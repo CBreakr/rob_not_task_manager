@@ -127,7 +127,7 @@ router.delete("/:id", (req, res, next) => {
             return la+"" !== list._id+"";
           });
           user.save()
-          .then(res => {
+          .then(result => {
             removeTasks(listId, next);
           });
 
