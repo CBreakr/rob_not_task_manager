@@ -1,6 +1,15 @@
 
 import React from "react";
 
+const StatusList = [
+  "unstarted",
+  "started",
+  "paused",
+  "finished",
+  "deployed",
+  "archived"
+];
+
 class TaskForm extends React.Component {
 
   constructor() {
@@ -8,7 +17,8 @@ class TaskForm extends React.Component {
     this.state = {
       taskId:null,
       taskname:null,
-      description:null
+      description:null,
+      status: null
     };
   }
 
@@ -17,7 +27,8 @@ class TaskForm extends React.Component {
       return {
         taskId: nextProps.task._id,
         taskname: nextProps.task.taskname,
-        description: nextProps.task.description
+        description: nextProps.task.description,
+        status: nextProps.task.status
       };
     }
     else{
@@ -41,6 +52,7 @@ class TaskForm extends React.Component {
 
     task.taskname = this.state.taskname;
     task.description = this.state.description;
+    task.status = this.state.status;
 
     console.log("upsert props", {list: this.props.list});
 
@@ -49,7 +61,8 @@ class TaskForm extends React.Component {
     // clear the input
     this.setState({
       taskname: "",
-      description: ""
+      description: "",
+      status: ""
     });
 
     if(this.props.onComplete){
@@ -60,7 +73,8 @@ class TaskForm extends React.Component {
   onCancel = () => {
     this.setState({
       taskname:"",
-      description:""
+      description:"",
+      status:""
     });
 
     if(this.props.onCancel){
@@ -72,10 +86,12 @@ class TaskForm extends React.Component {
 
     let taskname = "";
     let description = "";
+    let status = "";
 
     if(this.state){
       taskname = this.state.taskname || "";
       description = this.state.description || "";
+      status = this.state.status || "";
     }
 
     return (
@@ -84,6 +100,19 @@ class TaskForm extends React.Component {
           <input type="text" name="taskname" placeholder="name" value={taskname} onChange={this.updateInput} />
           <br />
           <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
+          <br />
+          <select name="status" onChange={this.updateInput}>
+          {
+            StatusList.map(status => {
+              if(status===this.state.status){
+                return <option selected value={status}>{status}</option>
+              }
+              else{
+                return <option value={status}>{status}</option>
+              }
+            })
+          }
+          </select>
           <br />
           <input type="submit" value={this.props.submitText} />
           <input type="button" value="Cancel" onClick={this.onCancel} />

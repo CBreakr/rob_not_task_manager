@@ -48,7 +48,7 @@ router.post("/", (req, res, next) => {
     .then(user => {
       console.log("we have a user for task entry");
       if(user.listAccess.find(access => access._id == listId)){
-        console.log("user has access to this list for task entry");
+        console.log("user has access to this list for task entry", {task});
         task.createdBy = user._id;
         task.parentList = listId;
         TaskModel.create(task, (err, entry) => {
@@ -95,6 +95,7 @@ router.put("/", (req, res, next) => {
           //
           entry.taskname = task.taskname;
           entry.description = task.description;
+          entry.status = task.status;
           entry.save();
 
           return res.json({message:"task updated"});
