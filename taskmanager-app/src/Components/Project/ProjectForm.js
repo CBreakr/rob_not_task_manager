@@ -81,7 +81,7 @@ class ProjectForm extends React.Component {
         <form onSubmit={this.upsertProject}>
           <input type="text" name="projectname" placeholder="name" value={projectname} onChange={this.updateInput} />
           <br />
-          <input type="text" name="description" placeholder="description" value={description} onChange={this.updateInput} />
+          <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
           <br />
           <input type="submit" value={this.props.submitText} />
           <input type="button" value="Cancel" onClick={this.onCancel} />

@@ -83,7 +83,7 @@ class TaskForm extends React.Component {
         <form onSubmit={this.upsertTask}>
           <input type="text" name="taskname" placeholder="name" value={taskname} onChange={this.updateInput} />
           <br />
-          <input type="text" name="description" placeholder="description" value={description} onChange={this.updateInput} />
+          <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
           <br />
           <input type="submit" value={this.props.submitText} />
           <input type="button" value="Cancel" onClick={this.onCancel} />

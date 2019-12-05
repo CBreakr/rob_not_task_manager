@@ -83,7 +83,7 @@ class ListForm extends React.Component {
         <form onSubmit={this.upsertList}>
           <input type="text" name="listname" placeholder="name" value={listname} onChange={this.updateInput} />
           <br />
-          <input type="text" name="description" placeholder="description" value={description} onChange={this.updateInput} />
+          <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
           <br />
           <input type="submit" value={this.props.submitText} />
           <input type="button" value="Cancel" onClick={this.onCancel} />
