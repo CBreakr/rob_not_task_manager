@@ -1,7 +1,9 @@
 
 import React from "react";
 
-import ListForm from "../../Containers/List/ListFormContainer";
+// import ListForm from "../../Containers/List/ListFormContainer";
+// <ListForm submitText="Add" />
+import AddNewList from "./AddNewList";
 import Lists from "../../Containers/List/ListsContainer";
 import ActiveList from "../../Containers/List/ActiveListContainer";
 
@@ -9,7 +11,7 @@ class ListScreen extends React.Component {
   render() {
     return(
       <div>
-        <ListForm submitText="Add" />
+        <AddNewList />
         <Lists />
         <ActiveList />
       </div>

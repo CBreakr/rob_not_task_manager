@@ -1,7 +1,9 @@
 
 import React from "react";
 
-import TaskForm from "../../Containers/Task/TaskFormContainer";
+// import TaskForm from "../../Containers/Task/TaskFormContainer";
+// <TaskForm submitText="Add" />
+import AddNewTask from "./AddNewTask";
 import Tasks from "../../Containers/Task/TasksContainer";
 import ActiveTask from "../../Containers/Task/ActiveTaskContainer";
 
@@ -9,8 +11,7 @@ class TaskScreen extends React.Component {
   render() {
     return(
       <div>
-        TASK SCREEN
-        <TaskForm submitText="Add" />
+        <AddNewTask />
         <Tasks />
         <ActiveTask />
       </div>
