@@ -1,7 +1,9 @@
 
 import React from "react";
 
-const StatusList = [
+import DropDown from "../DropDown";
+
+const statusList = [
   "unstarted",
   "started",
   "paused",
@@ -101,18 +103,12 @@ class TaskForm extends React.Component {
           <br />
           <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
           <br />
-          <select name="status" onChange={this.updateInput}>
-          {
-            StatusList.map(status => {
-              if(status===this.state.status){
-                return <option selected value={status}>{status}</option>
-              }
-              else{
-                return <option value={status}>{status}</option>
-              }
-            })
-          }
-          </select>
+          <DropDown
+            name="status"
+            valueList={statusList}
+            currentValue={status}
+            updateInput={this.updateInput}
+          />
           <br />
           <input type="submit" value={this.props.submitText} />
           <input type="button" value="Cancel" onClick={this.onCancel} />
@@ -121,5 +117,20 @@ class TaskForm extends React.Component {
     );
   }
 }
+
+/*
+<select name="status" onChange={this.updateInput}>
+{
+  StatusList.map(status => {
+    if(status===this.state.status){
+      return <option selected value={status}>{status}</option>
+    }
+    else{
+      return <option value={status}>{status}</option>
+    }
+  })
+}
+</select>
+*/
 
 export default TaskForm;
