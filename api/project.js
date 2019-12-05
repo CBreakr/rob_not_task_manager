@@ -41,29 +41,31 @@ router.post("/", (req, res, next) => {
           return next(err);
         }
         user.projectAccess.push(entry._id);
-        user.save();
-
-        // and I also need to create a default list for the project
-        const defaultList = {
-          listname: `${entry.projectname} base list`,
-          description: `default list for the ${entry.projectname} project`,
-          parentProject: entry._id,
-          createdBy: user._id,
-        }
-
-        ListModel.create(defaultList, (err, list) => {
-          if(err) {
-            // don't worry about this, since it doesn't really harm anything
+        user.save()
+        .then(res => {
+          // and I also need to create a default list for the project
+          const defaultList = {
+            listname: `${entry.projectname} base list`,
+            description: `default list for the ${entry.projectname} project`,
+            parentProject: entry._id,
+            createdBy: user._id,
           }
-          else{
-            console.log("list created", {list});
-            // give the user access to this default list
-            user.listAccess.push(list._id);
-            user.save();
-          }
-        });
 
-        return res.json({newProject: entry});
+          ListModel.create(defaultList, (err, list) => {
+            if(err) {
+              // don't worry about this, since it doesn't really harm anything
+            }
+            else{
+              console.log("list created", {list});
+              // give the user access to this default list
+              user.listAccess.push(list._id);
+              user.save();
+            }
+          });
+
+          return res.json({newProject: entry});
+        })
+        .catch(err => next(err));
       });
     })
     .catch(err => next(err));

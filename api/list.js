@@ -122,12 +122,14 @@ router.delete("/:id", (req, res, next) => {
             return next(err);
           }
           list.deleteOne();
-          removeTasks(listId, next);
 
           user.listAccess = user.listAccess.filter(la => {
             return la+"" !== list._id+"";
           });
-          user.save();
+          user.save()
+          .then(res => {
+            removeTasks(listId, next);
+          });
 
           return res.json({message:"deletion successful"});
         });
