@@ -14,6 +14,9 @@ const DispatchActions = {
       // the project list
       console.log("selected project id", {selectId});
       dispatch({type:ActionTypes.RECEIVE_PROJECTS, projects:data.projects, projectId:selectId});
+      if(selectId){
+        ListDispatchActions.getLists(dispatch, selectId);
+      }
     })
     .catch(err => console.log("error getting project list", {err}));
   },
