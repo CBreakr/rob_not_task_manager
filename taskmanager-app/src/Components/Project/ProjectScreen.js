@@ -10,11 +10,11 @@ import ActiveProject from "../../Containers/Project/ActiveProjectContainer";
 class ProjectScreen extends React.Component {
   render() {
     return (
-      <>
+      <div className="project_screen">
         <AddNewProject />
         <Projects />
         <ActiveProject />
-      </>
+      </div>
     );
   }
 }

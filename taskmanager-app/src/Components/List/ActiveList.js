@@ -63,7 +63,7 @@ class ActiveList extends React.Component {
     }
 
     return (
-      <div>
+      <div className="active_list_container">
         {
           list
           ?

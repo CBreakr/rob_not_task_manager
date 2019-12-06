@@ -62,7 +62,7 @@ class ActiveTask extends React.Component {
     }
 
     return (
-      <div>
+      <div className="active_task_container">
         {
           task
           ?

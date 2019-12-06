@@ -9,7 +9,7 @@ class Logout extends React.Component {
 
   render(){
     return (
-      <div>
+      <div className="logout_form">
         <span>
           {this.props.email}
         </span>

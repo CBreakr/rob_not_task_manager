@@ -24,7 +24,7 @@ class RegisterForm extends React.Component {
   register = (evt) => {
     evt.preventDefault();
     this.props.register(this.state);
-    
+
     this.setState({
       email:"",
       password:""
@@ -33,7 +33,7 @@ class RegisterForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="register_form">
         <form onSubmit={this.register}>
           <input type="text" name="email" placeholder="email" onChange={this.updateInput} />
           <br />

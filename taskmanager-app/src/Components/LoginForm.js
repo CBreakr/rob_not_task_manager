@@ -25,7 +25,7 @@ class LoginForm extends React.Component {
     evt.preventDefault();
     console.log("login state", {user:this.state});
     this.props.login(this.state);
-    
+
     this.setState({
       email:"",
       password:""
@@ -34,7 +34,7 @@ class LoginForm extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="login_form">
         <form onSubmit={this.login}>
           <input type="text" name="email" placeholder="email" onChange={this.updateInput} />
           <br />

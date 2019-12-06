@@ -10,7 +10,7 @@ import ActiveTask from "../../Containers/Task/ActiveTaskContainer";
 class TaskScreen extends React.Component {
   render() {
     return(
-      <div>
+      <div className="task_screen">
         <AddNewTask />
         <Tasks />
         <ActiveTask />

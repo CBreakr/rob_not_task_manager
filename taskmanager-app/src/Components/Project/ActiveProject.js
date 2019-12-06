@@ -63,7 +63,7 @@ class ActiveProject extends React.Component {
     }
 
     return (
-      <div>
+      <div className="active_project_container">
         {
           project
           ?

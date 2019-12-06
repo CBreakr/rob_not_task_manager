@@ -10,7 +10,7 @@ import ActiveList from "../../Containers/List/ActiveListContainer";
 class ListScreen extends React.Component {
   render() {
     return(
-      <div>
+      <div className="list_screen">
         <AddNewList />
         <Lists />
         <ActiveList />
