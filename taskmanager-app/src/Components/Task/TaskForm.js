@@ -31,14 +31,15 @@ const typeList = [
   "meta"
 ];
 
+// need to remember to set default values
 const emptyState = {
   taskId:"",
   taskname:"",
   description:"",
-  status:"",
-  priority:"",
-  size:"",
-  type:""
+  status:"unstarted",
+  priority:"standard",
+  size:"1",
+  type:"task"
 };
 
 class TaskForm extends React.Component {
