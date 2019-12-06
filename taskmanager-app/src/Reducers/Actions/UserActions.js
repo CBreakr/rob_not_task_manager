@@ -14,6 +14,7 @@ const DispatchActions = {
     .then(data => {
       if(data.user){
         dispatch({type:ActionTypes.RECEIVE_USER, user:data.user});
+        ProjectDispatchActions.getProjects(dispatch);
       }
     })
     .catch(err => console.log("error on user check", {err}));
