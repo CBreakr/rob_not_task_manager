@@ -9,7 +9,7 @@ const Task = new mongoose.Schema(
   description: {type:String, default:"", trim:true},
   priority: {type:String, default:"standard", trim:true},
   size: {type:Number, default:1},
-  status: {type:String, default:"created", trim:true},
+  status: {type:String, default:"unstarted", trim:true},
   type: {type:String, default:"task", trim:true},
   dueDate: {type:Date, default:null},
   createdBy: {type:ObjectId, ref:"User", required:true},
