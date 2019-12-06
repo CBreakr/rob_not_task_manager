@@ -88,7 +88,6 @@ router.put("/", (req, res, next) => {
           //
           // fill in the Task values
           //
-          // just taskname and description for now
           //
           //
           //
@@ -96,6 +95,9 @@ router.put("/", (req, res, next) => {
           entry.taskname = task.taskname;
           entry.description = task.description;
           entry.status = task.status;
+          entry.priority = task.priority;
+          entry.size = task.size;
+          entry.type = task.type;
           entry.save();
 
           return res.json({message:"task updated"});

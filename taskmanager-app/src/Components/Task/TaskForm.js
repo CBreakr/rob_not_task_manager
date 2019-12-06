@@ -12,16 +12,40 @@ const statusList = [
   "archived"
 ];
 
+const priorityList = [
+  "standard",
+  "optional",
+  "low",
+  "high",
+  "emergency"
+];
+
+const sizeList = [
+  "1", "2", "3", "5", "8"
+];
+
+const typeList = [
+  "task",
+  "bug",
+  "chore",
+  "meta"
+];
+
+const emptyState = {
+  taskId:"",
+  taskname:"",
+  description:"",
+  status:"",
+  priority:"",
+  size:"",
+  type:""
+};
+
 class TaskForm extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      taskId:null,
-      taskname:null,
-      description:null,
-      status: null
-    };
+    this.state = emptyState;
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -30,7 +54,10 @@ class TaskForm extends React.Component {
         taskId: nextProps.task._id,
         taskname: nextProps.task.taskname,
         description: nextProps.task.description,
-        status: nextProps.task.status
+        status: nextProps.task.status,
+        priority: nextProps.task.priority,
+        size: nextProps.task.size,
+        type: nextProps.task.type
       };
     }
     else{
@@ -55,17 +82,16 @@ class TaskForm extends React.Component {
     task.taskname = this.state.taskname;
     task.description = this.state.description;
     task.status = this.state.status;
+    task.priority = this.state.priority;
+    task.size = this.state.size;
+    task.type = this.state.type;
 
     console.log("upsert props", {list: this.props.list});
 
     this.props.upsertTask(task, this.props.list._id);
 
     // clear the input
-    this.setState({
-      taskname: "",
-      description: "",
-      status: ""
-    });
+    this.setState(emptyState);
 
     if(this.props.onComplete){
       this.props.onComplete();
@@ -73,11 +99,7 @@ class TaskForm extends React.Component {
   }
 
   onCancel = () => {
-    this.setState({
-      taskname:"",
-      description:"",
-      status:""
-    });
+    this.setState(emptyState);
 
     if(this.props.onCancel){
       this.props.onCancel();
@@ -89,11 +111,17 @@ class TaskForm extends React.Component {
     let taskname = "";
     let description = "";
     let status = "";
+    let priority = "";
+    let size = "";
+    let type = "";
 
     if(this.state){
       taskname = this.state.taskname || "";
       description = this.state.description || "";
       status = this.state.status || "";
+      priority = this.state.priority || "";
+      size = this.state.size || "";
+      type = this.state.type || "";
     }
 
     return (
@@ -103,10 +131,35 @@ class TaskForm extends React.Component {
           <br />
           <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
           <br />
+          Status:
           <DropDown
             name="status"
             valueList={statusList}
             currentValue={status}
+            updateInput={this.updateInput}
+          />
+          <br />
+          Priority:
+          <DropDown
+            name="priority"
+            valueList={priorityList}
+            currentValue={priority}
+            updateInput={this.updateInput}
+          />
+          <br />
+          Size:
+          <DropDown
+            name="size"
+            valueList={sizeList}
+            currentValue={size}
+            updateInput={this.updateInput}
+          />
+          <br />
+          Type:
+          <DropDown
+            name="type"
+            valueList={typeList}
+            currentValue={type}
             updateInput={this.updateInput}
           />
           <br />
