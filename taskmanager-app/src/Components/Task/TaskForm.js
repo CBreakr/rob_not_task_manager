@@ -1,6 +1,8 @@
 
 import React from "react";
 
+import moment from "moment";
+
 import DropDown from "../DropDown";
 
 const statusList = [
@@ -39,7 +41,8 @@ const emptyState = {
   status:"unstarted",
   priority:"standard",
   size:"1",
-  type:"task"
+  type:"task",
+  dueDate:null
 };
 
 class TaskForm extends React.Component {
@@ -51,15 +54,22 @@ class TaskForm extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.task && nextProps.task._id != prevState.taskId){
-      return {
+      const ret = {
         taskId: nextProps.task._id,
         taskname: nextProps.task.taskname,
         description: nextProps.task.description,
         status: nextProps.task.status,
         priority: nextProps.task.priority,
         size: nextProps.task.size,
-        type: nextProps.task.type
+        type: nextProps.task.type,
+        dueDate : null
       };
+
+      if(nextProps.task.dueDate){
+        ret.dueDate = moment(nextProps.task.dueDate).format("MM/DD/YYYY");
+      }
+
+      return ret;
     }
     else{
       return null;
@@ -86,6 +96,17 @@ class TaskForm extends React.Component {
     task.priority = this.state.priority;
     task.size = this.state.size;
     task.type = this.state.type;
+
+    const d = Date.parse(this.state.dueDate);
+    console.log("date parse", {d});
+    if(isNaN(d)){
+      alert("invalid date");
+      return;
+    }
+    else{
+      task.dueDate = d;
+    }
+
 
     console.log("upsert props", {list: this.props.list});
 
@@ -115,6 +136,7 @@ class TaskForm extends React.Component {
     let priority = "";
     let size = "";
     let type = "";
+    let dueDate = "";
 
     if(this.state){
       taskname = this.state.taskname || "";
@@ -123,6 +145,7 @@ class TaskForm extends React.Component {
       priority = this.state.priority || "";
       size = this.state.size || "";
       type = this.state.type || "";
+      dueDate = this.state.dueDate || null;
     }
 
     return (
@@ -163,6 +186,8 @@ class TaskForm extends React.Component {
             currentValue={type}
             updateInput={this.updateInput}
           />
+          <br />
+          <input type="text" name="dueDate" placeholder="due date" value={dueDate} onChange={this.updateInput} />
           <br />
           <input type="submit" value={this.props.submitText} />
           <input type="button" value="Cancel" onClick={this.onCancel} />

@@ -98,6 +98,7 @@ router.put("/", (req, res, next) => {
           entry.priority = task.priority;
           entry.size = task.size;
           entry.type = task.type;
+          entry.dueDate = task.dueDate;
           entry.save();
 
           return res.json({message:"task updated"});
