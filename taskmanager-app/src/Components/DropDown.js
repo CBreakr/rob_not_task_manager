@@ -8,10 +8,10 @@ class DropDown extends React.Component {
       {
         this.props.valueList.map(value => {
           if(value === this.props.currentValue){
-            return <option selected value={value}>{value}</option>
+            return <option key={value} selected value={value}>{value}</option>
           }
           else{
-            return <option value={value}>{value}</option>
+            return <option key={value} value={value}>{value}</option>
           }
         })
       }
