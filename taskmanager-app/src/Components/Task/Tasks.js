@@ -22,7 +22,7 @@ class Tasks extends React.Component {
         {
           tasks.map(task => {
             return (
-              <li key={task._id} taskid={task._id} onClick={this.selectTask}>{task.taskname}</li>
+              <li key={task._id} taskid={task._id} onClick={this.selectTask}>{task.taskname} ({task.status}, {task.priority})</li>
             );
           })
         }

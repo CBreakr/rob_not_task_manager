@@ -81,10 +81,24 @@ class ActiveTask extends React.Component {
                 {task.taskname}
               </div>
               <div>
+                <input type="button" value="edit" onClick={this.setEdit} />
+                <input type="button" value="delete" onClick={this.deleteTask} />
+              </div>
+              <div>
                 {task.description}
               </div>
-              <input type="button" value="edit" onClick={this.setEdit} />
-              <input type="button" value="delete" onClick={this.deleteTask} />
+              <div>
+                status: {task.status}
+              </div>
+              <div>
+                priority: {task.priority}
+              </div>
+              <div>
+                size: {task.size}
+              </div>
+              <div>
+                type: {task.type}
+              </div>
             </>
           }
           </>
