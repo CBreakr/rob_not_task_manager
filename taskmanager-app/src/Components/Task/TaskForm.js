@@ -97,14 +97,12 @@ class TaskForm extends React.Component {
     task.size = this.state.size;
     task.type = this.state.type;
 
-    const d = Date.parse(this.state.dueDate);
-    console.log("date parse", {d});
-    if(isNaN(d)){
+    if(this.state.dueDate && isNaN(Date.parse(this.state.dueDate))){
       alert("invalid date");
       return;
     }
     else{
-      task.dueDate = d;
+      task.dueDate = this.state.dueDate;
     }
 
 
