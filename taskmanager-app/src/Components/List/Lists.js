@@ -17,7 +17,6 @@ class Lists extends React.Component {
 
     return (
       <div>
-        Lists:
         <ul>
         {
           lists.map(list => {
