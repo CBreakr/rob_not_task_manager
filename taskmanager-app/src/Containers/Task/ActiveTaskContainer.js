@@ -7,9 +7,12 @@ import ActiveTask from "../../Components/Task/ActiveTask";
 
 const mapStateToProps = (state) => {
   const props = {};
-  if(state.currentTask){
-    props.task = {...state.currentTask};
-  }
+
+  // console.log("current task selected?", {state});
+  //
+  // if(state.currentTask){
+  //   props.task = {...state.currentTask};
+  // }
   return props;
 }
 

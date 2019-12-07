@@ -126,6 +126,13 @@ input[type="button"], input[type="submit"] {
   transition: 0.3s
 }
 
+.task_element_active {
+  border-color: $text-color-hover;
+  color: $text-color-hover;
+  cursor: default;
+  background-color: $task-background-hover;
+}
+
 .task_element:hover {
   background-color: $task-background-hover;
 }

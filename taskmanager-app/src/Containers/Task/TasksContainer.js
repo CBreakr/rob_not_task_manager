@@ -8,13 +8,18 @@ import Tasks from "../../Components/Task/Tasks";
 const mapStateToProps = (state) => {
   const props = {
     list: null,
-    tasks: null
+    tasks: null,
+    currentTask: null
   }
 
   if(state.currentList) {
     props.list = state.currentList;
     if(state.tasks){
       props.tasks = [...state.tasks];
+    }
+
+    if(state.currentTask) {
+      props.currentTask = {...state.currentTask};
     }
   }
 

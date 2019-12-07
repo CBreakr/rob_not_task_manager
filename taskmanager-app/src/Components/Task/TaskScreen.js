@@ -7,6 +7,8 @@ import AddNewTask from "./AddNewTask";
 import Tasks from "../../Containers/Task/TasksContainer";
 import ActiveTask from "../../Containers/Task/ActiveTaskContainer";
 
+// <ActiveTask />
+
 class TaskScreen extends React.Component {
   render() {
     return(
@@ -14,7 +16,7 @@ class TaskScreen extends React.Component {
         <h2>Tasks:</h2>
         <AddNewTask />
         <Tasks />
-        <ActiveTask />
+
       </div>
     );
   }
