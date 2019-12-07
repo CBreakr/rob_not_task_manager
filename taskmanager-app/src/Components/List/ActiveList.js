@@ -2,7 +2,6 @@
 import React from "react";
 
 import ListForm from "../../Containers/List/ListFormContainer";
-import TaskScreen from "../../Containers/Task/TaskScreenContainer";
 
 class ActiveList extends React.Component {
 
@@ -86,7 +85,6 @@ class ActiveList extends React.Component {
               </div>
               <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
               <input type="button" className="reject_button" value="delete" onClick={this.deleteList} />
-              <TaskScreen />
             </>
           }
           </>

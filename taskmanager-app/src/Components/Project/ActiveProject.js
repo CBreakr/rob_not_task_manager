@@ -2,7 +2,6 @@
 import React from "react";
 
 import ProjectForm from "../../Containers/Project/ProjectFormContainer";
-import ListScreen from "../../Containers/List/ListScreenContainer";
 
 class ActiveProject extends React.Component {
 
@@ -86,7 +85,6 @@ class ActiveProject extends React.Component {
               </div>
               <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
               <input type="button" className="reject_button" value="delete" onClick={this.deleteProject} />
-              <ListScreen />
             </>
           }
           </>

@@ -5,9 +5,11 @@
   text-align: center;
   color: $text-color;
 
+/*
   display: flex;
   flex-direction: column;
   align-items: center;
+*/
 }
 
 * {
@@ -67,6 +69,14 @@ li:hover {
   border-color: $text-color-hover;
 }
 
+/* MAIN STRUCTURE */
+
+.main {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 /* LOGOUT */
 .logout_form {
   background-color: black;
@@ -74,7 +84,7 @@ li:hover {
 
 /* PROJECT */
 .project_screen {
-  width: 60vw;
+  // width: 60vw;
   background-color: $project-container-background;
   margin: 8px 0;
 }
@@ -90,7 +100,7 @@ li:hover {
 
 /* LIST */
 .list_screen {
-  width: 60vw;
+  // width: 60vw;
   background-color: $list-container-background;
   margin: 8px 0;
 }
@@ -106,7 +116,7 @@ li:hover {
 
 /* TASK */
 .task_screen {
-  width: 60vw;
+  // width: 60vw;
   background-color: $task-container-background;
   margin: 8px 0;
 }
