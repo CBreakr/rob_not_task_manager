@@ -40,7 +40,7 @@ class LoginForm extends React.Component {
           <br />
           <input type="password" name="password" placeholder="password" onChange={this.updateInput} />
           <br />
-          <input type="submit" value="Login" />
+          <input type="submit" className="confirm_button" value="Login" />
         </form>
       </div>
     );

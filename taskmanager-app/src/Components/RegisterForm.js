@@ -39,7 +39,7 @@ class RegisterForm extends React.Component {
           <br />
           <input type="password" name="password" placeholder="password" onChange={this.updateInput} />
           <br />
-          <input type="submit" value="register" />
+          <input type="submit" className="confirm_button" value="register" />
         </form>
       </div>
     );

@@ -4,12 +4,10 @@
 .App {
   text-align: center;
   color: $text-color;
+}
 
-/*
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-*/
+body {
+  background-color: black;
 }
 
 * {
@@ -40,7 +38,7 @@ li:hover {
 
 /* BUTTONS */
 
-input[type="button"] {
+input[type="button"], input[type="submit"] {
   padding: 4px;
   margin: 4px;
   transition: 0.3s;
@@ -81,7 +79,7 @@ input[type="button"] {
 
 /* LOGOUT */
 .logout_form {
-  background-color: black;
+  margin-top: 8px;
 }
 
 /* PROJECT */
