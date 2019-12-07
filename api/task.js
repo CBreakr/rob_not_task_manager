@@ -24,7 +24,7 @@ router.get("/bylist/:id", (req, res, next) => {
       if(user.listAccess.find(access => access._id == listId)){
         // get the lists
         // then also check the lists against the user's access
-        TaskModel.find({parentList:listId}, (err, tasks) => {
+        TaskModel.find({parentList:listId}, null, {sort: {status:-1}}, (err, tasks) => {
           if(err){
             return next(err);
           }
