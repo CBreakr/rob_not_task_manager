@@ -44,7 +44,7 @@ class AddNewList extends React.Component {
             submitText="Add" />
         :
         <div>
-          <input type="button" value="Add New List" onClick={this.setEdit} />
+          <input type="button" className="confirm_button" value="Add New List" onClick={this.setEdit} />
         </div>
       }
       </>

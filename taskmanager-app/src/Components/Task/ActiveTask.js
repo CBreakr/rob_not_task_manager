@@ -81,8 +81,8 @@ class ActiveTask extends React.Component {
                 {task.taskname}
               </div>
               <div>
-                <input type="button" value="edit" onClick={this.setEdit} />
-                <input type="button" value="delete" onClick={this.deleteTask} />
+                <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
+                <input type="button" className="reject_button" value="delete" onClick={this.deleteTask} />
               </div>
               <div>
                 {task.description}

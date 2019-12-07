@@ -17,12 +17,11 @@ class Tasks extends React.Component {
 
     return (
       <div>
-        Tasks:
         <ul>
         {
           tasks.map(task => {
             return (
-              <li key={task._id} taskid={task._id} onClick={this.selectTask}>{task.taskname} ({task.status}, {task.priority})</li>
+              <li className="task_element" key={task._id} taskid={task._id} onClick={this.selectTask}>{task.taskname} ({task.status}, {task.priority})</li>
             );
           })
         }

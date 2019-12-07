@@ -22,7 +22,7 @@ class Lists extends React.Component {
         {
           lists.map(list => {
             return (
-              <li key={list._id} listid={list._id} onClick={this.selectList}>{list.listname}</li>
+              <li className="list_element" key={list._id} listid={list._id} onClick={this.selectList}>{list.listname}</li>
             );
           })
         }

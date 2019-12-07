@@ -11,6 +11,7 @@ class ProjectScreen extends React.Component {
   render() {
     return (
       <div className="project_screen">
+        <h2>Projects:</h2>
         <AddNewProject />
         <Projects />
         <ActiveProject />

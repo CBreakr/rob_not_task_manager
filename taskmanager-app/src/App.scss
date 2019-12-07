@@ -3,8 +3,104 @@
 
 .App {
   text-align: center;
+  color: $text-color;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-body {
-  background-color: $test-color;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+li {
+  border: 1px solid $text-color;
+  list-style: none;
+}
+
+li:hover {
+  border-color: $text-color-hover;
+  color: $text-color-hover;
+}
+
+/* BUTTONS */
+.confirm_button {
+  background-color: $confirm-button-color;
+  color: $text-color;
+  border: 1px solid $text-color;
+  padding: 4px;
+  margin: 4px;
+  transition: 0.3s;
+}
+
+.confirm_button:hover {
+  background-color: $confirm-button-color-hover;
+  color: $text-color-hover;
+  border-color: $text-color-hover;
+}
+
+.reject_button {
+  background-color: $reject-button-color;
+  color: $text-color;
+  border: 1px solid $text-color;
+  padding: 4px;
+  margin: 4px;
+  transition: 0.3s;
+}
+
+.reject_button:hover {
+  background-color: $reject-button-color-hover;
+  color: $text-color-hover;
+  border-color: $text-color-hover;
+}
+
+/* PROJECT */
+.project_screen {
+  width: 60vw;
+  background-color: $project-container-background;
+  margin: 8px 0;
+}
+
+.project_element {
+  background-color: $project-background;
+  transition: 0.3s;
+}
+
+.project_element:hover {
+  background-color: $project-background-hover;
+}
+
+/* LIST */
+.list_screen {
+  width: 60vw;
+  background-color: $list-container-background;
+  margin: 8px 0;
+}
+
+.list_element {
+  background-color: $list-background;
+  transition: 0.3s;
+}
+
+.list_element:hover {
+  background-color: $list-background-hover;
+}
+
+/* TASK */
+.task_screen {
+  width: 60vw;
+  background-color: $task-container-background;
+  margin: 8px 0;
+}
+
+.task_element {
+  background-color: $task-background;
+  transition: 0.3s
+}
+
+.task_element:hover {
+  background-color: $task-background-hover;
 }

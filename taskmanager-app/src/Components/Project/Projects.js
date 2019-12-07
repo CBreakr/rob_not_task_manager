@@ -16,13 +16,12 @@ class Projects extends React.Component {
     }
 
     return (
-      <div>
-        Projects:
+      <div>        
         <ul>
         {
           projects.map(project => {
             return (
-              <li key={project._id} projectid={project._id} onClick={this.selectProject}>{project.projectname}</li>
+              <li className="project_element" key={project._id} projectid={project._id} onClick={this.selectProject}>{project.projectname}</li>
             );
           })
         }

@@ -84,8 +84,8 @@ class ActiveProject extends React.Component {
               <div>
                 {project.description}
               </div>
-              <input type="button" value="edit" onClick={this.setEdit} />
-              <input type="button" value="delete" onClick={this.deleteProject} />
+              <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
+              <input type="button" className="reject_button" value="delete" onClick={this.deleteProject} />
               <ListScreen />
             </>
           }

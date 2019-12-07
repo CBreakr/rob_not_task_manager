@@ -187,8 +187,8 @@ class TaskForm extends React.Component {
           <br />
           <input type="text" name="dueDate" placeholder="due date" value={dueDate} onChange={this.updateInput} />
           <br />
-          <input type="submit" value={this.props.submitText} />
-          <input type="button" value="Cancel" onClick={this.onCancel} />
+          <input type="submit" className="confirm_button" value={this.props.submitText} />
+          <input type="button" className="reject_button" value="Cancel" onClick={this.onCancel} />
         </form>
       </div>
     );

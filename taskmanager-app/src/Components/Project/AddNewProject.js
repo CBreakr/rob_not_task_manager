@@ -45,7 +45,7 @@ class AddNewProject extends React.Component {
             submitText="Add" />
         :
         <div>
-          <input type="button" value="Add New Project" onClick={this.setEdit} />
+          <input type="button" className="confirm_button" value="Add New Project" onClick={this.setEdit} />
         </div>
       }
       </>
