@@ -34,6 +34,7 @@ const rootReducer = (state = initialState, action) => {
       newState.projects = action.projects;
       // if it's null, then this will be undefined
       newState.currentProject = newState.projects.find(project => project._id == action.projectId);
+      newState.lists = null;
       newState.currentList = null;
       newState.currentTask = null;
       break;
@@ -45,6 +46,7 @@ const rootReducer = (state = initialState, action) => {
     case ReducerActionTypes.RECEIVE_LISTS:
       newState.lists = action.lists;
       newState.currentList = newState.lists.find(list => list._id == action.listId);
+      newState.tasks = null;
       newState.currentTask = null;
       break;
     case ReducerActionTypes.SET_CURRENT_LIST:
