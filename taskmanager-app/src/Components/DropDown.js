@@ -7,7 +7,7 @@ class DropDown extends React.Component {
       <select name={this.props.name} onChange={this.props.updateInput}>
       {
         this.props.valueList.map(value => {
-          if(value === this.props.currentValue){
+          if(value == this.props.currentValue){
             return <option key={value} selected value={value}>{value}</option>
           }
           else{
