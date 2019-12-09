@@ -77,6 +77,11 @@ input[type="button"], input[type="submit"] {
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.active_element_title {
+  font-size: 18px;
+  font-weight: bold;
+}
+
 /* LOGOUT */
 .logout_form {
   margin-top: 8px;

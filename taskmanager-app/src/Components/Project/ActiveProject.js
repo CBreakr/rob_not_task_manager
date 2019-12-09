@@ -77,7 +77,7 @@ class ActiveProject extends React.Component {
                 submitText="Save" />
             :
             <>
-              <div>
+              <div className="active_element_title">
                 {project.projectname}
               </div>
               <div>

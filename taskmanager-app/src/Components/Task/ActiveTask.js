@@ -78,7 +78,7 @@ class ActiveTask extends React.Component {
                 submitText="Save" />
             :
             <>
-              <div>
+              <div className="active_element_title">
                 {task.taskname}
               </div>
               <div>

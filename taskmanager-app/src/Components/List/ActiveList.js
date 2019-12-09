@@ -77,7 +77,7 @@ class ActiveList extends React.Component {
                 submitText="Save" />
             :
             <>
-              <div>
+              <div className="active_element_title">
                 {list.listname}
               </div>
               <div>
