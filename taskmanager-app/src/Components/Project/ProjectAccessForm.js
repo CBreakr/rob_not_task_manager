@@ -86,7 +86,7 @@ class ProjectAccessForm extends React.Component {
         <form onSubmit={this.findUserByEmail}>
           <input type="text" name="userEmail" value={userEmail} placeholder="email to find" onChange={this.updateInput} />
           <br />
-          <input type="submit" value="Find User" />
+          <input type="submit" className="access_button" value="Find User" />
         </form>
         {
           foundUser
@@ -99,7 +99,7 @@ class ProjectAccessForm extends React.Component {
                 updateInput={this.updateInput}
               />
               <br />
-              <input type="submit" value="Set Access" />
+              <input type="submit" className="access_button" value="Set Access" />
             </form>
           : <></>
         }

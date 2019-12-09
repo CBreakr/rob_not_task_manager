@@ -73,6 +73,18 @@ input[type="button"], input[type="submit"] {
   border-color: $text-color-hover;
 }
 
+.access_button {
+  background-color: $text-color-hover;
+  color: $text-color;
+  border: 1px solid $text-color;
+}
+
+.access_button:hover {
+  background-color: $text-color;
+  color: $text-color-hover;
+  border-color: $text-color-hover;
+}
+
 /* MAIN STRUCTURE */
 
 .header {
