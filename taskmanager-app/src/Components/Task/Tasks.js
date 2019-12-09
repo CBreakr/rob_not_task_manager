@@ -26,7 +26,7 @@ class Tasks extends React.Component {
     }
 
     return (
-      <div>
+      <div className="task_container">
         <ul>
         {
           tasks.map(task => {

@@ -30,6 +30,10 @@ li {
   padding: 2px 0 4px;
 }
 
+.task_container li {
+  width: 40vw;
+}
+
 li:hover {
   border-color: $text-color-hover;
   color: $text-color-hover;
@@ -79,7 +83,7 @@ input[type="button"], input[type="submit"] {
   height: 93vh;
   display: grid;
 
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 2fr;
 }
 
 .active_element_title {
@@ -89,6 +93,7 @@ input[type="button"], input[type="submit"] {
 
 /* LOGOUT */
 .logout_form {
+  display: inline-block;
   padding: 1vh 0;
 }
 
@@ -98,7 +103,9 @@ input[type="button"], input[type="submit"] {
   background-color: $project-container-background;
   // margin: 8px 0;
   padding: 8px;
+}
 
+.project_container {
   overflow:auto;
 }
 
@@ -124,7 +131,9 @@ input[type="button"], input[type="submit"] {
   background-color: $list-container-background;
   // margin: 8px 0;
   padding: 8px;
+}
 
+.list_container {
   overflow:auto;
 }
 
@@ -150,7 +159,10 @@ input[type="button"], input[type="submit"] {
   background-color: $task-container-background;
   // margin: 8px 0;
   padding: 8px;
+}
 
+.task_container {
+  height: 80vh;
   overflow:auto;
 }
 

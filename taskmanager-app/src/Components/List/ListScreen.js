@@ -10,8 +10,10 @@ class ListScreen extends React.Component {
   render() {
     return(
       <div className="list_screen">
-        <h2>Lists</h2>
-        <AddNewList />
+        <div className="list_header">
+          <h2>Lists</h2>
+          <AddNewList />
+        </div>
         <Lists />
       </div>
     );

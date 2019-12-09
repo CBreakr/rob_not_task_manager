@@ -24,7 +24,7 @@ class Lists extends React.Component {
     }
 
     return (
-      <div>
+      <div className="list_container">
         <ul>
         {
           lists.map(list => {
