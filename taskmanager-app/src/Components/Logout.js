@@ -9,12 +9,12 @@ class Logout extends React.Component {
 
   render(){
     return (
-      <div className="logout_form">
+      <span className="logout_form">
         <span>
           {this.props.email}
         </span>
         <input type="button" className="reject_button" value="Logout" onClick={this.logout} />
-      </div>
+      </span>
     )
   }
 }

@@ -77,6 +77,10 @@ input[type="button"], input[type="submit"] {
 
 .header {
   height: 7vh;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
 }
 
 .main {
@@ -88,6 +92,10 @@ input[type="button"], input[type="submit"] {
 
 .active_element_title {
   font-size: 18px;
+  font-weight: bold;
+}
+
+.app_title {
   font-weight: bold;
 }
 

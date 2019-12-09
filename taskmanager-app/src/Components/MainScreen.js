@@ -23,6 +23,7 @@ class MainScreen extends React.Component {
           user
           ? <>
               <div className="header">
+                <span class="app_title">Rob Not To Do</span>
                 <Logout />
               </div>
               <div className="main">
