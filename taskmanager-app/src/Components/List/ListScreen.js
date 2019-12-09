@@ -5,7 +5,6 @@ import React from "react";
 // <ListForm submitText="Add" />
 import AddNewList from "./AddNewList";
 import Lists from "../../Containers/List/ListsContainer";
-import ActiveList from "../../Containers/List/ActiveListContainer";
 
 class ListScreen extends React.Component {
   render() {
@@ -14,7 +13,6 @@ class ListScreen extends React.Component {
         <h2>Lists:</h2>
         <AddNewList />
         <Lists />
-        <ActiveList />
       </div>
     );
   }

@@ -8,13 +8,18 @@ import Lists from "../../Components/List/Lists";
 const mapStateToProps = (state) => {
   const props = {
     project: null,
-    lists: null
+    lists: null,
+    currentList: null
   }
 
   if(state.currentProject) {
     props.project = state.currentProject;
     if(state.lists){
       props.lists = [...state.lists];
+    }
+
+    if(state.currentList) {
+      props.currentList = {...state.currentList};
     }
   }
 

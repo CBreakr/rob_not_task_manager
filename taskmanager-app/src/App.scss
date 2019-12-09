@@ -124,6 +124,13 @@ input[type="button"], input[type="submit"] {
   transition: 0.3s;
 }
 
+.list_element_active {
+  border-color: $text-color-hover;
+  color: $text-color-hover;
+  cursor: default;
+  background-color: $list-background-hover;
+}
+
 .list_element:hover {
   background-color: $list-background-hover;
 }
