@@ -16,7 +16,6 @@ class TaskScreen extends React.Component {
         <h2>Tasks:</h2>
         <AddNewTask />
         <Tasks />
-
       </div>
     );
   }
