@@ -51,6 +51,7 @@ class ActiveTask extends React.Component {
   deleteTask = () => {
     const proceed = window.confirm(`Are you sure you want to PERMANENTLY DELETE list ${this.props.task.taskname}`);
     if(proceed){
+      console.log("props", {props:this.props});
       this.props.deleteTask(this.props.task);
     }
   }

@@ -1,7 +1,7 @@
 
 import React from "react";
 
-import ActiveTask from "./ActiveTask";
+import ActiveTask from "../../Containers/Task/ActiveTaskContainer";
 
 class Tasks extends React.Component {
 
