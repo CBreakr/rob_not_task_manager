@@ -100,6 +100,13 @@ input[type="button"], input[type="submit"] {
   transition: 0.3s;
 }
 
+.project_element_active {
+  border-color: $text-color-hover;
+  color: $text-color-hover;
+  cursor: default;
+  background-color: $project-background-hover;
+}
+
 .project_element:hover {
   background-color: $project-background-hover;
 }

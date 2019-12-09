@@ -8,13 +8,18 @@ import Projects from "../../Components/Project/Projects";
 const mapStateToProps = (state) => {
   const props = {
     user: null,
-    projects: null
+    projects: null,
+    currentProject: null
   }
 
   if(state.currentUser) {
     props.user = state.currentUser;
     if(state.projects){
       props.projects = [...state.projects];
+    }
+
+    if(state.currentProject) {
+      props.currentProject = {...state.currentProject};
     }
   }
 

@@ -14,7 +14,6 @@ class ProjectScreen extends React.Component {
         <h2>Projects:</h2>
         <AddNewProject />
         <Projects />
-        <ActiveProject />
       </div>
     );
   }

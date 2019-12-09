@@ -7,9 +7,9 @@ import ActiveProject from "../../Components/Project/ActiveProject";
 
 const mapStateToProps = (state) => {
   const props = {};
-  if(state.currentProject){
-    props.project = {...state.currentProject};
-  }
+  // if(state.currentProject){
+  //   props.project = {...state.currentProject};
+  // }
   return props;
 };
 

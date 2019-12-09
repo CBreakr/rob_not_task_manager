@@ -1,6 +1,8 @@
 
 import React from "react";
 
+import ActiveProject from "../../Containers/Project/ActiveProjectContainer";
+
 class Projects extends React.Component {
 
   selectProject = (evt) => {
@@ -11,17 +13,40 @@ class Projects extends React.Component {
   render(){
 
     let projects = [];
+    let currentProject = null;
+
     if(this.props.projects){
       projects = this.props.projects;
     }
 
+    if(this.props.currentProject){
+      currentProject = this.props.currentProject;
+    }
+
     return (
-      <div>        
+      <div>
         <ul>
         {
           projects.map(project => {
             return (
-              <li className="project_element" key={project._id} projectid={project._id} onClick={this.selectProject}>{project.projectname}</li>
+              <>
+                {
+                  currentProject && currentProject._id == project._id
+                  ?
+                  <li className="project_element_active"
+                    key={project._id}
+                    projectid={project._id}>
+                    <ActiveProject project={currentProject} />
+                  </li>
+                  :
+                  <li className="project_element"
+                    key={project._id}
+                    projectid={project._id}
+                    onClick={this.selectProject}>
+                    {project.projectname}
+                  </li>
+                }
+              </>
             );
           })
         }
