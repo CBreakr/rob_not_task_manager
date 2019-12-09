@@ -10,7 +10,7 @@ class ListScreen extends React.Component {
   render() {
     return(
       <div className="list_screen">
-        <h2>Lists:</h2>
+        <h2>Lists</h2>
         <AddNewList />
         <Lists />
       </div>

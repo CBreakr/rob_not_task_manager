@@ -13,7 +13,7 @@ class TaskScreen extends React.Component {
   render() {
     return(
       <div className="task_screen">
-        <h2>Tasks:</h2>
+        <h2>Tasks</h2>
         <AddNewTask />
         <Tasks />
       </div>

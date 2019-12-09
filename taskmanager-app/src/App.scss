@@ -71,7 +71,12 @@ input[type="button"], input[type="submit"] {
 
 /* MAIN STRUCTURE */
 
+.header {
+  height: 7vh;
+}
+
 .main {
+  height: 93vh;
   display: grid;
 
   grid-template-columns: 1fr 1fr 1fr;
@@ -84,15 +89,17 @@ input[type="button"], input[type="submit"] {
 
 /* LOGOUT */
 .logout_form {
-  margin-top: 8px;
+  padding: 1vh 0;
 }
 
 /* PROJECT */
 .project_screen {
   // width: 60vw;
   background-color: $project-container-background;
-  margin: 8px 0;
+  // margin: 8px 0;
   padding: 8px;
+
+  overflow:auto;
 }
 
 .project_element {
@@ -115,8 +122,10 @@ input[type="button"], input[type="submit"] {
 .list_screen {
   // width: 60vw;
   background-color: $list-container-background;
-  margin: 8px 0;
+  // margin: 8px 0;
   padding: 8px;
+
+  overflow:auto;
 }
 
 .list_element {
@@ -139,8 +148,10 @@ input[type="button"], input[type="submit"] {
 .task_screen {
   // width: 60vw;
   background-color: $task-container-background;
-  margin: 8px 0;
+  // margin: 8px 0;
   padding: 8px;
+
+  overflow:auto;
 }
 
 .task_element {
