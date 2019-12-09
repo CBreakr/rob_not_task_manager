@@ -36,10 +36,12 @@ class LoginForm extends React.Component {
     return (
       <div className="login_form">
         <form onSubmit={this.login}>
-          <input type="text" name="email" placeholder="email" onChange={this.updateInput} />
-          <br />
-          <input type="password" name="password" placeholder="password" onChange={this.updateInput} />
-          <br />
+          <div>
+            <input type="text" name="email" placeholder="email" onChange={this.updateInput} />
+          </div>
+          <div>
+            <input type="password" name="password" placeholder="password" onChange={this.updateInput} />
+          </div>
           <input type="submit" className="confirm_button" value="Login" />
         </form>
       </div>

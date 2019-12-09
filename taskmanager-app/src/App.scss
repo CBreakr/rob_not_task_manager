@@ -1,7 +1,7 @@
 
 @import "./variables.scss";
 
-.App {
+.appScreen {
   text-align: center;
   color: $text-color;
 }
@@ -14,75 +14,6 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-
-ul {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-li {
-  border: 1px solid $text-color;
-  list-style: none;
-  margin: 4px 0;
-  width: 20vw;
-  padding: 2px 0 4px;
-}
-
-.task_container li {
-  width: 40vw;
-}
-
-li:hover {
-  border-color: $text-color-hover;
-  color: $text-color-hover;
-  cursor: default;
-}
-
-/* BUTTONS */
-
-input[type="button"], input[type="submit"] {
-  padding: 4px;
-  margin: 4px;
-  transition: 0.3s;
-  text-transform: uppercase;
-}
-
-.confirm_button {
-  background-color: $confirm-button-color;
-  color: $text-color;
-  border: 1px solid $text-color;
-}
-
-.confirm_button:hover {
-  background-color: $confirm-button-color-hover;
-  color: $text-color-hover;
-  border-color: $text-color-hover;
-}
-
-.reject_button {
-  background-color: $reject-button-color;
-  color: $text-color;
-  border: 1px solid $text-color;
-}
-
-.reject_button:hover {
-  background-color: $reject-button-color-hover;
-  color: $text-color-hover;
-  border-color: $text-color-hover;
-}
-
-.access_button {
-  background-color: $text-color-hover;
-  color: $text-color;
-  border: 1px solid $text-color;
-}
-
-.access_button:hover {
-  background-color: $text-color;
-  color: $text-color-hover;
-  border-color: $text-color-hover;
 }
 
 /* MAIN STRUCTURE */
@@ -200,4 +131,114 @@ input[type="button"], input[type="submit"] {
 
 .task_element:hover {
   background-color: $task-background-hover;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+li {
+  border: 1px solid $text-color;
+  list-style: none;
+  margin: 4px 0;
+  width: 20vw;
+  padding: 2px 0 4px;
+}
+
+.task_container li {
+  width: 40vw;
+}
+
+li:hover {
+  border-color: $text-color-hover;
+  color: $text-color-hover;
+  cursor: default;
+}
+
+/* BUTTONS */
+
+input[type="button"], input[type="submit"] {
+  padding: 4px;
+  margin: 4px;
+  transition: 0.3s;
+  text-transform: uppercase;
+}
+
+.confirm_button {
+  background-color: $confirm-button-color;
+  color: $text-color;
+  border: 1px solid $text-color;
+}
+
+.confirm_button:hover {
+  background-color: $confirm-button-color-hover;
+  color: $text-color-hover;
+  border-color: $text-color-hover;
+}
+
+.reject_button {
+  background-color: $reject-button-color;
+  color: $text-color;
+  border: 1px solid $text-color;
+}
+
+.reject_button:hover {
+  background-color: $reject-button-color-hover;
+  color: $text-color-hover;
+  border-color: $text-color-hover;
+}
+
+.access_button {
+  background-color: $text-color-hover;
+  color: $text-color;
+  border: 1px solid $text-color;
+}
+
+.access_button:hover {
+  background-color: $text-color;
+  color: $text-color-hover;
+  border-color: $text-color-hover;
+}
+
+/* FORMS */
+
+form {
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="text"], input[type="password"], textarea {
+  width: 100%;
+}
+
+.dateInput {
+  width: 25%;
+}
+
+textarea {
+  height: 10vh;
+}
+
+form div {
+  width: 80%;
+  margin: 2px 0;
+  text-align: left;
+}
+
+select {
+  width: 100%;
+}
+
+.splitInputDiv {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.login_form, .register_form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }

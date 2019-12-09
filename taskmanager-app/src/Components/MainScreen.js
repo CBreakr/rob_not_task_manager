@@ -18,7 +18,7 @@ class MainScreen extends React.Component {
     const user = this.props.currentUser;
 
     return (
-      <div>
+      <div className="appScreen">
         {
           user
           ? <>

@@ -81,12 +81,16 @@ class ListForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.upsertList}>
-          <input type="text" name="listname" placeholder="name" value={listname} onChange={this.updateInput} />
-          <br />
-          <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
-          <br />
-          <input type="submit" className="confirm_button" value={this.props.submitText} />
-          <input type="button" className="reject_button" value="Cancel" onClick={this.onCancel} />
+          <div>
+            <input type="text" name="listname" placeholder="name" value={listname} onChange={this.updateInput} />
+          </div>
+          <div>
+            <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
+          </div>
+          <span>
+            <input type="submit" className="confirm_button" value={this.props.submitText} />
+            <input type="button" className="reject_button" value="Cancel" onClick={this.onCancel} />
+          </span>
         </form>
       </div>
     );

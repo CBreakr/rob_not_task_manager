@@ -84,21 +84,23 @@ class ProjectAccessForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.findUserByEmail}>
-          <input type="text" name="userEmail" value={userEmail} placeholder="email to find" onChange={this.updateInput} />
-          <br />
+          <div>
+            <input type="text" name="userEmail" value={userEmail} placeholder="email to find" onChange={this.updateInput} />
+          </div>
           <input type="submit" className="access_button" value="Find User" />
         </form>
         {
           foundUser
           ? <form onSubmit={this.setUserAccess}>
-              Access Level:
-              <DropDown
-                name="accessLevel"
-                valueList={accessLevelList}
-                currentValue={accessLevel}
-                updateInput={this.updateInput}
-              />
-              <br />
+              <div>
+                Access Level:
+                <DropDown
+                  name="accessLevel"
+                  valueList={accessLevelList}
+                  currentValue={accessLevel}
+                  updateInput={this.updateInput}
+                />
+              </div>
               <input type="submit" className="access_button" value="Set Access" />
             </form>
           : <></>

@@ -149,46 +149,64 @@ class TaskForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.upsertTask}>
-          <input type="text" name="taskname" placeholder="name" value={taskname} onChange={this.updateInput} />
-          <br />
-          <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
-          <br />
-          Status:
-          <DropDown
-            name="status"
-            valueList={statusList}
-            currentValue={status}
-            updateInput={this.updateInput}
-          />
-          <br />
-          Priority:
-          <DropDown
-            name="priority"
-            valueList={priorityList}
-            currentValue={priority}
-            updateInput={this.updateInput}
-          />
-          <br />
-          Size:
-          <DropDown
-            name="size"
-            valueList={sizeList}
-            currentValue={size}
-            updateInput={this.updateInput}
-          />
-          <br />
-          Type:
-          <DropDown
-            name="type"
-            valueList={typeList}
-            currentValue={type}
-            updateInput={this.updateInput}
-          />
-          <br />
-          <input type="text" name="dueDate" placeholder="due date" value={dueDate} onChange={this.updateInput} />
-          <br />
-          <input type="submit" className="confirm_button" value={this.props.submitText} />
-          <input type="button" className="reject_button" value="Cancel" onClick={this.onCancel} />
+          <div>
+            <input type="text" name="taskname" placeholder="name" value={taskname} onChange={this.updateInput} />
+          </div>
+          <div>
+            <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
+          </div>
+          <div className="splitInputDiv">
+            <span>
+              Status:
+            </span>
+            <DropDown
+              name="status"
+              valueList={statusList}
+              currentValue={status}
+              updateInput={this.updateInput}
+            />
+          </div>
+          <div className="splitInputDiv">
+            <span>
+              Priority:
+            </span>
+            <DropDown
+              name="priority"
+              valueList={priorityList}
+              currentValue={priority}
+              updateInput={this.updateInput}
+            />
+          </div>
+          <div class="splitInputDiv">
+            <span>
+              Type:
+            </span>
+            <DropDown
+              name="type"
+              valueList={typeList}
+              currentValue={type}
+              updateInput={this.updateInput}
+            />
+          </div>
+          <div class="splitInputDiv">
+            <span>
+              Size:
+            </span>
+            <DropDown
+              name="size"
+              valueList={sizeList}
+              currentValue={size}
+              updateInput={this.updateInput}
+            />
+          </div>
+          <div className="splitInputDiv">
+            Due Date:
+            <input type="text" className="dateInput" name="dueDate" value={dueDate} onChange={this.updateInput} />
+          </div>
+          <span>
+            <input type="submit" className="confirm_button" value={this.props.submitText} />
+            <input type="button" className="reject_button" value="Cancel" onClick={this.onCancel} />
+          </span>
         </form>
       </div>
     );
