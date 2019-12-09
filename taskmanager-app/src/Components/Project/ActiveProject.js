@@ -2,6 +2,7 @@
 import React from "react";
 
 import ProjectForm from "../../Containers/Project/ProjectFormContainer";
+import ProjectAccessForm from "../../Containers/Project/ProjectAccessFormContainer";
 
 class ActiveProject extends React.Component {
 
@@ -9,7 +10,8 @@ class ActiveProject extends React.Component {
     super();
     this.state = {
       projectId: null,
-      editMode: false
+      editMode: false,
+      accessMode: false
     };
   }
 
@@ -17,7 +19,8 @@ class ActiveProject extends React.Component {
     if(nextProps && nextProps.project && nextProps.project._id != prevState.projectId){
       return {
         projectId: nextProps.project._id,
-        editMode: false
+        editMode: false,
+        accessMode: false
       };
     }
     else {
@@ -29,7 +32,8 @@ class ActiveProject extends React.Component {
     console.log("SCREEN set edit");
     this.setState({
       ...this.state,
-      editMode:true
+      editMode:true,
+      accessMode:false
     });
   }
 
@@ -37,14 +41,16 @@ class ActiveProject extends React.Component {
     console.log("on cancel");
     this.setState({
       ...this.state,
-      editMode:false
+      editMode:false,
+      accessMode:false
     });
   }
 
   onComplete = () => {
     this.setState({
       ...this.state,
-      editMode:false
+      editMode:false,
+      accessMode:false
     });
   }
 
@@ -53,6 +59,14 @@ class ActiveProject extends React.Component {
     if(proceed){
       this.props.deleteProject(this.props.project._id);
     }
+  }
+
+  setAccess = () => {
+    this.setState({
+      ...this.state,
+      editMode:false,
+      accessMode:true
+    });
   }
 
   render() {
@@ -83,8 +97,19 @@ class ActiveProject extends React.Component {
               <div>
                 {project.description}
               </div>
-              <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
-              <input type="button" className="reject_button" value="delete" onClick={this.deleteProject} />
+              {
+                project.isAdminAccess || project.isUseAccess
+                ? <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
+                : <></>
+              }
+              {
+                project.isAdminAccess
+                ? <>
+                  <input type="button" className="reject_button" value="delete" onClick={this.deleteProject} />
+                  <input type="button" className="access_button" value="Access" onClick={this.setAccess} />
+                 </>
+                : <></>
+              }
             </>
           }
           </>
@@ -92,6 +117,11 @@ class ActiveProject extends React.Component {
           <div>
             No Project Selected Yet
           </div>
+        }
+        {
+          this.state.accessMode
+          ? <ProjectAccessForm />
+          : <></>
         }
       </div>
     );

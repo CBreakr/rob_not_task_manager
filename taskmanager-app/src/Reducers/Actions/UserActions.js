@@ -56,6 +56,39 @@ const DispatchActions = {
       dispatch({type:ActionTypes.LOGOUT_USER});
     })
     .catch(err => console.log("error on logout", {err}));
+  },
+  findUserByEmail: (dispatch, userEmail, callback) => {
+    console.log("let's find the user by email", {userEmail});
+    fetch("/api/user/finduserbyemail", {
+      method:"POST",
+      headers,
+      body: JSON.stringify({userEmail})
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("what did we find?", {data});
+      if(callback && typeof callback === "function"){
+        callback(data.user);
+      }
+    })
+    .catch(err => console.log("error finding user", {err}));
+  },
+  setUserAccessForProject: (dispatch, currentProject, foundUser, accessLevel) => {
+    console.log("set the access level of the user for project");
+    const input = {currentProject, foundUser, accessLevel};
+
+    console.log(input);
+
+    fetch("/api/user/setuseraccess", {
+      method:"POST",
+      headers,
+      body: JSON.stringify(input)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log("set access result", {data});
+    })
+    .catch(err => console.log("error finding user", {err}));
   }
 };
 

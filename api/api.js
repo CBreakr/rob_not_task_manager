@@ -6,6 +6,7 @@ const register = require("./register");
 const project = require("./project");
 const list = require("./list");
 const task = require("./task");
+const userAccess = require("./userAccess");
 
 const router = express.Router();
 
@@ -20,5 +21,6 @@ router.use("/register", register);
 router.use("/project", project);
 router.use("/list", list);
 router.use("/task", task);
+router.use("/user", userAccess);
 
 module.exports = router;

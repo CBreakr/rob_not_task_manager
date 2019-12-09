@@ -20,8 +20,18 @@ router.get("/", (req, res, next) => {
     .populate("readProjectAccess")
     .exec()
     .then(user => {
-      console.log({admin: user.adminProjectAccess});
-      const allProjects = [...user.adminProjectAccess, ...user.useProjectAccess, ...user.readProjectAccess];
+      const adminProjects = user.adminProjectAccess.map(project => {
+        const jsProject = project.toObject();
+        jsProject.isAdminAccess = true;
+        return jsProject;
+      });
+      const useProjects = user.useProjectAccess.map(project => {
+        const jsProject = project.toObject();
+        jsProject.isUseAccess = true;
+        return jsProject;
+      });
+
+      const allProjects = [...adminProjects, ...useProjects, ...user.readProjectAccess];
       return res.json({projects: allProjects});
     })
     .catch(err => console.log("error: project GET, find user", {err}));

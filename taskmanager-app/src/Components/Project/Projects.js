@@ -17,6 +17,7 @@ class Projects extends React.Component {
 
     if(this.props.projects){
       projects = this.props.projects;
+      console.log({projects: this.props.project});
     }
 
     if(this.props.currentProject){
