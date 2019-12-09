@@ -14,11 +14,13 @@ module.exports = removeLists = (projectId, user, next) => {
       console.log("remove list", {list});
       list.deleteOne();
       // remove the listaccess here, too
+      /*
       user.listAccess = user.listAccess.filter(la => {
         // return la+"" !== list._id+"";
         return !(la+"" === list._id+"");
       });
       user.save();
+      */
       removeTasks(list._id, next);
     });
   });

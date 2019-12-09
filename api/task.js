@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 const TaskModel = require("../models/TaskModel");
+const ListModel = require("../models/ListModel");
 const UserModel = require("../models/UserModel");
 
 router.get("/:id", (req, res, next) => {
@@ -21,17 +22,29 @@ router.get("/bylist/:id", (req, res, next) => {
     UserModel.findById(req.user._id)
     .then(user => {
       // make sure the user has access
-      if(user.listAccess.find(access => access._id == listId)){
-        // get the lists
-        // then also check the lists against the user's access
-        TaskModel.find({parentList:listId}, null, {sort: {status:-1}}, (err, tasks) => {
-          if(err){
-            return next(err);
-          }
+      ListModel.findById(listId, (err, list) => {
+        if(err){
+          console.log("error finding list for tasks");
+          return next(err);
+        }
 
-          return res.json({tasks});
-        });
-      }
+        const allProjects = [...user.adminProjectAccess, ...user.useProjectAccess, ...user.readProjectAccess];
+
+        if(allProjects.find(access => access._id+"" == list.parentProject+"")){
+          // get the lists
+          // then also check the lists against the user's access
+          TaskModel.find({parentList:listId}, null, {sort: {status:-1}}, (err, tasks) => {
+            if(err){
+              return next(err);
+            }
+
+            return res.json({tasks});
+          });
+        }
+        else{
+          console.log("invalid user rights: TASK GET");
+        }
+      });
     })
     .catch(err => next(err));
   }
@@ -47,20 +60,27 @@ router.post("/", (req, res, next) => {
     UserModel.findById(req.user._id)
     .then(user => {
       console.log("we have a user for task entry");
-      if(user.listAccess.find(access => access._id == listId)){
-        console.log("user has access to this list for task entry", {task});
-        task.createdBy = user._id;
-        task.parentList = listId;
-        TaskModel.create(task, (err, entry) => {
-          if(err){
-            console.log("error on task creation", {err});
-            return next(err);
-          }
-          console.log("task created");
 
-          return res.json({newTask:entry});
-        })
-      }
+      ListModel.findById(listId, (err, list) => {
+        const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
+        if(projectAccess.find(access => access._id+"" == list.parentProject+"")){
+          console.log("user has access to this list for task entry", {task});
+          task.createdBy = user._id;
+          task.parentList = listId;
+          TaskModel.create(task, (err, entry) => {
+            if(err){
+              console.log("error on task creation", {err});
+              return next(err);
+            }
+            console.log("task created");
+
+            return res.json({newTask:entry});
+          })
+        }
+        else{
+          console.log("invalid user rights: TASK POST");
+        }
+      });
     })
   }
   else{
@@ -75,35 +95,41 @@ router.put("/", (req, res, next) => {
     UserModel.findById(req.user._id)
     .then(user => {
       // make sure the user has access
-      if(user.listAccess.find(access => access._id == task.parentList)){
-        TaskModel.findById(task._id, (err, entry) => {
-          if(err){
-            return next(err);
-          }
+      ListModel.findById(task.parentList, (err, list) => {
+        const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
+        if(projectAccess.find(access => access._id+"" == list.parentProject+"")){
+          TaskModel.findById(task._id, (err, entry) => {
+            if(err){
+              return next(err);
+            }
 
-          //
-          //
-          //
-          //
-          //
-          // fill in the Task values
-          //
-          //
-          //
-          //
-          //
-          entry.taskname = task.taskname;
-          entry.description = task.description;
-          entry.status = task.status;
-          entry.priority = task.priority;
-          entry.size = task.size;
-          entry.type = task.type;
-          entry.dueDate = task.dueDate;
-          entry.save();
+            //
+            //
+            //
+            //
+            //
+            // fill in the Task values
+            //
+            //
+            //
+            //
+            //
+            entry.taskname = task.taskname;
+            entry.description = task.description;
+            entry.status = task.status;
+            entry.priority = task.priority;
+            entry.size = task.size;
+            entry.type = task.type;
+            entry.dueDate = task.dueDate;
+            entry.save();
 
-          return res.json({message:"task updated"});
-        });
-      }
+            return res.json({message:"task updated"});
+          });
+        }
+        else{
+          console.log("invalid user rights: TASK PUT");
+        }
+      });
     })
     .catch(err => next(err));
   }
@@ -127,15 +153,17 @@ router.delete("/:id", (req, res, next) => {
 
         console.log("we have a task to delete");
 
-        // make sure the user has access
-        if(user.listAccess.find(access => access._id.equals(task.parentList))){
-          console.log("user has access to delete this task");
-          task.deleteOne();
-          return res.json({message:"deletion successful"});
-        }
-        else{
-          console.log("no user access to delete");
-        }
+        ListModel.findById(task.parentList, (err, list) => {
+          // make sure the user has access
+          if(user.adminProjectAccess.find(access => access._id.equals(list.parentProject))){
+            console.log("user has access to delete this task");
+            task.deleteOne();
+            return res.json({message:"deletion successful"});
+          }
+          else{
+            console.log("no user access to delete TASK");
+          }
+        });
       });
     })
     .catch(err => next(err));

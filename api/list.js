@@ -23,7 +23,9 @@ router.get("/byproject/:id", (req, res, next) => {
     UserModel.findById(req.user._id)
     .then(user => {
       // make sure the user has access
-      if(user.projectAccess.find(access => access._id == projectId)){
+
+      const allProjects = [...user.adminProjectAccess, ...user.useProjectAccess, ...user.readProjectAccess];
+      if(allProjects.find(access => access._id == projectId)){
         // get the lists
         // then also check the lists against the user's access
         ListModel.find({parentProject:projectId}, (err, lists) => {
@@ -31,13 +33,16 @@ router.get("/byproject/:id", (req, res, next) => {
             return next(err);
           }
 
+          /*
           const accessible = lists.filter(list => {
-            return user.listAccess.find(la => {
-              return la+"" === list._id+"";
+            return user.adminListAccess.find(ala => {
+              return ala+"" === list._id+"";
             });
           });
 
           return res.json({lists:accessible});
+          */
+          return res.json({lists});
         });
       }
     })
@@ -55,7 +60,8 @@ router.post("/", (req, res, next) => {
     UserModel.findById(req.user._id)
     .then(user => {
       console.log("we have a user for list entry");
-      if(user.projectAccess.find(access => access._id == projectId)){
+      const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
+      if(projectAccess.find(access => access._id == projectId)){
         console.log("user has access to this project for list entry");
         list.createdBy = user._id;
         list.parentProject = projectId;
@@ -65,8 +71,10 @@ router.post("/", (req, res, next) => {
             return next(err);
           }
           console.log("list created");
-          user.listAccess.push(entry._id);
+          /*
+          user.adminListAccess.push(entry._id);
           user.save();
+          */
 
           return res.json({newList:entry});
         })
@@ -85,7 +93,9 @@ router.put("/", (req, res, next) => {
     UserModel.findById(req.user._id)
     .then(user => {
       // make sure the user has access
-      if(user.listAccess.find(access => access._id == list._id)){
+      const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
+      // if(user.adminListAccess.find(access => access._id == list._id)){
+      if(projectAccess.find(access => access._id == list.parentProject)){
         ListModel.findById(list._id, (err, entry) => {
           if(err){
             return next(err);
@@ -114,7 +124,8 @@ router.delete("/:id", (req, res, next) => {
     .then(user => {
       console.log("we have the user for delete");
       // make sure the user has access
-      if(user.listAccess.find(access => access._id == listId)){
+      /*
+      if(user.adminListAccess.find(access => access._id == listId)){
         console.log("we have a list to delete");
         ListModel.findById(listId, (err, list) => {
           if(err){
@@ -123,7 +134,7 @@ router.delete("/:id", (req, res, next) => {
           }
           list.deleteOne();
 
-          user.listAccess = user.listAccess.filter(la => {
+          user.adminListAccess = user.adminListAccess.filter(la => {
             return la+"" !== list._id+"";
           });
           user.save()
@@ -137,6 +148,30 @@ router.delete("/:id", (req, res, next) => {
       else{
         console.log("could not find the list to delete");
       }
+      */
+        ListModel.findById(listId, (err, list) => {
+          console.log("we have a list to delete");
+          if(err){
+            console.log("error finding list for deletion", {err});
+            return next(err);
+          }
+
+          if(user.adminProjectAccess.find(access => {
+            console.log("test id match", {access:access._id, pp: list.parentProject});
+            return access._id+"" == list.parentProject+""
+          })){
+            list.deleteOne()
+            .then(result => {
+              console.log("DELETE ONE LIST: THEN");
+              removeTasks(listId, next);
+            });
+
+            return res.json({message:"deletion successful"});
+          }
+          else{
+            console.log("invalid user access: LIST DELETE");
+          }
+        });
     })
     .catch(err => next(err));
   }

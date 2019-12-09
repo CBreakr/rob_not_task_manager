@@ -15,12 +15,14 @@ router.get("/", (req, res, next) => {
 
     // get the user from the DB as a source
     UserModel.findById(user._id)
-    .populate({
-      path:"projectAccess"
-    })
+    .populate("adminProjectAccess")
+    .populate("useProjectAccess")
+    .populate("readProjectAccess")
     .exec()
     .then(user => {
-      return res.json({projects: user.projectAccess});
+      console.log({admin: user.adminProjectAccess});
+      const allProjects = [...user.adminProjectAccess, ...user.useProjectAccess, ...user.readProjectAccess];
+      return res.json({projects: allProjects});
     })
     .catch(err => console.log("error: project GET, find user", {err}));
   }
@@ -40,7 +42,7 @@ router.post("/", (req, res, next) => {
         if(err) {
           return next(err);
         }
-        user.projectAccess.push(entry._id);
+        user.adminProjectAccess.push(entry._id);
         user.save()
         .then(result => {
           // and I also need to create a default list for the project
@@ -58,8 +60,10 @@ router.post("/", (req, res, next) => {
             else{
               console.log("list created", {list});
               // give the user access to this default list
-              user.listAccess.push(list._id);
+              /*
+              user.adminListAccess.push(list._id);
               user.save();
+              */
             }
           });
 
@@ -83,7 +87,9 @@ router.put("/", (req, res, next) => {
     UserModel.findById(req.user._id)
     .then(user => {
       // make sure the user has access
-      if(user.projectAccess.find(access => access._id == project._id)){
+      const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
+
+      if(projectAccess.find(access => access._id == project._id)){
         ProjectModel.findById(project._id, (err, entry) => {
           if(err){
             return next(err);
@@ -112,7 +118,7 @@ router.delete("/:id", (req, res, next) => {
     .then(user => {
       console.log("we have the user for delete");
       // make sure the user has access
-      if(user.projectAccess.find(access => access._id == projectId)){
+      if(user.adminProjectAccess.find(access => access._id == projectId)){
         console.log("we have a project to delete");
         ProjectModel.findById(req.params.id, (err, project) => {
           if(err){
@@ -120,7 +126,7 @@ router.delete("/:id", (req, res, next) => {
             return next(err);
           }
           project.deleteOne();
-          user.projectAccess = user.projectAccess.filter(pa => {
+          user.adminProjectAccess = user.adminProjectAccess.filter(pa => {
             return pa+"" !== project._id+"";
           });
           user.save()
