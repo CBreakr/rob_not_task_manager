@@ -31,7 +31,7 @@ class Tasks extends React.Component {
         {
           tasks.map(task => {
             return (
-                <>
+              <>
                 {
                   currentTask && currentTask._id == task._id
                   ?
