@@ -5,7 +5,6 @@ import React from "react";
 // <ProjectForm submitText="Add" />
 import AddNewProject from "./AddNewProject";
 import Projects from "../../Containers/Project/ProjectsContainer";
-import ActiveProject from "../../Containers/Project/ActiveProjectContainer";
 
 class ProjectScreen extends React.Component {
   render() {
