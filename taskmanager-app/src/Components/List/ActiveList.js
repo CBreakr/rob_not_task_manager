@@ -57,8 +57,14 @@ class ActiveList extends React.Component {
 
   render() {
     let list = null;
+    let project = null;
+
     if(this.props && this.props.list){
       list = this.props.list;
+    }
+
+    if(this.props && this.props.project){
+      project = this.props.project;
     }
 
     return (
@@ -83,8 +89,19 @@ class ActiveList extends React.Component {
               <div>
                 {list.description}
               </div>
-              <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
-              <input type="button" className="reject_button" value="delete" onClick={this.deleteList} />
+              {
+                project.isUseAccess
+                ? <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
+                : <></>
+              }
+              {
+                project.isAdminAccess
+                ? <>
+                <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
+                <input type="button" className="reject_button" value="delete" onClick={this.deleteList} />
+                 </>
+                : <></>
+              }
             </>
           }
           </>

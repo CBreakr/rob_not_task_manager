@@ -7,6 +7,7 @@ import ActiveList from "../../Components/List/ActiveList";
 
 const mapStateToProps = (state) => {
   const props = {};
+  props.project = {...state.currentProject};
   if(state.currentList){
     props.list = {...state.currentList};
   }

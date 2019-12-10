@@ -58,8 +58,14 @@ class ActiveTask extends React.Component {
 
   render() {
     let task = null;
+    let project = null;
+
     if(this.props && this.props.task){
       task = this.props.task;
+    }
+
+    if(this.props && this.props.project){
+      project = this.props.project;
     }
 
     return (
@@ -82,8 +88,19 @@ class ActiveTask extends React.Component {
                 {task.taskname}
               </div>
               <div>
+              {
+                project.isUseAccess
+                ? <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
+                : <></>
+              }
+              {
+                project.isAdminAccess
+                ? <>
                 <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
                 <input type="button" className="reject_button" value="delete" onClick={this.deleteTask} />
+                 </>
+                : <></>
+              }
               </div>
               <div>
                 {task.description}

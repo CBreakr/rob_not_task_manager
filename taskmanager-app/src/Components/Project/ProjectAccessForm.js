@@ -4,6 +4,7 @@ import React from "react";
 import DropDown from "../DropDown";
 
 const accessLevelList = [
+  "none",
   "read",
   "create/edit",
   "admin"
@@ -16,7 +17,8 @@ class ProjectAccessForm extends React.Component {
     this.state = {
       foundUser: null,
       userEmail:"",
-      accessLevel:"read"
+      accessLevel:"none",
+      errorMessage:""
     };
   }
 
@@ -36,14 +38,29 @@ class ProjectAccessForm extends React.Component {
 
   setUser = (user) => {
     console.log("did we get a user back?", {user});
-    this.setState({
+
+    const state = {
       ...this.state,
       foundUser:user
-    });
+    };
+
+    if(!user){
+      state.errorMessage = "user not found";
+    }
+    else{
+      const isAdmin = user.adminProjectAccess.find(accessId => {
+        const projectId = this.props.currentProject._id+"";
+        return accessId == projectId;
+      });
+      if(isAdmin){
+        state.errorMessage = "user is admin";
+      }
+    }
+
+    this.setState(state);
   }
 
   setUserAccess = (evt) => {
-    console.log("FORM: set user access", {user:this.state.foundUser, level:this.state.accessLevel});
     evt.preventDefault();
     if(this.state.foundUser && this.state.accessLevel){
       this.props.setUserAccess(this.props.currentProject, this.state.foundUser, this.state.accessLevel);
@@ -52,7 +69,8 @@ class ProjectAccessForm extends React.Component {
       this.setState({
         foundUser: null,
         userEmail:"",
-        accessLevel:""
+        accessLevel:"",
+        errorMessage:""
       });
 
       if(this.props.onComplete){
@@ -66,6 +84,7 @@ class ProjectAccessForm extends React.Component {
     let foundUser = "";
     let userEmail = "";
     let accessLevel = "";
+    let errorMessage = "";
 
     if(this.state){
       if(this.state.foundUser){
@@ -79,6 +98,10 @@ class ProjectAccessForm extends React.Component {
       if(this.state.accessLevel){
         accessLevel = this.state.accessLevel;
       }
+
+      if(this.state.errorMessage){
+        errorMessage = this.state.errorMessage;
+      }
     }
 
     return (
@@ -90,7 +113,7 @@ class ProjectAccessForm extends React.Component {
           <input type="submit" className="access_button" value="Find User" />
         </form>
         {
-          foundUser
+          foundUser && !errorMessage
           ? <form onSubmit={this.setUserAccess}>
               <div>
                 Access Level:
@@ -103,7 +126,13 @@ class ProjectAccessForm extends React.Component {
               </div>
               <input type="submit" className="access_button" value="Set Access" />
             </form>
-          : <></>
+          : <>
+            {
+              errorMessage
+              ? <span>{errorMessage}</span>
+              : <></>
+            }
+            </>
         }
       </div>
     );
