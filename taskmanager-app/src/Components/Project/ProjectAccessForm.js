@@ -110,6 +110,9 @@ class ProjectAccessForm extends React.Component {
 
     return (
       <div>
+        <div>
+          Give access to another user
+        </div>
         <form onSubmit={this.findUserByEmail}>
           <div>
             <input type="text" name="userEmail" value={userEmail} placeholder="email to find" onChange={this.updateInput} />

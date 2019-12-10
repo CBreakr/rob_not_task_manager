@@ -35,7 +35,7 @@ class MainScreen extends React.Component {
               </div>
             </>
           : <div className="landing_page">
-              <h1>{title}</h1>
+              <h1 className="app_title">{title}</h1>
               <LoginForm />
               <RegisterForm />
             </div>
