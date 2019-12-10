@@ -8,6 +8,7 @@
 
 body {
   background-color: black;
+  overflow:hidden;
 }
 
 * {
@@ -19,7 +20,7 @@ body {
 /* MAIN STRUCTURE */
 
 .header {
-  height: 7vh;
+  height: $header-height;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -27,7 +28,7 @@ body {
 }
 
 .main {
-  height: 93vh;
+  // height: 93vh;
   display: grid;
 
   grid-template-columns: 1fr 1fr 2fr;
@@ -50,13 +51,17 @@ body {
 
 /* PROJECT */
 .project_screen {
-  // width: 60vw;
   background-color: $project-container-background;
-  // margin: 8px 0;
   padding: 8px;
+  height: $screen-height;
+}
+
+.project_header{
+  margin-bottom: 4px;
 }
 
 .project_container {
+  height: $container-height;
   overflow:auto;
 }
 
@@ -78,13 +83,17 @@ body {
 
 /* LIST */
 .list_screen {
-  // width: 60vw;
   background-color: $list-container-background;
-  // margin: 8px 0;
   padding: 8px;
+  height: $screen-height;
+}
+
+.list_header{
+  margin-bottom: 4px;
 }
 
 .list_container {
+  height: $container-height;
   overflow:auto;
 }
 
@@ -106,14 +115,17 @@ body {
 
 /* TASK */
 .task_screen {
-  // width: 60vw;
   background-color: $task-container-background;
-  // margin: 8px 0;
   padding: 8px;
+  height: $screen-height;
+}
+
+.task_header{
+  margin-bottom: 4px;
 }
 
 .task_container {
-  height: 80vh;
+  height: $container-height;
   overflow:auto;
 }
 
@@ -161,9 +173,13 @@ li:hover {
 
 input[type="button"], input[type="submit"] {
   padding: 4px;
-  margin: 4px;
+  margin-bottom: 4px;
   transition: 0.3s;
   text-transform: uppercase;
+}
+
+li input[type="button"], input[type="submit"] {
+  margin: 4px;
 }
 
 .confirm_button {
@@ -241,4 +257,12 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+/* MEDIA */
+
+@media (max-height: 620px){
+  .project_container, .list_container, .task_container {
+    height: $container-height-small;
+  }
 }

@@ -12,9 +12,11 @@ class ProjectScreen extends React.Component {
       <div className="project_screen">
         <div className="project_header">
           <h2>Projects</h2>
+        </div>
+        <div className="project_container">
           <AddNewProject />
-        </div>        
-        <Projects />
+          <Projects />
+        </div>
       </div>
     );
   }

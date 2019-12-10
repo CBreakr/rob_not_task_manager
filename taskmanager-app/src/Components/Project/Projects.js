@@ -25,7 +25,7 @@ class Projects extends React.Component {
     }
 
     return (
-      <div className="project_container">
+      <div>
         <ul>
         {
           projects.map(project => {
