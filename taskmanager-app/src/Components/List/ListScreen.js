@@ -12,8 +12,12 @@ class ListScreen extends React.Component {
       <div className="list_screen">
         <div className="list_header">
           <h2>Lists</h2>
-          <AddNewList />
         </div>
+        {
+          this.props.projectSelected
+          ? <AddNewList />
+          : <></>
+        }
         <Lists />
       </div>
     );

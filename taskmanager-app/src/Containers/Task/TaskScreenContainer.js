@@ -3,10 +3,14 @@ import { connect } from "react-redux";
 
 import TaskScreen from "../../Components/Task/TaskScreen";
 
-// do we need anything right now?
+const mapStateToProps = (state) => {
+  const props = {};
+  if(state.currentList){
+    props.listSelected = true;
+  }
+  return props;
+}
 
-// I'm going to keep this for now in case
-
-const enhancer = connect(null, null);
+const enhancer = connect(mapStateToProps, null);
 
 export default enhancer(TaskScreen);

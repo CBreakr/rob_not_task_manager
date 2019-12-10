@@ -15,9 +15,15 @@ class TaskScreen extends React.Component {
       <div className="task_screen">
         <div className="task_header">
           <h2>Tasks</h2>
-          <AddNewTask />
         </div>
-        <Tasks />
+        <div className="task_container">
+          {
+            this.props.listSelected
+            ? <AddNewTask />
+            : <></>
+          }
+          <Tasks />
+        </div>
       </div>
     );
   }

@@ -3,10 +3,14 @@ import { connect } from "react-redux";
 
 import ListScreen from "../../Components/List/ListScreen";
 
-// do we need anything right now?
+const mapStateToProps = (state) => {
+  const props = {};
+  if(state.currentProject){
+    props.projectSelected = true;
+  }
+  return props;
+}
 
-// I'm going to keep this for now in case
-
-const enhancer = connect(null, null);
+const enhancer = connect(mapStateToProps, null);
 
 export default enhancer(ListScreen);
