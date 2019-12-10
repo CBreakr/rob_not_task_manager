@@ -69,6 +69,13 @@ class ActiveProject extends React.Component {
     });
   }
 
+  cancelSetAccess = () => {
+    this.setState({
+      ...this.state,
+      accessMode:false
+    });
+  }
+
   render() {
     let project = null;
     if(this.props && this.props.project){
@@ -120,7 +127,7 @@ class ActiveProject extends React.Component {
         }
         {
           this.state.accessMode
-          ? <ProjectAccessForm />
+          ? <ProjectAccessForm onCancel={this.cancelSetAccess} />
           : <></>
         }
       </div>

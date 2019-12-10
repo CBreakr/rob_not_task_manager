@@ -10,16 +10,18 @@ const accessLevelList = [
   "admin"
 ];
 
+const defaultState = {
+  foundUser: null,
+  userEmail:"",
+  accessLevel:"none",
+  errorMessage:""
+};
+
 class ProjectAccessForm extends React.Component {
 
   constructor(){
     super();
-    this.state = {
-      foundUser: null,
-      userEmail:"",
-      accessLevel:"none",
-      errorMessage:""
-    };
+    this.state = defaultState;
   }
 
   updateInput = (evt) => {
@@ -66,16 +68,18 @@ class ProjectAccessForm extends React.Component {
       this.props.setUserAccess(this.props.currentProject, this.state.foundUser, this.state.accessLevel);
 
       // clear the input
-      this.setState({
-        foundUser: null,
-        userEmail:"",
-        accessLevel:"",
-        errorMessage:""
-      });
+      this.setState(defaultState);
 
       if(this.props.onComplete){
         this.props.onComplete();
       }
+    }
+  }
+
+  onCancel = () => {
+    this.setState(defaultState);
+    if(this.props.onCancel && typeof this.props.onCancel === "function"){
+      this.props.onCancel();
     }
   }
 
@@ -110,7 +114,10 @@ class ProjectAccessForm extends React.Component {
           <div>
             <input type="text" name="userEmail" value={userEmail} placeholder="email to find" onChange={this.updateInput} />
           </div>
-          <input type="submit" className="access_button" value="Find User" />
+          <span>
+            <input type="submit" className="access_button" value="Find" />
+            <input type="button" className="access_button" value="Cancel" onClick={this.onCancel} />
+          </span>
         </form>
         {
           foundUser && !errorMessage
