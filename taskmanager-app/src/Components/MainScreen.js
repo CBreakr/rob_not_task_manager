@@ -8,6 +8,8 @@ import ProjectScreen from "../Containers/Project/ProjectScreenContainer";
 import ListScreen from "../Containers/List/ListScreenContainer";
 import TaskScreen from "../Containers/Task/TaskScreenContainer";
 
+const title = "Rob Not Task Manager";
+
 class MainScreen extends React.Component {
   componentDidMount(){
     // check for user
@@ -23,7 +25,7 @@ class MainScreen extends React.Component {
           user
           ? <>
               <div className="header">
-                <span className="app_title">Rob Not To Do</span>
+                <span className="app_title">{title}</span>
                 <Logout />
               </div>
               <div className="main">
@@ -32,11 +34,11 @@ class MainScreen extends React.Component {
                 <TaskScreen />
               </div>
             </>
-          : <>
-            <h1>Rob Not To Do</h1>
+          : <div className="landing_page">
+              <h1>{title}</h1>
               <LoginForm />
               <RegisterForm />
-            </>
+            </div>
         }
       </div>
     )

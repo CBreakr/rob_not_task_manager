@@ -28,9 +28,9 @@ body {
 }
 
 .main {
-  // height: 93vh;
   display: grid;
 
+  // grid-gap: 4px;
   grid-template-columns: 1fr 1fr 2fr;
 }
 
@@ -57,7 +57,7 @@ body {
 }
 
 .project_header{
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .project_container {
@@ -89,7 +89,7 @@ body {
 }
 
 .list_header{
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .list_container {
@@ -121,7 +121,7 @@ body {
 }
 
 .task_header{
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .task_container {
@@ -253,12 +253,16 @@ select {
   grid-template-columns: 1fr 1fr;
 }
 
+.landing_page {
+  margin-top: 16px;
+}
+
 .login_form, .register_form {
   display: flex;
   flex-direction: row;
   justify-content: center;
 
-  margin-top: 8px;
+  margin-top: 16px;
 }
 
 .logout_button {
