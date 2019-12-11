@@ -3,6 +3,8 @@ const TaskModel = require("../models/TaskModel");
 const ListModel = require("../models/ListModel");
 const UserModel = require("../models/UserModel");
 
+const cleanValue = require("../formatUtilities/cleanUserInput");
+
 const taskInteraction = {
   get: getTasks,
   post: postTask,
@@ -56,6 +58,13 @@ function postTask(res, next, userId, listId, task) {
     ListModel.findById(listId, (err, list) => {
       const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
       if(projectAccess.find(access => access._id+"" == list.parentProject+"")){
+        task.taskname = cleanValue(task.taskname);
+        task.description = cleanValue(task.description);
+        task.status = cleanValue(task.status);
+        task.priority = cleanValue(task.priority);
+        task.size = cleanValue(task.size);
+        task.type = cleanValue(task.type);
+        task.dueDate = cleanValue(task.dueDate);
         task.createdBy = user._id;
         task.parentList = listId;
         TaskModel.create(task, (err, entry) => {
@@ -88,13 +97,13 @@ function putTask(res, next, userId, task) {
             return next(err);
           }
 
-          entry.taskname = task.taskname;
-          entry.description = task.description;
-          entry.status = task.status;
-          entry.priority = task.priority;
-          entry.size = task.size;
-          entry.type = task.type;
-          entry.dueDate = task.dueDate;
+          entry.taskname = cleanValue(task.taskname);
+          entry.description = cleanValue(task.description);
+          entry.status = cleanValue(task.status);
+          entry.priority = cleanValue(task.priority);
+          entry.size = cleanValue(task.size);
+          entry.type = cleanValue(task.type);
+          entry.dueDate = cleanValue(task.dueDate);
           entry.save();
 
           return res.json({message:"task updated"});

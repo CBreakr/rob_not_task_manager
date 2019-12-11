@@ -3,6 +3,8 @@ import React from "react";
 
 import ActiveList from "../../Containers/List/ActiveListContainer";
 
+import cleanValue from "../../formatUtilities/cleanUserInput";
+
 class Lists extends React.Component {
 
   selectList = (evt) => {
@@ -43,7 +45,7 @@ class Lists extends React.Component {
                     key={list._id}
                     listid={list._id}
                     onClick={this.selectList}>
-                    {list.listname}
+                    {cleanValue(list.listname)}
                   </li>
                 }
               </>

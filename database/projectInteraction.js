@@ -2,6 +2,8 @@
 const UserModel = require("../models/UserModel");
 const ProjectModel = require("../models/ProjectModel");
 const ListModel = require("../models/ListModel");
+
+const cleanValue = require("../formatUtilities/cleanUserInput");
 const removeLists = require("./removalUtilities/removeLists");
 const removeProjectAccess = require("./removalUtilities/removeProjectAccess");
 
@@ -44,11 +46,14 @@ function getProject(res, next, user) {
 //
 //
 function postProject(res, next, project, userId) {
-  project.createdBy = userId;
-  project.userAccess = [userId];
-
   UserModel.findById(userId)
   .then(user => {
+
+    project.projectname = cleanValue(project.projectname);
+    project.description = cleanValue(project.description);
+    project.createdBy = userId;
+    project.userAccess = [userId];
+
     ProjectModel.create(project, (err, entry) => {
       if(err) {
         return next(err);
@@ -70,11 +75,6 @@ function postProject(res, next, project, userId) {
           }
           else{
             console.log("list created", {list});
-            // give the user access to this default list
-            /*
-            user.adminListAccess.push(list._id);
-            user.save();
-            */
           }
         });
 
@@ -101,8 +101,8 @@ function putProject(res, next, project, userId) {
           return next(err);
         }
 
-        entry.projectname = project.projectname;
-        entry.description = project.description;
+        entry.projectname = cleanValue(project.projectname);
+        entry.description = cleanValue(project.description);
         entry.save();
 
         return res.json({message:"project updated"});

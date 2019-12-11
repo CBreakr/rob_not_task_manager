@@ -3,6 +3,8 @@ import React from "react";
 
 import ListForm from "../../Containers/List/ListFormContainer";
 
+import cleanValue from "../../formatUtilities/cleanUserInput";
+
 class ActiveList extends React.Component {
 
   constructor(){
@@ -84,10 +86,10 @@ class ActiveList extends React.Component {
             :
             <>
               <div className="active_element_title">
-                {list.listname}
+              {cleanValue(list.listname)}
               </div>
               <div>
-                {list.description}
+                {cleanValue(list.description)}
               </div>
               {
                 project.isUseAccess

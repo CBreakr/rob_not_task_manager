@@ -1,12 +1,21 @@
 
 const ProjectModel = require("../../models/ProjectModel");
 
+/*
+FOR REFERENCE ONLY
 const accessLevelList = [
   "none",
   "read",
   "create/edit",
   "admin"
 ];
+*/
+
+/*
+When user access to a project is added, here's where the dirty work is done
+
+
+*/
 
 //
 //
@@ -14,57 +23,80 @@ const accessLevelList = [
 function setAccessLevel(user, currentAccessLevel, projectId, level){
   switch(level){
     case "none":
-      if(!listContainsProject(user.adminProjectAccess, projectId)){
-        console.log("remove read and use access");
-        user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
-        user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
-        if(currentAccessLevel !== "none"){
-          console.log("remove user access", {currentAccessLevel});
-          removeUserAccess(user, projectId);
-        }
-      }
-      else{
-        console.log("cannot change admin rights");
-      }
+      setNoneAccess(user, currentAccessLevel, projectId);
       break;
     case "read":
-      if(!listContainsProject(user.adminProjectAccess, projectId)){
-        console.log("remove use access");
-        user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
-        user.readProjectAccess.push(projectId);
-      }
-      else{
-        console.log("cannot change admin rights");
-      }
+      setReadAccess(user, currentAccessLevel, projectId);
       break;
     case "create/edit":
-      if(!listContainsProject(user.adminProjectAccess, projectId)){
-        console.log("remove read access");
-        user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
-        user.useProjectAccess.push(projectId);
-      }
-      else{
-        console.log("cannot change admin rights");
-      }
+      setUseAccess(user, currentAccessLevel, projectId);
       break;
     case "admin":
-      console.log("remove read and use access");
-      user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
-      user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
-      user.adminProjectAccess.push(projectId);
+      setAdminAccess(user, currentAccessLevel, projectId);
       break;
     default:
       console.log("wrong access level sent", {level});
   }
 
   // the project needs a reference as well
-  console.log({currentAccessLevel, level});
   if(!currentAccessLevel && level !== "none"){
-    console.log("add user access", {currentAccessLevel});
     addUserAccessToProject(user, projectId);
   }
 
+  // finally, time to save...
   user.save();
+}
+
+//
+//
+//
+function setNoneAccess(user, currentAccessLevel, projectId) {
+  if(!listContainsProject(user.adminProjectAccess, projectId)){
+    user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
+    user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
+    if(currentAccessLevel !== "none"){
+      // remove from the project's list
+      removeUserAccess(user, projectId);
+    }
+  }
+  else{
+    console.log("cannot change admin rights");
+  }
+}
+
+//
+//
+//
+function setReadAccess(user, currentAccessLevel, projectId) {
+  if(!listContainsProject(user.adminProjectAccess, projectId)){
+    user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
+    user.readProjectAccess.push(projectId);
+  }
+  else{
+    console.log("cannot change admin rights");
+  }
+}
+
+//
+//
+//
+function setUseAccess(user, currentAccessLevel, projectId) {
+  if(!listContainsProject(user.adminProjectAccess, projectId)){
+    user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
+    user.useProjectAccess.push(projectId);
+  }
+  else{
+    console.log("cannot change admin rights");
+  }
+}
+
+//
+//
+//
+function setAdminAccess(user, currentAccessLevel, projectId) {
+  user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
+  user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
+  user.adminProjectAccess.push(projectId);
 }
 
 //
@@ -80,11 +112,9 @@ function listContainsProject(list, projectId){
 //
 //
 function removeProjectFromList(list, projectId){
-  console.log({listBefore:list});
   const filtered = list.filter(element => {
     return element._id+"" !== projectId+"";
   });
-  console.log({listAfter:filtered});
   return filtered;
 }
 
@@ -113,7 +143,6 @@ function addUserAccessToProject(user, projectId){
     if(err){
       console.log("error getting the project");
     }
-    console.log("add user to project access", {user, project});
     project.userAccess.push(user._id);
     project.save();
   });

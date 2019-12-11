@@ -3,6 +3,8 @@ import React from "react";
 
 import ActiveTask from "../../Containers/Task/ActiveTaskContainer";
 
+import cleanValue from "../../formatUtilities/cleanUserInput";
+
 class Tasks extends React.Component {
 
   selectTask = (evt) => {
@@ -45,7 +47,7 @@ class Tasks extends React.Component {
                     key={task._id}
                     taskid={task._id}
                     onClick={this.selectTask}>
-                    {task.taskname} ({task.status}, {task.priority})
+                    {cleanValue(task.taskname)} ({cleanValue(task.status)}, {cleanValue(task.priority)})
                   </li>
                 }
               </>

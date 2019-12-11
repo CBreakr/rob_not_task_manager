@@ -44,13 +44,13 @@ class ListForm extends React.Component {
 
     console.log("upsert props", {project: this.props.project});
 
-    this.props.upsertList(list, this.props.project._id);
-
     // clear the input
     this.setState({
       listname: "",
       description: ""
     });
+
+    this.props.upsertList(list, this.props.project._id);
 
     if(this.props.onComplete){
       this.props.onComplete();

@@ -3,6 +3,8 @@ import React from "react";
 
 import ActiveProject from "../../Containers/Project/ActiveProjectContainer";
 
+import cleanValue from "../../formatUtilities/cleanUserInput";
+
 class Projects extends React.Component {
 
   selectProject = (evt) => {
@@ -44,7 +46,7 @@ class Projects extends React.Component {
                     key={project._id}
                     projectid={project._id}
                     onClick={this.selectProject}>
-                    {project.projectname}
+                    {cleanValue(project.projectname)}
                   </li>
                 }
               </>

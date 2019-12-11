@@ -4,6 +4,8 @@ import React from "react";
 import ProjectForm from "../../Containers/Project/ProjectFormContainer";
 import ProjectAccessForm from "../../Containers/Project/ProjectAccessFormContainer";
 
+import cleanValue from "../../formatUtilities/cleanUserInput";
+
 class ActiveProject extends React.Component {
 
   constructor(){
@@ -99,10 +101,10 @@ class ActiveProject extends React.Component {
             :
             <>
               <div className="active_element_title">
-                {project.projectname}
+                {cleanValue(project.projectname)}
               </div>
               <div>
-                {project.description}
+                {cleanValue(project.description)}
               </div>
               {
                 project.isAdminAccess || project.isUseAccess

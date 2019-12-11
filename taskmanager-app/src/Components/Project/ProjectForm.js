@@ -42,13 +42,13 @@ class ProjectForm extends React.Component {
     project.projectname = this.state.projectname;
     project.description = this.state.description;
 
-    this.props.upsertProject(project);
-
     // clear the input
     this.setState({
       projectname: "",
       description: ""
     });
+
+    this.props.upsertProject(project);
 
     if(this.props.onComplete){
       this.props.onComplete();

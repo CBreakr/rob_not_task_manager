@@ -2,6 +2,7 @@
 const UserModel = require("../models/UserModel");
 const ListModel = require("../models/ListModel");
 
+const cleanValue = require("../formatUtilities/cleanUserInput");
 const removeTasks = require("./removalUtilities/removeTasks");
 
 //
@@ -44,6 +45,8 @@ function postList(res, next, projectId, userId, list){
     // either admin or use (create/edit) access required
     const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
     if(projectAccess.find(access => access._id == projectId)){
+      list.listname = cleanValue(list.listname);
+      list.description = cleanValue(list.description);
       list.createdBy = user._id;
       list.parentProject = projectId;
       ListModel.create(list, (err, entry) => {
@@ -73,8 +76,8 @@ function putList(res, next, userId, list){
         }
 
         // update the individual values
-        entry.listname = list.listname;
-        entry.description = list.description;
+        entry.listname = cleanValue(list.listname);
+        entry.description = cleanValue(list.description);
         entry.save();
 
         return res.json({message:"list updated"});

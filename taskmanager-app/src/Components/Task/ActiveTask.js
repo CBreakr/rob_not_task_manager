@@ -3,6 +3,8 @@ import React from "react";
 
 import TaskForm from "../../Containers/Task/TaskFormContainer";
 
+import cleanValue from "../../formatUtilities/cleanUserInput";
+
 class ActiveTask extends React.Component {
 
   constructor(){
@@ -51,7 +53,6 @@ class ActiveTask extends React.Component {
   deleteTask = () => {
     const proceed = window.confirm(`Are you sure you want to PERMANENTLY DELETE list ${this.props.task.taskname}`);
     if(proceed){
-      console.log("props", {props:this.props});
       this.props.deleteTask(this.props.task);
     }
   }
@@ -85,22 +86,22 @@ class ActiveTask extends React.Component {
             :
             <>
               <div className="active_element_title">
-                {task.taskname}
+                {cleanValue(task.taskname)}
               </div>
               <div>
-                {task.description}
+                {cleanValue(task.description)}
               </div>
               <div>
-                status: {task.status}
+                status: {cleanValue(task.status)}
               </div>
               <div>
-                priority: {task.priority}
+                priority: {cleanValue(task.priority)}
               </div>
               <div>
-                size: {task.size}
+                size: {cleanValue(task.size)}
               </div>
               <div>
-                type: {task.type}
+                type: {cleanValue(task.type)}
               </div>
               <div>
               {

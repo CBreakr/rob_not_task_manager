@@ -108,10 +108,10 @@ class TaskForm extends React.Component {
 
     console.log("upsert props", {list: this.props.list});
 
-    this.props.upsertTask(task, this.props.list._id);
-
     // clear the input
     this.setState(emptyState);
+
+    this.props.upsertTask(task, this.props.list._id);
 
     if(this.props.onComplete){
       this.props.onComplete();

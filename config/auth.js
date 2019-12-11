@@ -4,6 +4,8 @@ const UserModel = require("../models/UserModel");
 
 const bcrypt = require("bcryptjs");
 
+const cleanValue = require("../formatUtilities/cleanUserInput");
+
 const SALT_ROUNDS = 10;
 
 module.exports = (passport) => {
@@ -67,7 +69,8 @@ function createLocalRegister(){
     passReqToCallback: true
   },
   (req, email, password, next) => {
-    UserModel.find({email}, (err, users) => {
+    const cleanEmail = cleanValue(email);
+    UserModel.find({email:cleanEmail}, (err, users) => {
       if(err){
         return loginFail(next, err);
       }
@@ -78,7 +81,7 @@ function createLocalRegister(){
       else{
         const hashedPassword = bcrypt.hashSync(password, SALT_ROUNDS);
         UserModel.create({
-          email,
+          email: cleanEmail,
           password:hashedPassword
         },
           (err, user) => {
@@ -90,7 +93,7 @@ function createLocalRegister(){
         });
       }
     });
-  })
+  });
 }
 
 //
