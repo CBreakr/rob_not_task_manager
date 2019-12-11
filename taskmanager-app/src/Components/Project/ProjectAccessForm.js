@@ -54,8 +54,26 @@ class ProjectAccessForm extends React.Component {
         const projectId = this.props.currentProject._id+"";
         return accessId == projectId;
       });
+
       if(isAdmin){
         state.errorMessage = "user is admin";
+      }
+
+      const isUse = user.useProjectAccess.find(accessId => {
+        const projectId = this.props.currentProject._id+"";
+        return accessId == projectId;
+      });
+
+      const isRead = user.readProjectAccess.find(accessId => {
+        const projectId = this.props.currentProject._id+"";
+        return accessId == projectId;
+      });
+
+      if(isUse){
+        user.currentAccessLevel = "create/edit";
+      }
+      else if(isRead){
+        user.currentAccessLevel = "read";
       }
     }
 
@@ -89,10 +107,14 @@ class ProjectAccessForm extends React.Component {
     let userEmail = "";
     let accessLevel = "";
     let errorMessage = "";
+    let currentAccessLevel = "none";
 
     if(this.state){
       if(this.state.foundUser){
         foundUser = this.state.foundUser;
+        if(foundUser.currentAccessLevel){
+          currentAccessLevel = foundUser.currentAccessLevel;
+        }
       }
 
       if(this.state.userEmail){
@@ -130,7 +152,7 @@ class ProjectAccessForm extends React.Component {
                 <DropDown
                   name="accessLevel"
                   valueList={accessLevelList}
-                  currentValue={accessLevel}
+                  currentValue={currentAccessLevel}
                   updateInput={this.updateInput}
                 />
               </div>

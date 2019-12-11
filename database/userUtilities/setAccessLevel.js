@@ -1,4 +1,6 @@
 
+const ProjectModel = require("../../models/ProjectModel");
+
 const accessLevelList = [
   "none",
   "read",
@@ -9,13 +11,17 @@ const accessLevelList = [
 //
 //
 //
-function setAccessLevel(user, projectId, level){
+function setAccessLevel(user, currentAccessLevel, projectId, level){
   switch(level){
     case "none":
       if(!listContainsProject(user.adminProjectAccess, projectId)){
         console.log("remove read and use access");
         user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
         user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
+        if(currentAccessLevel !== "none"){
+          console.log("remove user access", {currentAccessLevel});
+          removeUserAccess(user, projectId);
+        }
       }
       else{
         console.log("cannot change admin rights");
@@ -48,7 +54,14 @@ function setAccessLevel(user, projectId, level){
       user.adminProjectAccess.push(projectId);
       break;
     default:
-      console.log("wrong access level sent");
+      console.log("wrong access level sent", {level});
+  }
+
+  // the project needs a reference as well
+  console.log({currentAccessLevel, level});
+  if(!currentAccessLevel && level !== "none"){
+    console.log("add user access", {currentAccessLevel});
+    addUserAccessToProject(user, projectId);
   }
 
   user.save();
@@ -73,6 +86,37 @@ function removeProjectFromList(list, projectId){
   });
   console.log({listAfter:filtered});
   return filtered;
+}
+
+//
+//
+//
+function removeUserAccess(user, projectId) {
+  ProjectModel.findById(projectId, (err, project) => {
+    if(err){
+      console.log("error getting the project");
+    }
+
+    project.userAccess = project.userAccess.filter(u => {
+      return u._id+"" !== user._id+"";
+    });
+
+    project.save();
+  });
+}
+
+//
+//
+//
+function addUserAccessToProject(user, projectId){
+  ProjectModel.findById(projectId, (err, project) => {
+    if(err){
+      console.log("error getting the project");
+    }
+    console.log("add user to project access", {user, project});
+    project.userAccess.push(user._id);
+    project.save();
+  });
 }
 
 //

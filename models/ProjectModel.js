@@ -11,6 +11,7 @@ const ProjectSchema = new mongoose.Schema(
   description: {type:String, default:"", trim:true},
   createdBy: {type:ObjectId, ref:"User", required:true},
   // lists: [{type:ObjectId, ref:"List"}],
+  userAccess:[{type:ObjectId, ref:"User"}],
   timestamp: {type:Date, default:Date.now}
 },
 {

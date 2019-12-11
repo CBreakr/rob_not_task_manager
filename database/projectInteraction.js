@@ -3,6 +3,7 @@ const UserModel = require("../models/UserModel");
 const ProjectModel = require("../models/ProjectModel");
 const ListModel = require("../models/ListModel");
 const removeLists = require("./removalUtilities/removeLists");
+const removeProjectAccess = require("./removalUtilities/removeProjectAccess");
 
 const projectInteraction = {
   get: getProject,
@@ -44,6 +45,7 @@ function getProject(res, next, user) {
 //
 function postProject(res, next, project, userId) {
   project.createdBy = userId;
+  project.userAccess = [userId];
 
   UserModel.findById(userId)
   .then(user => {
@@ -126,14 +128,15 @@ function deleteProject(res, next, projectId, userId) {
           return next(err);
         }
         project.deleteOne();
-        user.adminProjectAccess = user.adminProjectAccess.filter(pa => {
-          return pa+"" !== project._id+"";
-        });
-        user.save()
-        .then(res => {
-          console.log("user saved, inside THEN block");
-          removeLists(projectId, user, next);
-        });
+        // user.adminProjectAccess = user.adminProjectAccess.filter(pa => {
+        //   return pa+"" !== project._id+"";
+        // });
+        // user.save()
+        // .then(res => {
+        //   console.log("user saved, inside THEN block");
+        // });
+        removeLists(projectId, user, next);
+        removeProjectAccess(project, next);
         return res.json({message:"deletion successful"});
       });
     }
