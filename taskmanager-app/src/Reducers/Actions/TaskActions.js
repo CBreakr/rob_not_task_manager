@@ -12,7 +12,10 @@ const DispatchActions = {
     .then(res => res.json())
     .then(data => {
       console.log("get tasks by list", {data});
-      dispatch({type:ActionTypes.RECEIVE_TASKS, tasks:data.tasks, taskId:selectId});
+      dispatch({type:ActionTypes.RECEIVE_TASKS, tasks:data.tasks});
+      if(selectId){
+        DispatchActions.setTask(dispatch, selectId);
+      }
     })
     .catch(err => console.log("error getting tasks by list", {err}));
   },

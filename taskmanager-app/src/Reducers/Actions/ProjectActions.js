@@ -16,7 +16,10 @@ const DispatchActions = {
       data.projects.map(project => {
         console.log({project}, {properties:Object.getOwnPropertyNames(project)}, {isAdmin:project.isAdmin});
       });
-      dispatch({type:ActionTypes.RECEIVE_PROJECTS, projects:data.projects, projectId:selectId});
+      dispatch({type:ActionTypes.RECEIVE_PROJECTS, projects:data.projects});
+      if(selectId){
+        DispatchActions.setProject(dispatch, selectId);
+      }
     })
     .catch(err => console.log("error getting project list", {err}));
   },

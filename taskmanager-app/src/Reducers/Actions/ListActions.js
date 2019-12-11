@@ -13,7 +13,10 @@ const DispatchActions = {
     .then(res => res.json())
     .then(data => {
       console.log("get lists by project", {data});
-      dispatch({type:ActionTypes.RECEIVE_LISTS, lists:data.lists, listId:selectId});
+      dispatch({type:ActionTypes.RECEIVE_LISTS, lists:data.lists});
+      if(selectId){
+        DispatchActions.setList(dispatch, selectId);
+      }
     })
     .catch(err => console.log("error getting lists by project", {err}));
   },
