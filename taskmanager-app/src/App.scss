@@ -56,6 +56,10 @@ h1.app_title {
   padding: 1vh 0;
 }
 
+.description {
+  margin: 8px auto;
+}
+
 /* PROJECT */
 .project_screen {
   background-color: $project-container-background;
@@ -150,6 +154,11 @@ h1.app_title {
 
 .task_element:hover {
   background-color: $task-background-hover;
+}
+
+.task_unfinished {
+  background-color: $text-color;
+  color: $text-color-hover;
 }
 
 ul {
@@ -289,6 +298,7 @@ select {
 
 /* MEDIA */
 
+// for now just a tiny tweak
 @media (max-height: 620px){
   .project_container, .list_container, .task_container {
     height: $container-height-small;

@@ -88,20 +88,24 @@ class ActiveTask extends React.Component {
               <div className="active_element_title">
                 {cleanValue(task.taskname)}
               </div>
-              <div>
+              <div className="description">
                 {cleanValue(task.description)}
               </div>
-              <div>
-                status: {cleanValue(task.status)}
+              <div className="splitInputDiv">
+                <span>status:</span>
+                <span>{cleanValue(task.status)}</span>
               </div>
-              <div>
-                priority: {cleanValue(task.priority)}
+              <div className="splitInputDiv">
+                <span>priority:</span>
+                <span>{cleanValue(task.priority)}</span>
               </div>
-              <div>
-                size: {cleanValue(task.size)}
+              <div className="splitInputDiv">
+                <span>size:</span>
+                <span>{cleanValue(task.size)}</span>
               </div>
-              <div>
-                type: {cleanValue(task.type)}
+              <div className="splitInputDiv">
+                <span>type:</span>
+                <span>{cleanValue(task.type)}</span>
               </div>
               <div>
               {

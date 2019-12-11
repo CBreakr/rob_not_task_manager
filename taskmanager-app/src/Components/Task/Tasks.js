@@ -23,6 +23,8 @@ class Tasks extends React.Component {
 
     console.log("CURRENT TASK?", {currentTask: this.props.currentTask});
 
+    let statusClass = "task_unfinished";
+
     if(this.props.currentTask){
       currentTask = this.props.currentTask;
     }
@@ -47,7 +49,15 @@ class Tasks extends React.Component {
                     key={task._id}
                     taskid={task._id}
                     onClick={this.selectTask}>
-                    {cleanValue(task.taskname)} ({cleanValue(task.status)}, {cleanValue(task.priority)})
+                    {cleanValue(task.taskname)}
+                    (<span className={
+                      task.status === "finished"
+                      || task.status === "deployed"
+                      || task.status === "archived"
+                      ? "task_finished"
+                      : "task_unfinished"
+                    }>{cleanValue(task.status)}</span>,
+                    {cleanValue(task.priority)})
                   </li>
                 }
               </>

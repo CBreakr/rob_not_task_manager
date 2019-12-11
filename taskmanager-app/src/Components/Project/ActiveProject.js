@@ -103,7 +103,7 @@ class ActiveProject extends React.Component {
               <div className="active_element_title">
                 {cleanValue(project.projectname)}
               </div>
-              <div>
+              <div className="description">
                 {cleanValue(project.description)}
               </div>
               {

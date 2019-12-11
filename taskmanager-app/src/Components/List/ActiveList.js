@@ -88,7 +88,7 @@ class ActiveList extends React.Component {
               <div className="active_element_title">
               {cleanValue(list.listname)}
               </div>
-              <div>
+              <div className="description">
                 {cleanValue(list.description)}
               </div>
               {
