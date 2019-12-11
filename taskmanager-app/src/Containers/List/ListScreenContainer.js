@@ -6,7 +6,7 @@ import ListScreen from "../../Components/List/ListScreen";
 const mapStateToProps = (state) => {
   const props = {};
   if(state.currentProject){
-    props.projectSelected = true;
+    props.currentProject = state.currentProject;
   }
   return props;
 }

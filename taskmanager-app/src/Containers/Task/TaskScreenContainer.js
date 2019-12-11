@@ -5,8 +5,11 @@ import TaskScreen from "../../Components/Task/TaskScreen";
 
 const mapStateToProps = (state) => {
   const props = {};
-  if(state.currentList){
-    props.listSelected = true;
+  if(state.currentProject){
+    props.currentProject = state.currentProject;
+    if(state.currentList){
+      props.listSelected = true;
+    }
   }
   return props;
 }

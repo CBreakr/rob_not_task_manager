@@ -7,6 +7,17 @@ import AddNewList from "./AddNewList";
 import Lists from "../../Containers/List/ListsContainer";
 
 class ListScreen extends React.Component {
+
+  hasAddAccess = () => {
+    if(this.props && this.props.currentProject &&
+      (this.props.currentProject.isAdminAccess
+      || this.props.currentProject.isUseAccess)
+    ){
+      return true;
+    }
+    return false;
+  }
+
   render() {
     return(
       <div className="list_screen">
@@ -15,7 +26,7 @@ class ListScreen extends React.Component {
         </div>
         <div className="list_container">
           {
-            this.props.projectSelected
+            this.props.currentProject && this.hasAddAccess()
             ? <AddNewList />
             : <></>
           }
@@ -24,6 +35,10 @@ class ListScreen extends React.Component {
       </div>
     );
   }
+}
+
+function userHasAccess(user, project){
+
 }
 
 export default ListScreen;

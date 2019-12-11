@@ -10,6 +10,17 @@ import ActiveTask from "../../Containers/Task/ActiveTaskContainer";
 // <ActiveTask />
 
 class TaskScreen extends React.Component {
+
+  hasAddAccess = () => {
+    if(this.props && this.props.currentProject &&
+      (this.props.currentProject.isAdminAccess
+      || this.props.currentProject.isUseAccess)
+    ){
+      return true;
+    }
+    return false;
+  }
+
   render() {
     return(
       <div className="task_screen">
@@ -18,7 +29,7 @@ class TaskScreen extends React.Component {
         </div>
         <div className="task_container">
           {
-            this.props.listSelected
+            this.props.listSelected && this.hasAddAccess()
             ? <AddNewTask />
             : <></>
           }
