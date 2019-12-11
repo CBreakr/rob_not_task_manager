@@ -4,6 +4,9 @@ const ListModel = require("../models/ListModel");
 
 const removeTasks = require("./removalUtilities/removeTasks");
 
+//
+// expose these to the outside
+//
 const listInteraction = {
   get: getLists,
   post: postList,
@@ -12,20 +15,15 @@ const listInteraction = {
 };
 
 //
-//
+// make sure the user has access, then get the lists
 //
 function getLists(res, next, projectId, userId){
-  // first need to check the user and the project
-  // then need to load the lists for the project
-
   UserModel.findById(userId)
   .then(user => {
-    // make sure the user has access
-
+    // make sure the user has access to the project
+    // any of the access types will do
     const allProjects = [...user.adminProjectAccess, ...user.useProjectAccess, ...user.readProjectAccess];
     if(allProjects.find(access => access._id == projectId)){
-      // get the lists
-      // then also check the lists against the user's access
       ListModel.find({parentProject:projectId}, (err, lists) => {
         if(err){
           return next(err);
@@ -38,15 +36,14 @@ function getLists(res, next, projectId, userId){
 }
 
 //
-//
+// make sure the user has access to add lists, then create a new one
 //
 function postList(res, next, projectId, userId, list){
   UserModel.findById(userId)
   .then(user => {
-    console.log("we have a user for list entry");
+    // either admin or use (create/edit) access required
     const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
     if(projectAccess.find(access => access._id == projectId)){
-      console.log("user has access to this project for list entry");
       list.createdBy = user._id;
       list.parentProject = projectId;
       ListModel.create(list, (err, entry) => {
@@ -54,7 +51,6 @@ function postList(res, next, projectId, userId, list){
           console.log("error on list creation", {err});
           return next(err);
         }
-        console.log("list created");
 
         return res.json({newList:entry});
       })
@@ -63,20 +59,20 @@ function postList(res, next, projectId, userId, list){
 }
 
 //
-//
+// make sure the user has access to update lists, then run the update
 //
 function putList(res, next, userId, list){
   UserModel.findById(userId)
   .then(user => {
-    // make sure the user has access
+    // either admin or use (create/edit) access required
     const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
-    // if(user.adminListAccess.find(access => access._id == list._id)){
     if(projectAccess.find(access => access._id == list.parentProject)){
       ListModel.findById(list._id, (err, entry) => {
         if(err){
           return next(err);
         }
 
+        // update the individual values
         entry.listname = list.listname;
         entry.description = list.description;
         entry.save();
@@ -89,26 +85,25 @@ function putList(res, next, userId, list){
 }
 
 //
-//
+// make sure the user has admin access, then delete the list
+// cascade the delete to any child tasks
 //
 function deleteList(res, next, userId, listId){
   UserModel.findById(userId)
   .then(user => {
-    console.log("we have the user for delete");
     ListModel.findById(listId, (err, list) => {
-      console.log("we have a list to delete");
       if(err){
         console.log("error finding list for deletion", {err});
         return next(err);
       }
 
+      // only admin access is good enough for delete
       if(user.adminProjectAccess.find(access => {
-        console.log("test id match", {access:access._id, pp: list.parentProject});
         return access._id+"" == list.parentProject+""
       })){
         list.deleteOne()
         .then(result => {
-          console.log("DELETE ONE LIST: THEN");
+          // also remove child tasks
           removeTasks(listId, next);
         });
 
@@ -122,4 +117,7 @@ function deleteList(res, next, userId, listId){
   .catch(err => next(err));
 }
 
+//
+// EXPORT
+//
 module.exports = listInteraction;

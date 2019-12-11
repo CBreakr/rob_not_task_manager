@@ -2,25 +2,20 @@
 const ListModel = require("../../models/ListModel");
 const removeTasks = require("./removeTasks");
 
+/*
+
+After a project is deleted, its child lists need to be removed as well
+
+*/
+
 module.exports = removeLists = (projectId, user, next) => {
-  console.log("remove lists", {projectId, user});
-  ListModel.find({parentProject:projectId}, (err, lists) => {
-    console.log("lists find", {lists});
-    if(err){
+  ListModel.find({parentProject:projectId}, (err, lists) => {    if(err){
       // having orphaned records here isn't the worst
       // return next(err);
     }
     lists.map(list => {
-      console.log("remove list", {list});
       list.deleteOne();
-      // remove the listaccess here, too
-      /*
-      user.listAccess = user.listAccess.filter(la => {
-        // return la+"" !== list._id+"";
-        return !(la+"" === list._id+"");
-      });
-      user.save();
-      */
+      // delete the task children of each list
       removeTasks(list._id, next);
     });
   });
