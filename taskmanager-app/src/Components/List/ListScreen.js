@@ -1,6 +1,8 @@
 
 import React from "react";
 
+import { Scrollbars } from "react-custom-scrollbars";
+
 // import ListForm from "../../Containers/List/ListFormContainer";
 // <ListForm submitText="Add" />
 import AddNewList from "./AddNewList";
@@ -24,14 +26,16 @@ class ListScreen extends React.Component {
         <div className="list_header">
           <h2>Lists</h2>
         </div>
-        <div className="list_container">
-          {
-            this.props.currentProject && this.hasAddAccess()
-            ? <AddNewList />
-            : <></>
-          }
-          <Lists />
-        </div>
+        <Scrollbars autoWidth autoHide style={{height:"85vh"}}>
+          <div className="list_container">
+            {
+              this.props.currentProject && this.hasAddAccess()
+              ? <AddNewList />
+              : <></>
+            }
+            <Lists />
+          </div>
+        </Scrollbars>
       </div>
     );
   }
