@@ -11,7 +11,8 @@ const fs = require("fs");
 const api = require("./api/api");
 const auth = require("./config/auth")(passport);
 
-// DB
+// DB CONNECTION
+
 const DB = process.env.DB_CONNECT
           || "mongodb://localhost/taskmanager";
 
@@ -35,8 +36,10 @@ const SESSION_SECRET = process.env.SESSION_SECRET
                       || "lyg7o6twergvweflyi";
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true}));
 
-// SESSION
+// LOGIN & SESSION
 
 app.use(session({
   secret: SESSION_SECRET,
@@ -46,9 +49,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
 
 // API ROUTE
 
