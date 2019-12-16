@@ -1,6 +1,8 @@
 
 import React from "react";
 
+import { Scrollbars } from "react-custom-scrollbars";
+
 // import TaskForm from "../../Containers/Task/TaskFormContainer";
 // <TaskForm submitText="Add" />
 import AddNewTask from "./AddNewTask";
@@ -27,6 +29,7 @@ class TaskScreen extends React.Component {
         <div className="task_header">
           <h2>Tasks</h2>
         </div>
+        <Scrollbars autoWidth autoHide style={{height:"85vh"}}>
         <div className="task_container">
           {
             this.props.listSelected && this.hasAddAccess()
@@ -35,6 +38,7 @@ class TaskScreen extends React.Component {
           }
           <Tasks />
         </div>
+        </Scrollbars>
       </div>
     );
   }
