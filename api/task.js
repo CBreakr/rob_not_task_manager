@@ -10,7 +10,7 @@ const UserModel = require("../models/UserModel");
 const taskInteraction = require("../database/taskInteraction");
 
 //
-//
+// get the tasks within the specified list
 //
 router.get("/bylist/:id", (req, res, next) => {
   if(req.user){
@@ -24,7 +24,7 @@ router.get("/bylist/:id", (req, res, next) => {
 });
 
 //
-//
+// create a new task within the specified list
 //
 router.post("/", (req, res, next) => {
   if(req.user && req.body && req.body.task && req.body.listId){
@@ -38,7 +38,7 @@ router.post("/", (req, res, next) => {
 });
 
 //
-//
+// edit the specified task
 //
 router.put("/", (req, res, next) => {
   if(req.body && req.user && req.body.task){
@@ -52,7 +52,7 @@ router.put("/", (req, res, next) => {
 });
 
 //
-//
+// delete the specified task
 //
 router.delete("/:id", (req, res, next) => {
   if(req.user){

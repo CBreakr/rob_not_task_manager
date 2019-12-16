@@ -6,7 +6,7 @@ const router = express.Router();
 const projectInteraction = require("../database/projectInteraction");
 
 //
-//
+// get all projects the current user has access to
 //
 router.get("/", (req, res, next) => {
   if(req.user) {
@@ -19,7 +19,7 @@ router.get("/", (req, res, next) => {
 });
 
 //
-//
+// create a new project
 //
 router.post("/", (req, res, next) => {
   if(req.body && req.user && req.body.project){
@@ -34,7 +34,7 @@ router.post("/", (req, res, next) => {
 });
 
 //
-//
+// edit the specified project
 //
 router.put("/", (req, res, next) => {
   if(req.body && req.user && req.body.project){
@@ -48,7 +48,7 @@ router.put("/", (req, res, next) => {
 });
 
 //
-//
+// delete the specified project
 //
 router.delete("/:id", (req, res, next) => {
   if(req.user){

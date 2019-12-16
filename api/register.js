@@ -4,10 +4,10 @@ const passport = require("passport");
 
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-  res.json({message: "GET register"});
-});
-
+//
+// register a new user, with the localRegister
+// strategy as found in ../config/auth.js
+//
 router.post("/",
   passport.authenticate("localRegister"),
   (req, res) => {

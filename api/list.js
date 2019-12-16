@@ -6,7 +6,7 @@ const router = express.Router();
 const listInteraction = require("../database/listInteraction");
 
 //
-//
+// get the lists that are within the given project
 //
 router.get("/byproject/:id", (req, res, next) => {
   if(req.user){
@@ -21,7 +21,7 @@ router.get("/byproject/:id", (req, res, next) => {
 });
 
 //
-//
+// create a new list within the specified project
 //
 router.post("/", (req, res, next) => {
   if(req.user && req.body && req.body.list && req.body.projectId){
@@ -35,7 +35,7 @@ router.post("/", (req, res, next) => {
 });
 
 //
-//
+// edit the specified list
 //
 router.put("/", (req, res, next) => {
   if(req.body && req.user && req.body.list){
@@ -49,7 +49,7 @@ router.put("/", (req, res, next) => {
 });
 
 //
-//
+// delete the specified list
 //
 router.delete("/:id", (req, res, next) => {
   if(req.user){
