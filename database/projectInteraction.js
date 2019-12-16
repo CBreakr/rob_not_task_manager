@@ -7,6 +7,9 @@ const cleanValue = require("../formatUtilities/cleanUserInput");
 const removeLists = require("./removalUtilities/removeLists");
 const removeProjectAccess = require("./removalUtilities/removeProjectAccess");
 
+//
+// expose these to the outside
+//
 const projectInteraction = {
   get: getProject,
   post: postProject,
@@ -15,7 +18,10 @@ const projectInteraction = {
 };
 
 //
-//
+// - get the projects which the user has access to
+// - attach "use" or "admin" access specification
+// to any projects for which the user has that
+// level of access
 //
 function getProject(res, next, user) {
   // get the user from the DB as a source
@@ -25,6 +31,11 @@ function getProject(res, next, user) {
   .populate("readProjectAccess")
   .exec()
   .then(user => {
+    // apply the specific level of access
+    // for the project if it's greater than simple read
+    //
+    // note: need to convert to a proper JS object first
+    //
     const adminProjects = user.adminProjectAccess.map(project => {
       const jsProject = project.toObject();
       jsProject.isAdminAccess = true;
@@ -36,6 +47,7 @@ function getProject(res, next, user) {
       return jsProject;
     });
 
+    // merge all of the project access lists and return
     const allProjects = [...adminProjects, ...useProjects, ...user.readProjectAccess];
     return res.json({projects: allProjects});
   })
@@ -43,7 +55,7 @@ function getProject(res, next, user) {
 }
 
 //
-//
+// create a new project, add the current user as admin
 //
 function postProject(res, next, project, userId) {
   UserModel.findById(userId)
@@ -87,12 +99,13 @@ function postProject(res, next, project, userId) {
 }
 
 //
-//
+// check if the user has "use" or "admin" access
+// to the specified project and, if so, update it
 //
 function putProject(res, next, project, userId) {
   UserModel.findById(userId)
   .then(user => {
-    // make sure the user has access
+    // make sure the user has access: use or admin
     const projectAccess = [...user.adminProjectAccess, ...user.useProjectAccess];
 
     if(projectAccess.find(access => access._id == project._id)){
@@ -101,6 +114,7 @@ function putProject(res, next, project, userId) {
           return next(err);
         }
 
+        // update the values and save
         entry.projectname = cleanValue(project.projectname);
         entry.description = cleanValue(project.description);
         entry.save();
@@ -113,29 +127,23 @@ function putProject(res, next, project, userId) {
 }
 
 //
-//
+// check if the user has "admin" access
+// to the specified project and, if so, delete it
 //
 function deleteProject(res, next, projectId, userId) {
   UserModel.findById(userId)
   .then(user => {
-    console.log("we have the user for delete");
-    // make sure the user has access
+    // make sure the user has admin access
     if(user.adminProjectAccess.find(access => access._id == projectId)){
-      console.log("we have a project to delete");
       ProjectModel.findById(projectId, (err, project) => {
         if(err){
           console.log("error finding project for deletion", {err});
           return next(err);
         }
         project.deleteOne();
-        // user.adminProjectAccess = user.adminProjectAccess.filter(pa => {
-        //   return pa+"" !== project._id+"";
-        // });
-        // user.save()
-        // .then(res => {
-        //   console.log("user saved, inside THEN block");
-        // });
+        // also be sure to remove the child lists of this project
         removeLists(projectId, user, next);
+        // ...and to remove the project access from all users
         removeProjectAccess(project, next);
         return res.json({message:"deletion successful"});
       });
@@ -147,4 +155,7 @@ function deleteProject(res, next, projectId, userId) {
   .catch(err => next(err));
 }
 
+//
+// EXPORT
+//
 module.exports = projectInteraction;

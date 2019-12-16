@@ -16,7 +16,7 @@ const listInteraction = {
 };
 
 //
-// make sure the user has access, then get the lists
+// make sure the user has access to the project, then get the lists
 //
 function getLists(res, next, projectId, userId){
   UserModel.findById(userId)
@@ -75,7 +75,7 @@ function putList(res, next, userId, list){
           return next(err);
         }
 
-        // update the individual values
+        // update the individual values and save
         entry.listname = cleanValue(list.listname);
         entry.description = cleanValue(list.description);
         entry.save();

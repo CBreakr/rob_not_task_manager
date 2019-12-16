@@ -10,6 +10,8 @@ After a project is deleted, references to it in the access lists of users should
 
 module.exports = removeProjectAccess = (project, next) => {
   const userIds = [];
+  // create the list to use for the mongo query
+  // just to make sue that they're in ObjectId form
   project.userAccess.map(id => {
     userIds.push(mongoose.Types.ObjectId(id));
   });
@@ -17,6 +19,7 @@ module.exports = removeProjectAccess = (project, next) => {
   UserModel.find({'_id': { $in: userIds}}, (err, users) => {
     if(err){
       // having orphaned records here isn't the worst
+      // so don't push here
       // return next(err);
     }
     users.map(user => {

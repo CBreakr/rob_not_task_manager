@@ -11,6 +11,7 @@ module.exports = removeTasks = (listId, next) => {
   TaskModel.find({parentList:listId}, (err, tasks) => {
     if(err){
       // having orphaned records here isn't the worst
+      // so don't push here
       // return next(err);
     }
     tasks.map(task => {

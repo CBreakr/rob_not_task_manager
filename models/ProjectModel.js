@@ -18,6 +18,10 @@ const ProjectSchema = new mongoose.Schema(
   collection: "projects"
 });
 
+//
+// this wasn't working and so I went with the
+// functionality found in ../database/removalUtilities
+//
 /*
 ProjectSchema.pre("deleteOne", {document:true}, (next) => {
   const projectId = this._id;

@@ -11,14 +11,9 @@ const accessLevelList = [
 ];
 */
 
-/*
-When user access to a project is added, here's where the dirty work is done
-
-
-*/
-
 //
-//
+// call the appropriate access function based on
+// which level is being set
 //
 function setAccessLevel(user, currentAccessLevel, projectId, level){
   switch(level){
@@ -43,18 +38,27 @@ function setAccessLevel(user, currentAccessLevel, projectId, level){
     addUserAccessToProject(user, projectId);
   }
 
-  // finally, time to save...
+  // finally, time to save the user
   user.save();
 }
 
-//
-//
-//
+/*
+  general notes:
+
+  - to apply an access level,
+    first remove the other access levels
+    then add to the specified level
+
+  - if a user has admin rights to a project,
+    they can't have their rights level changed
+*/
+
 function setNoneAccess(user, currentAccessLevel, projectId) {
-  if(!listContainsProject(user.adminProjectAccess, projectId)){
-    user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
-    user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
+  if(!listContainsId(user.adminProjectAccess, projectId)){
+    user.readProjectAccess = removeIdFromList(user.readProjectAccess, projectId);
+    user.useProjectAccess = removeIdFromList(user.useProjectAccess, projectId);
     if(currentAccessLevel !== "none"){
+      // additional step:
       // remove from the project's list
       removeUserAccess(user, projectId);
     }
@@ -64,12 +68,9 @@ function setNoneAccess(user, currentAccessLevel, projectId) {
   }
 }
 
-//
-//
-//
 function setReadAccess(user, currentAccessLevel, projectId) {
-  if(!listContainsProject(user.adminProjectAccess, projectId)){
-    user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
+  if(!listContainsId(user.adminProjectAccess, projectId)){
+    user.useProjectAccess = removeIdFromList(user.useProjectAccess, projectId);
     user.readProjectAccess.push(projectId);
   }
   else{
@@ -77,12 +78,9 @@ function setReadAccess(user, currentAccessLevel, projectId) {
   }
 }
 
-//
-//
-//
 function setUseAccess(user, currentAccessLevel, projectId) {
-  if(!listContainsProject(user.adminProjectAccess, projectId)){
-    user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
+  if(!listContainsId(user.adminProjectAccess, projectId)){
+    user.readProjectAccess = removeIdFromList(user.readProjectAccess, projectId);
     user.useProjectAccess.push(projectId);
   }
   else{
@@ -90,36 +88,19 @@ function setUseAccess(user, currentAccessLevel, projectId) {
   }
 }
 
-//
-//
-//
 function setAdminAccess(user, currentAccessLevel, projectId) {
-  user.readProjectAccess = removeProjectFromList(user.readProjectAccess, projectId);
-  user.useProjectAccess = removeProjectFromList(user.useProjectAccess, projectId);
+  user.readProjectAccess = removeIdFromList(user.readProjectAccess, projectId);
+  user.useProjectAccess = removeIdFromList(user.useProjectAccess, projectId);
   user.adminProjectAccess.push(projectId);
 }
 
 //
+// UTILITIES
 //
-//
-function listContainsProject(list, projectId){
-  return list.find(element => {
-    return element._id+"" === projectId+"";
-  });
-}
 
 //
-//
-//
-function removeProjectFromList(list, projectId){
-  const filtered = list.filter(element => {
-    return element._id+"" !== projectId+"";
-  });
-  return filtered;
-}
-
-//
-//
+// remove the user from the specified project's
+// userAccess reference list
 //
 function removeUserAccess(user, projectId) {
   ProjectModel.findById(projectId, (err, project) => {
@@ -127,16 +108,14 @@ function removeUserAccess(user, projectId) {
       console.log("error getting the project");
     }
 
-    project.userAccess = project.userAccess.filter(u => {
-      return u._id+"" !== user._id+"";
-    });
-
+    project.userAccess = removeIdFromList(project.userAccess, user._id);
     project.save();
   });
 }
 
 //
-//
+// add the user to the specified project's
+// userAccess reference list
 //
 function addUserAccessToProject(user, projectId){
   ProjectModel.findById(projectId, (err, project) => {
@@ -146,6 +125,25 @@ function addUserAccessToProject(user, projectId){
     project.userAccess.push(user._id);
     project.save();
   });
+}
+
+//
+// shorthand for finding id within reference list
+//
+function listContainsId(list, id){
+  return list.find(element => {
+    return element._id+"" === id+"";
+  });
+}
+
+//
+// shorthand for removing id from reference list
+//
+function removeIdFromList(list, id){
+  const filtered = list.filter(element => {
+    return element._id+"" !== id+"";
+  });
+  return filtered;
 }
 
 //

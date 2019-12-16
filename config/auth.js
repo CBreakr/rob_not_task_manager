@@ -31,7 +31,9 @@ module.exports = (passport) => {
 
 // define the strategies
 
+//
 // LOGIN
+//
 function createLocalLogin(){
   return new LocalStrategy({
     usernameField: "email",
@@ -39,12 +41,14 @@ function createLocalLogin(){
     passReqToCallback: true
   },
   (req, email, password, next) => {
+    // find the user first
     UserModel.find({email}, (err, users) => {
       if(err){
         return loginFail(next, err);
       }
 
       if(users && users.length == 1){
+        // we've found the user, now to check passwords
         if(bcrypt.compareSync(password, users[0].password)){
           // match
           return next(null, users[0]);
@@ -55,13 +59,17 @@ function createLocalLogin(){
         }
       }
       else{
+        // there's been an error:
+        // multiple copies of thee same user exists
         return loginFail(next, new Error("invalid username and password combination"));
       }
     });
   })
 }
 
+//
 // REGISTER
+//
 function createLocalRegister(){
   return new LocalStrategy({
     usernameField: "email",
@@ -70,16 +78,20 @@ function createLocalRegister(){
   },
   (req, email, password, next) => {
     const cleanEmail = cleanValue(email);
+    // check that the user doesn't already exist
     UserModel.find({email:cleanEmail}, (err, users) => {
       if(err){
         return loginFail(next, err);
       }
 
       if(users && users.length > 0){
+        // the user already exists
         return loginFail(next, new Error("cannot create new user"));
       }
       else{
+        // encrypt the password...
         const hashedPassword = bcrypt.hashSync(password, SALT_ROUNDS);
+        // ...and create the new user
         UserModel.create({
           email: cleanEmail,
           password:hashedPassword
@@ -89,6 +101,7 @@ function createLocalRegister(){
             return loginFail(next, err);
           }
 
+          // pass the new user along
           return next(null, user);
         });
       }
@@ -97,7 +110,7 @@ function createLocalRegister(){
 }
 
 //
-//
+// handle the login failure by passing the error along
 //
 function loginFail(next, err){
   return next(err);
