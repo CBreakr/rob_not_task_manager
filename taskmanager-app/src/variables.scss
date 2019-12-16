@@ -1,7 +1,15 @@
 
+/* FONTS */
 $title-font-family: 'Work+Sans:700', sans-serif;
 $content-font-family: 'Montserrat', sans-serif;
 
+/* HEIGHTS */
+$header-height: 7vh;
+$screen-height: 93vh;
+$container-height-small: 82vh;
+$container-height: 85vh;
+
+/* COLORS */
 $text-color:#E0E0E0;
 $text-color-hover:#202020;
 
@@ -34,8 +42,3 @@ $confirm-button-color-hover:#859CEC;
 
 $reject-button-color:#960B0B; // red
 $reject-button-color-hover:#EC859C;
-
-$header-height: 7vh;
-$screen-height: 93vh;
-$container-height-small: 82vh;
-$container-height: 85vh;
