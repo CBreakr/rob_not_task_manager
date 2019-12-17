@@ -5,6 +5,13 @@ import DispatchActions from "../../Reducers/Actions/ListActions";
 
 import ActiveList from "../../Components/List/ActiveList";
 
+/*
+pass along:
+- current project
+- current list
+- delete list method
+*/
+
 const mapStateToProps = (state) => {
   const props = {};
   props.project = {...state.currentProject};

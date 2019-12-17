@@ -15,49 +15,59 @@ const initialState = {
   projects: []
 };
 
+//
+// let's update the store
+//
 const rootReducer = (state = initialState, action) => {
 
   let newState = {...state};
 
   switch(action.type){
     case ReducerActionTypes.RECEIVE_USER:
-      console.log("receive user", {user:action.user});
+      // set the current user
       newState.currentUser = action.user;
       break;
     case ReducerActionTypes.LOGOUT_USER:
-      console.log("logout");
-      // just replace everything
+      // just replace everything with the initial state
       newState = initialState;
       break;
     case ReducerActionTypes.RECEIVE_PROJECTS:
-      console.log("projects", {projects:action.projects}, {id:action.projectId});
-      newState.projects = action.projects;
-      // if it's null, then this will be undefined
+      // clear all elements, then set projects
       newState.currentProject = null; //newState.projects.find(project => project._id == action.projectId);
       newState.lists = null;
+      newState.tasks = null;
       newState.currentList = null;
       newState.currentTask = null;
+      newState.projects = action.projects;
       break;
     case ReducerActionTypes.SET_CURRENT_PROJECT:
-      newState.currentProject = newState.projects.find(project => project._id == action.projectId);
+      // clear lists and tasks, then set current project by id match
+      newState.lists = null;
+      newState.tasks = null;
       newState.currentList = null;
       newState.currentTask = null;
+      newState.currentProject = newState.projects.find(project => project._id == action.projectId);
       break;
     case ReducerActionTypes.RECEIVE_LISTS:
-      newState.lists = action.lists;
+      // clear tasks and current list
+      // then set lists
       newState.currentList = null; // newState.lists.find(list => list._id == action.listId);
       newState.tasks = null;
       newState.currentTask = null;
+      newState.lists = action.lists;
       break;
     case ReducerActionTypes.SET_CURRENT_LIST:
-      newState.currentList = newState.lists.find(list => list._id == action.listId);
+      // clear tasks, then set current list by id match
       newState.currentTask = null;
+      newState.currentList = newState.lists.find(list => list._id == action.listId);
       break;
     case ReducerActionTypes.RECEIVE_TASKS:
-      newState.tasks = action.tasks;
+      // clear current task, then set tasks
       newState.currentTask = null; //newState.tasks.find(list => list._id == action.taskId);
+      newState.tasks = action.tasks;
       break;
     case ReducerActionTypes.SET_CURRENT_TASK:
+      // just set the current task
       newState.currentTask = newState.tasks.find(list => list._id == action.taskId);
       break;
     default:

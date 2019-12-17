@@ -5,8 +5,13 @@ import DispatchActions from "../Reducers/Actions/UserActions";
 
 import LoginForm from "../Components/LoginForm";
 
+/*
+pass along:
+- login method
+*/
+
 const mapStateToProps = (state) => {
-  return {...state};
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {

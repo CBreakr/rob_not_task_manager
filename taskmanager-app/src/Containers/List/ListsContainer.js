@@ -5,6 +5,15 @@ import DispatchActions from "../../Reducers/Actions/ListActions";
 
 import Lists from "../../Components/List/Lists";
 
+/*
+pass along:
+- current project
+- lists for that project
+- current list
+- get lists method
+- set current list method
+*/
+
 const mapStateToProps = (state) => {
   const props = {
     project: null,

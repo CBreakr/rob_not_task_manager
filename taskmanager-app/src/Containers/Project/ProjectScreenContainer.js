@@ -3,9 +3,7 @@ import { connect } from "react-redux";
 
 import ProjectScreen from "../../Components/Project/ProjectScreen";
 
-// do we need anything right now?
-
-// I'm going to keep this for now in case
+// we don't need anything right now
 
 const enhancer = connect(null, null);
 

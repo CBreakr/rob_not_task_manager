@@ -5,8 +5,13 @@ import DispatchActions from "../../Reducers/Actions/TaskActions";
 
 import TaskForm from "../../Components/Task/TaskForm";
 
+/*
+pass along:
+- current list
+- upsert task method
+*/
+
 const mapStateToProps = (state) => {
-  console.log("current list", {list: state.currentList});
   return {
     list: {...state.currentList}
   };

@@ -5,6 +5,13 @@ import DispatchActions from "../../Reducers/Actions/UserActions";
 
 import ProjectAccessForm from "../../Components/Project/ProjectAccessForm";
 
+/*
+pass along:
+- current project
+- find user by email method
+- set user access method
+*/
+
 const mapStateToProps = (state) => {
   return {
     currentProject: state.currentProject

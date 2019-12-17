@@ -5,8 +5,13 @@ import DispatchActions from "../Reducers/Actions/UserActions";
 
 import RegisterForm from "../Components/RegisterForm";
 
+/*
+pass along:
+- user register method
+*/
+
 const mapStateToProps = (state) => {
-  return {...state};
+  return {};
 }
 
 const mapDispatchToProps = (dispatch) => {

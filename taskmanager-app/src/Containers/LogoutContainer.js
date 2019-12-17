@@ -5,6 +5,12 @@ import DispatchActions from "../Reducers/Actions/UserActions";
 
 import Logout from "../Components/Logout";
 
+/*
+pass along:
+- email of current user
+- logout method
+*/
+
 const mapStateToProps = (state) => {
   if(state.currentUser){
     return {email:state.currentUser.email};

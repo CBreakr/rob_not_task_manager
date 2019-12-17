@@ -5,6 +5,15 @@ import DispatchActions from "../../Reducers/Actions/ProjectActions";
 
 import Projects from "../../Components/Project/Projects";
 
+/*
+pass along:
+- current user
+- projects
+- current project
+- get projects method
+- set current project method
+*/
+
 const mapStateToProps = (state) => {
   const props = {
     user: null,

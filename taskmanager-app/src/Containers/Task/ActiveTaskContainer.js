@@ -5,16 +5,16 @@ import DispatchActions from "../../Reducers/Actions/TaskActions";
 
 import ActiveTask from "../../Components/Task/ActiveTask";
 
-const mapStateToProps = (state) => {
-  const props = {};
+/*
+pass along:
+- current project
+- delete task method
+*/
 
-  props.project = {...state.currentProject};
-  // console.log("current task selected?", {state});
-  //
-  // if(state.currentTask){
-  //   props.task = {...state.currentTask};
-  // }
-  return props;
+const mapStateToProps = (state) => {
+  return {
+    project: {...state.currentProject}
+  };
 }
 
 const mapDispatchToProps = (dispatch) => {

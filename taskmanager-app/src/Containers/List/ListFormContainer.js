@@ -5,8 +5,13 @@ import DispatchActions from "../../Reducers/Actions/ListActions";
 
 import ListForm from "../../Components/List/ListForm";
 
+/*
+pass along:
+- current project
+- upsert list method
+*/
+
 const mapStateToProps = (state) => {
-  console.log("current project", {project: state.currentProject});
   return {
     project: {...state.currentProject}
   };
@@ -14,7 +19,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    upsertList: (list, projectId) => {console.log("in upsert", {list, projectId}); DispatchActions.upsertList(dispatch, list, projectId)}
+    upsertList: (list, projectId) => DispatchActions.upsertList(dispatch, list, projectId)
   }
 };
 

@@ -5,12 +5,13 @@ import DispatchActions from "../../Reducers/Actions/ProjectActions";
 
 import ActiveProject from "../../Components/Project/ActiveProject";
 
+/*
+pass along:
+- delete project method
+*/
+
 const mapStateToProps = (state) => {
-  const props = {};
-  // if(state.currentProject){
-  //   props.project = {...state.currentProject};
-  // }
-  return props;
+  return {};
 };
 
 const mapDispatchToProps = (dispatch) => {

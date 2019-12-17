@@ -5,6 +5,11 @@ import DispatchActions from "../../Reducers/Actions/ProjectActions";
 
 import ProjectForm from "../../Components/Project/ProjectForm";
 
+/*
+pass along:
+- upsert project
+*/
+
 const mapStateToProps = (state) => {
   return {};
 };

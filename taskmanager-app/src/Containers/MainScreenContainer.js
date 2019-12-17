@@ -5,6 +5,12 @@ import DispatchActions from "../Reducers/Actions/UserActions";
 
 import MainScreen from "../Components/MainScreen";
 
+/*
+pass along:
+- state
+- get user method
+*/
+
 const mapStateToProps = (state) => {
   return {...state};
 };

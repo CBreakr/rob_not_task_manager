@@ -3,6 +3,11 @@ import { connect } from "react-redux";
 
 import ListScreen from "../../Components/List/ListScreen";
 
+/*
+pass along:
+- current project
+*/
+
 const mapStateToProps = (state) => {
   const props = {};
   if(state.currentProject){
