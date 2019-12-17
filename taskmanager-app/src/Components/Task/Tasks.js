@@ -5,6 +5,16 @@ import ActiveTask from "../../Containers/Task/ActiveTaskContainer";
 
 import cleanValue from "../../formatUtilities/cleanUserInput";
 
+/*
+  display all tasks for the current list
+  as <li> within a <ul>,
+  making a distinction for the current task
+
+  props expected:
+  - tasks
+  - current task
+*/
+
 class Tasks extends React.Component {
 
   selectTask = (evt) => {
@@ -12,8 +22,15 @@ class Tasks extends React.Component {
     this.props.setCurrentTask(taskId);
   }
 
+  //
+  // RENDER
+  //
   render(){
 
+    // get the prop values for
+    // the tasks and current task
+    // if they exist,
+    // otherwise use default empty values
     let tasks = [];
     let currentTask = null;
 
@@ -21,14 +38,14 @@ class Tasks extends React.Component {
       tasks = this.props.tasks;
     }
 
-    console.log("CURRENT TASK?", {currentTask: this.props.currentTask});
-
     let statusClass = "task_unfinished";
 
     if(this.props.currentTask){
       currentTask = this.props.currentTask;
     }
 
+    // loop through all tasks
+    // and display them
     return (
       <div>
         <ul>
@@ -70,4 +87,7 @@ class Tasks extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default Tasks;

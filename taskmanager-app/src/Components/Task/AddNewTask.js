@@ -3,6 +3,15 @@ import React from "react";
 
 import TaskForm from "../../Containers/Task/TaskFormContainer";
 
+/*
+  display a button to the user
+  if they click this button, show
+  the TaskForm
+
+  pass in onComplete
+  and onCancel methods to the form
+*/
+
 class AddNewTask extends React.Component {
   constructor(){
     super();
@@ -11,6 +20,9 @@ class AddNewTask extends React.Component {
     };
   }
 
+  //
+  // show the form
+  //
   setEdit = () => {
     this.setState({
       ...this.state,
@@ -18,6 +30,10 @@ class AddNewTask extends React.Component {
     });
   }
 
+  //
+  // both onCancel and onComplete
+  // just hide the form
+  //
   onCancel = () => {
     this.setState({
       ...this.state,
@@ -32,7 +48,12 @@ class AddNewTask extends React.Component {
     });
   }
 
+  //
+  // RENDER
+  //
   render(){
+    // if we're in edit mode, then show the form
+    // if not, then show the add button
     return (
       <>
       {
@@ -44,7 +65,10 @@ class AddNewTask extends React.Component {
             submitText="Add" />
         :
         <div>
-          <input type="button" className="confirm_button" value="Add New Task" onClick={this.setEdit} />
+          <input type="button"
+            className="confirm_button"
+            value="Add New Task"
+            onClick={this.setEdit} />
         </div>
       }
       </>
@@ -52,4 +76,7 @@ class AddNewTask extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default AddNewTask;

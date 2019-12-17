@@ -5,6 +5,16 @@ import ActiveList from "../../Containers/List/ActiveListContainer";
 
 import cleanValue from "../../formatUtilities/cleanUserInput";
 
+/*
+  display all lists for the current project
+  as <li> within a <ul>,
+  making a distinction for the current list
+
+  props expected:
+  - lists
+  - current list
+*/
+
 class Lists extends React.Component {
 
   selectList = (evt) => {
@@ -12,8 +22,15 @@ class Lists extends React.Component {
     this.props.setCurrentList(listId);
   }
 
+  //
+  // RENDER
+  //
   render(){
 
+    // get the prop values for
+    // the lists and current list
+    // if they exist,
+    // otherwise use default empty values
     let lists = [];
     let currentList = null;
 
@@ -25,6 +42,8 @@ class Lists extends React.Component {
       currentList = this.props.currentList;
     }
 
+    // loop trhough all lists
+    // and display them
     return (
       <div>
         <ul>
@@ -58,4 +77,7 @@ class Lists extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default Lists;

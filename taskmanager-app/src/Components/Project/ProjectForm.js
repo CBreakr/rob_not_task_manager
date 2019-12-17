@@ -1,6 +1,16 @@
 
 import React from "react";
 
+/*
+  element to show the input fields necessary for
+  entering a new project or editing an existing one
+
+  props expected:
+  - current project (for edit only)
+  - on complete method
+  - on cancel method
+*/
+
 class ProjectForm extends React.Component {
 
   constructor() {
@@ -12,6 +22,11 @@ class ProjectForm extends React.Component {
     };
   }
 
+  //
+  // if the current project has been changed
+  // then fill the deried state with the
+  // new values for that project
+  //
   static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.project && nextProps.project._id != prevState.projectId){
       return {
@@ -21,16 +36,26 @@ class ProjectForm extends React.Component {
       };
     }
     else{
+      // no change to the current project
       return null;
     }
   }
 
+  //
+  // set the state value based on the input name
+  //
   updateInput = (evt) => {
     const newState = {...this.state};
     newState[evt.target.name] = evt.target.value;
     this.setState(newState);
   }
 
+  //
+  // pull in the user input values,
+  // clear the state,
+  // call the upsert method,
+  // call the on complete method that was passed in
+  //
   upsertProject = (evt) => {
     evt.preventDefault();
     let project = {};
@@ -55,6 +80,11 @@ class ProjectForm extends React.Component {
     }
   }
 
+  //
+  // clear the state and then
+  // call the on cancel method
+  // that was passed in
+  //
   onCancel = () => {
     this.setState({
       projectname:"",
@@ -66,8 +96,14 @@ class ProjectForm extends React.Component {
     }
   }
 
+  //
+  // RENDER
+  //
   render() {
 
+    // get the prop values for the project fields
+    // or just use empty values if we're
+    // entering a new project
     let projectname = "";
     let description = "";
 
@@ -80,14 +116,26 @@ class ProjectForm extends React.Component {
       <div>
         <form onSubmit={this.upsertProject}>
           <div>
-            <input type="text" name="projectname" placeholder="name" value={projectname} onChange={this.updateInput} />
+            <input type="text"
+              name="projectname"
+              placeholder="name"
+              value={projectname}
+              onChange={this.updateInput} />
           </div>
           <div>
-            <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
+            <textarea name="description"
+              placeholder="description"
+              value={description}
+              onChange={this.updateInput}></textarea>
           </div>
           <span>
-            <input type="submit" className="confirm_button" value={this.props.submitText} />
-            <input type="button" className="reject_button" value="Cancel" onClick={this.onCancel} />
+            <input type="submit"
+              className="confirm_button"
+              value={this.props.submitText} />
+            <input type="button"
+              className="reject_button"
+              value="Cancel"
+              onClick={this.onCancel} />
           </span>
         </form>
       </div>

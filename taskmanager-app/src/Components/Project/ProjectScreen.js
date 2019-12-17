@@ -3,10 +3,13 @@ import React from "react";
 
 import { Scrollbars } from "react-custom-scrollbars";
 
-// import ProjectForm from "../../Containers/Project/ProjectFormContainer";
-// <ProjectForm submitText="Add" />
 import AddNewProject from "./AddNewProject";
 import Projects from "../../Containers/Project/ProjectsContainer";
+
+/*
+  parent element for all parts of the
+  Project display, showing the set of projects
+*/
 
 class ProjectScreen extends React.Component {
   render() {
@@ -26,4 +29,7 @@ class ProjectScreen extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default ProjectScreen;

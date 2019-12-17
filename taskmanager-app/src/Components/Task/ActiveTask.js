@@ -5,6 +5,17 @@ import TaskForm from "../../Containers/Task/TaskFormContainer";
 
 import cleanValue from "../../formatUtilities/cleanUserInput";
 
+/*
+  display the selected task,
+  including all metadata fields
+  and options for edit/delete
+  based on user access rights
+
+  props expected:
+  - task
+  - project
+*/
+
 class ActiveTask extends React.Component {
 
   constructor(){
@@ -15,6 +26,10 @@ class ActiveTask extends React.Component {
     };
   }
 
+  //
+  // if the current task is changed,
+  // set the new id and hide the TaskForm
+  //
   static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps && nextProps.list && nextProps.task._id != prevState.taskId){
       return {
@@ -23,10 +38,14 @@ class ActiveTask extends React.Component {
       };
     }
     else {
+      // no change to the current task
       return null;
     }
   }
 
+  //
+  // show the TaskForm for editing
+  //
   setEdit = () => {
     console.log("SCREEN set edit");
     this.setState({
@@ -35,6 +54,10 @@ class ActiveTask extends React.Component {
     });
   }
 
+  //
+  // both onCanel and onComplete
+  // just hide the TaskForm
+  //
   onCancel = () => {
     console.log("on cancel");
     this.setState({
@@ -50,6 +73,9 @@ class ActiveTask extends React.Component {
     });
   }
 
+  //
+  // ask the user for confirmation before running delete
+  //
   deleteTask = () => {
     const proceed = window.confirm(`Are you sure you want to PERMANENTLY DELETE list ${this.props.task.taskname}`);
     if(proceed){
@@ -57,7 +83,12 @@ class ActiveTask extends React.Component {
     }
   }
 
+  //
+  // RENDER
+  //
   render() {
+    // get the task and project props if they're set
+    // otherwise use empty values
     let task = null;
     let project = null;
 
@@ -69,6 +100,17 @@ class ActiveTask extends React.Component {
       project = this.props.project;
     }
 
+    //
+    // display each of the field values for
+    // the current task, as well as buttons
+    // based on the user's access level:
+    // "use" access can edit
+    // "admin" access can edit and delete
+    //
+    // be sure to always clean the values which
+    // came from user input before display
+    // to make sure there are no HTML tags
+    //
     return (
       <div className="active_task_container">
         {
@@ -135,4 +177,7 @@ class ActiveTask extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default ActiveTask;

@@ -5,6 +5,19 @@ import moment from "moment";
 
 import DropDown from "../DropDown";
 
+/*
+  element to show the input fields necessary for
+  entering a new task or editing an existing one
+
+  props expected:
+  - current task (for edit only)
+  - on complete method
+  - on cancel method
+*/
+
+//
+// values for the respective dropdown fields
+//
 const statusList = [
   "unstarted",
   "started",
@@ -33,7 +46,7 @@ const typeList = [
   "meta"
 ];
 
-// need to remember to set default values
+// used to set default values
 const emptyState = {
   taskId:"",
   taskname:"",
@@ -45,6 +58,7 @@ const emptyState = {
   dueDate:null
 };
 
+
 class TaskForm extends React.Component {
 
   constructor() {
@@ -52,6 +66,11 @@ class TaskForm extends React.Component {
     this.state = emptyState;
   }
 
+  //
+  // if the current task has been changed
+  // then fill the deried state with the
+  // new values for that task
+  //
   static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps.task && nextProps.task._id != prevState.taskId){
       const ret = {
@@ -65,23 +84,35 @@ class TaskForm extends React.Component {
         dueDate : null
       };
 
+      // get the due date in the right display format
       if(nextProps.task.dueDate){
-        ret.dueDate = moment(nextProps.task.dueDate).format("MM/DD/YYYY");
+        ret.dueDate = moment(nextProps.task.dueDate)
+                      .format("MM/DD/YYYY");
       }
 
       return ret;
     }
     else{
+      // no change to the current task
       return null;
     }
   }
 
+  //
+  // set the state value based on the input name
+  //
   updateInput = (evt) => {
     const newState = {...this.state};
     newState[evt.target.name] = evt.target.value;
     this.setState(newState);
   }
 
+  //
+  // pull in the user input values,
+  // clear the state,
+  // call the upsert method,
+  // call the on complete method that was passed in
+  //
   upsertTask = (evt) => {
     evt.preventDefault();
     let task = {};
@@ -97,6 +128,7 @@ class TaskForm extends React.Component {
     task.size = this.state.size;
     task.type = this.state.type;
 
+    // make sure we have a proper date
     const d = Date.parse(this.state.dueDate);
     if(this.state.dueDate && isNaN(d)) {
       alert("invalid date");
@@ -105,8 +137,6 @@ class TaskForm extends React.Component {
     else{
       task.dueDate = d;
     }
-
-    console.log("upsert props", {list: this.props.list});
 
     // clear the input
     this.setState(emptyState);
@@ -118,6 +148,11 @@ class TaskForm extends React.Component {
     }
   }
 
+  //
+  // clear the state and then
+  // call the on cancel method
+  // that was passed in
+  //
   onCancel = () => {
     this.setState(emptyState);
 
@@ -126,8 +161,14 @@ class TaskForm extends React.Component {
     }
   }
 
+  //
+  // RENDER
+  //
   render() {
 
+    // get the prop values for the task fields
+    // or just use empty values if we're
+    // entering a new task
     let taskname = "";
     let description = "";
     let status = "";
@@ -146,14 +187,24 @@ class TaskForm extends React.Component {
       dueDate = this.state.dueDate || null;
     }
 
+    // each field gets its own row
+    // with the metadata fields displayed
+    // as two columns: fieldname and input element
     return (
       <div>
         <form onSubmit={this.upsertTask}>
           <div>
-            <input type="text" name="taskname" placeholder="name" value={taskname} onChange={this.updateInput} />
+            <input type="text"
+              name="taskname"
+              placeholder="name"
+              value={taskname}
+              onChange={this.updateInput} />
           </div>
           <div>
-            <textarea name="description" placeholder="description" value={description} onChange={this.updateInput}></textarea>
+            <textarea name="description"
+              placeholder="description"
+              value={description}
+              onChange={this.updateInput}></textarea>
           </div>
           <div className="splitInputDiv">
             <span>
@@ -201,11 +252,20 @@ class TaskForm extends React.Component {
           </div>
           <div className="splitInputDiv">
             Due Date:
-            <input type="text" className="dateInput" name="dueDate" value={dueDate} onChange={this.updateInput} />
+            <input type="text"
+              className="dateInput"
+              name="dueDate"
+              value={dueDate}
+              onChange={this.updateInput} />
           </div>
           <span>
-            <input type="submit" className="confirm_button" value={this.props.submitText} />
-            <input type="button" className="reject_button" value="Cancel" onClick={this.onCancel} />
+            <input type="submit"
+              className="confirm_button"
+              value={this.props.submitText} />
+            <input type="button"
+              className="reject_button"
+              value="Cancel"
+              onClick={this.onCancel} />
           </span>
         </form>
       </div>
@@ -213,19 +273,7 @@ class TaskForm extends React.Component {
   }
 }
 
-/*
-<select name="status" onChange={this.updateInput}>
-{
-  StatusList.map(status => {
-    if(status===this.state.status){
-      return <option selected value={status}>{status}</option>
-    }
-    else{
-      return <option value={status}>{status}</option>
-    }
-  })
-}
-</select>
-*/
-
+//
+// EXPORT
+//
 export default TaskForm;

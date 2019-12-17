@@ -5,6 +5,16 @@ import ActiveProject from "../../Containers/Project/ActiveProjectContainer";
 
 import cleanValue from "../../formatUtilities/cleanUserInput";
 
+/*
+  display all projects for the current user
+  as <li> within a <ul>,
+  making a distinction for the current project
+
+  props expected:
+  - projects
+  - current project
+*/
+
 class Projects extends React.Component {
 
   selectProject = (evt) => {
@@ -12,8 +22,15 @@ class Projects extends React.Component {
     this.props.setCurrentProject(projectId);
   }
 
+  //
+  // RENDER
+  //
   render(){
 
+    // get the prop values for
+    // the projects and current projects
+    // if they exist,
+    // otherwise use default empty values
     let projects = [];
     let currentProject = null;
 
@@ -26,6 +43,8 @@ class Projects extends React.Component {
       currentProject = this.props.currentProject;
     }
 
+    // loop through all projects
+    // and display them
     return (
       <div>
         <ul>
@@ -59,4 +78,7 @@ class Projects extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default Projects;

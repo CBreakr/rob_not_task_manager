@@ -8,17 +8,29 @@ import ProjectScreen from "../Containers/Project/ProjectScreenContainer";
 import ListScreen from "../Containers/List/ListScreenContainer";
 import TaskScreen from "../Containers/Task/TaskScreenContainer";
 
+/*
+  parent element for everything within the application
+*/
+
 const title = "Rob Not Task Manager";
 
 class MainScreen extends React.Component {
+
+  //
+  // check for an active user session
+  //
   componentDidMount(){
-    // check for user
     this.props.getUser();
   }
 
+  //
+  // RENDER
+  //
   render() {
     const user = this.props.currentUser;
 
+    // if we have a user, then show the main screen with projects
+    // if not, then show the landing page with login/register
     return (
       <div className="appScreen">
         {
@@ -45,4 +57,7 @@ class MainScreen extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default MainScreen;

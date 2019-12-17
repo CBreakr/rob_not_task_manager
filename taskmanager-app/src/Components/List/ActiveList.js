@@ -5,6 +5,16 @@ import ListForm from "../../Containers/List/ListFormContainer";
 
 import cleanValue from "../../formatUtilities/cleanUserInput";
 
+/*
+  display the selected list
+  and options for edit/delete
+  based on user access rights
+
+  props expected:
+  - list
+  - project
+*/
+
 class ActiveList extends React.Component {
 
   constructor(){
@@ -15,6 +25,10 @@ class ActiveList extends React.Component {
     };
   }
 
+  //
+  // if the current list is changed,
+  // set the new id and hide the ListForm
+  //
   static getDerivedStateFromProps(nextProps, prevState) {
     if(nextProps && nextProps.list && nextProps.list._id != prevState.listId){
       return {
@@ -23,10 +37,14 @@ class ActiveList extends React.Component {
       };
     }
     else {
+      // no change to the current list
       return null;
     }
   }
 
+  //
+  // show the TaskForm for editing
+  //
   setEdit = () => {
     console.log("SCREEN set edit");
     this.setState({
@@ -35,8 +53,11 @@ class ActiveList extends React.Component {
     });
   }
 
+  //
+  // both onCanel and onComplete
+  // just hide the ListForm
+  //
   onCancel = () => {
-    console.log("on cancel");
     this.setState({
       ...this.state,
       editMode:false
@@ -50,6 +71,9 @@ class ActiveList extends React.Component {
     });
   }
 
+  //
+  // ask the user for confirmation before running delete
+  //
   deleteList = () => {
     const proceed = window.confirm(`Are you sure you want to PERMANENTLY DELETE list ${this.props.list.listname}`);
     if(proceed){
@@ -57,7 +81,12 @@ class ActiveList extends React.Component {
     }
   }
 
+  //
+  // RENDER
+  //
   render() {
+    // get the list and project props if they're set
+    // otherwise use empty values
     let list = null;
     let project = null;
 
@@ -69,6 +98,17 @@ class ActiveList extends React.Component {
       project = this.props.project;
     }
 
+    //
+    // display each of the field values for
+    // the current list, as well as buttons
+    // based on the user's access level:
+    // "use" access can edit
+    // "admin" access can edit and delete
+    //
+    // be sure to always clean the values which
+    // came from user input before display
+    // to make sure there are no HTML tags
+    //
     return (
       <div className="active_list_container">
         {
@@ -93,14 +133,23 @@ class ActiveList extends React.Component {
               </div>
               {
                 project.isUseAccess
-                ? <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
+                ? <input type="button"
+                    className="confirm_button"
+                    value="edit"
+                    onClick={this.setEdit} />
                 : <></>
               }
               {
                 project.isAdminAccess
                 ? <>
-                <input type="button" className="confirm_button" value="edit" onClick={this.setEdit} />
-                <input type="button" className="reject_button" value="delete" onClick={this.deleteList} />
+                <input type="button"
+                  className="confirm_button"
+                  value="edit"
+                  onClick={this.setEdit} />
+                <input type="button"
+                  className="reject_button"
+                  value="delete"
+                  onClick={this.deleteList} />
                  </>
                 : <></>
               }
@@ -117,4 +166,7 @@ class ActiveList extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default ActiveList;

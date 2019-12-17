@@ -3,6 +3,15 @@ import React from "react";
 
 import ProjectForm from "../../Containers/Project/ProjectFormContainer";
 
+/*
+  display a button to the user
+  if they click this button, show
+  the ProjectForm
+
+  pass in onComplete
+  and onCancel methods to the form
+*/
+
 class AddNewProject extends React.Component {
 
   constructor(){
@@ -12,6 +21,9 @@ class AddNewProject extends React.Component {
     };
   }
 
+  //
+  // show the form
+  //
   setEdit = () => {
     this.setState({
       ...this.state,
@@ -19,6 +31,10 @@ class AddNewProject extends React.Component {
     });
   }
 
+  //
+  // both onCancel and onComplete
+  // just hide the form
+  //
   onCancel = () => {
     this.setState({
       ...this.state,
@@ -33,7 +49,12 @@ class AddNewProject extends React.Component {
     });
   }
 
+  //
+  // RENDER
+  //
   render(){
+    // if we're in edit mode, then show the form
+    // if not, then show the add button
     return (
       <>
       {
@@ -53,4 +74,7 @@ class AddNewProject extends React.Component {
   }
 }
 
+//
+// EXPORT
+//
 export default AddNewProject;
