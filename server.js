@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
 const env = require("dotenv");
+const MongoStore = require('connect-mongo')(session);
 
 const fs = require("fs");
 
@@ -47,7 +48,8 @@ app.use(session({
   secret: SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  cookie: { maxAge: 86400000 } // 1 day
+  cookie: { maxAge: 86400000 }, // 1 day
+  store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 app.use(passport.initialize());
