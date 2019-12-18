@@ -12,7 +12,6 @@ const api = require("./api/api");
 const auth = require("./config/auth")(passport);
 
 // DB CONNECTION
-
 const DB = process.env.DB_CONNECT
           || "mongodb://localhost/taskmanager";
 
@@ -44,7 +43,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(session({
   secret: SESSION_SECRET,
   resave: true,
-  saveUninitialized: true
+  saveUninitialized: true,
+  cookie: { maxAge: 86400000 } // 1 day
 }));
 
 app.use(passport.initialize());
