@@ -1,5 +1,6 @@
 
 import React from "react";
+import moment from "moment";
 
 import TaskForm from "../../Containers/Task/TaskFormContainer";
 
@@ -94,6 +95,12 @@ class ActiveTask extends React.Component {
 
     if(this.props && this.props.task){
       task = this.props.task;
+
+      // format the date before display
+      if(task.dueDate){
+        task.dueDate = moment(task.dueDate)
+                      .format("MM/DD/YYYY");
+      }
     }
 
     if(this.props && this.props.project){
@@ -149,6 +156,14 @@ class ActiveTask extends React.Component {
                 <span>type:</span>
                 <span>{cleanValue(task.type)}</span>
               </div>
+              {
+                task.dueDate
+                ? <div className="splitInputDiv">
+                    <span>due date:</span>
+                    <span>{cleanValue(task.dueDate)}</span>
+                  </div>
+                : <></>
+              }
               <div>
               {
                 project.isUseAccess
