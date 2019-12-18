@@ -5,11 +5,14 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const session = require("express-session");
+const env = require("dotenv");
 
 const fs = require("fs");
 
 const api = require("./api/api");
 const auth = require("./config/auth")(passport);
+
+env.config();
 
 // DB CONNECTION
 const DB = process.env.DB_CONNECT

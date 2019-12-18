@@ -4,3 +4,6 @@
 
 # production
 /build
+
+# environment
+.env
